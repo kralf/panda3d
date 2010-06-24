@@ -1,4 +1,5 @@
 remake_find_package(PythonLibs)
+remake_find_package(openssl CONFIG)
 
 remake_include(${PYTHON_INCLUDE_PATH})
 

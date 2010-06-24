@@ -19,6 +19,7 @@
 #ifdef HAVE_OPENSSL
 
 #include "pnotify.h"
+#include "memoryHook.h"
 #include "openssl/evp.h"
 
 ////////////////////////////////////////////////////////////////////
