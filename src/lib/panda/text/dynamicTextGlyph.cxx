@@ -26,6 +26,7 @@
 #include "transparencyAttrib.h"
 #include "colorAttrib.h"
 #include "renderState.h"
+#include "dynamicTextFont.h"
 #include "config_gobj.h"
 
 ////////////////////////////////////////////////////////////////////
