@@ -92,9 +92,9 @@
 #undef USE_MEMORY_PTMALLOC
 #define USE_MEMORY_MALLOC 1
 #define HAVE_ZLIB 1
-#undef HAVE_PNG
-#undef HAVE_JPEG
-#undef HAVE_TIFF
+#define HAVE_PNG 1
+#define HAVE_JPEG 1
+#define HAVE_TIFF 1
 #undef HAVE_VRPN
 #undef HAVE_FMODEX
 #undef HAVE_OPENAL
