@@ -17,16 +17,16 @@
 // that file for an explanation for what you're supposed to declare in
 // order to include this file.
 
-#include "glmisc_src.cxx"
-#include "glTextureContext_src.cxx"
-#include "glVertexBufferContext_src.cxx"
-#include "glIndexBufferContext_src.cxx"
-#include "glOcclusionQueryContext_src.cxx"
-#include "glGeomContext_src.cxx"
-#include "glGeomMunger_src.cxx"
-#include "glShaderContext_src.cxx"
-#include "glImmediateModeSender_src.cxx"
-#include "glGraphicsBuffer_src.cxx"
-#include "glGraphicsStateGuardian_src.cxx"
+#include "glmisc_src.T"
+#include "glTextureContext_src.T"
+#include "glVertexBufferContext_src.T"
+#include "glIndexBufferContext_src.T"
+#include "glOcclusionQueryContext_src.T"
+#include "glGeomContext_src.T"
+#include "glGeomMunger_src.T"
+#include "glShaderContext_src.T"
+#include "glImmediateModeSender_src.T"
+#include "glGraphicsBuffer_src.T"
+#include "glGraphicsStateGuardian_src.T"
 
 

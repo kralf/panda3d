@@ -63,11 +63,6 @@
 #include <windows.h>
 #endif
 
-// This prevents glext.h from getting included by gl.h
-// That way, we can provide our own, better version.
-#define __glext_h_
-#define GL_GLEXT_VERSION 0
-
 #ifdef IS_OSX
   #include <OpenGL/gl.h>
   #ifdef HAVE_GLU
@@ -79,9 +74,6 @@
   #include <GL/glu.h>
   #endif
 #endif
-
-#undef GL_GLEXT_VERSION
-#include "panda_glext.h"
 
 #include "glstuff_src.h"
 

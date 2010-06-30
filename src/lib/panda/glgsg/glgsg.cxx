@@ -17,4 +17,4 @@
 // the "true" GL library.
 
 #include "glgsg.h"
-#include "glstuff_src.cxx"
+#include "glstuff_src.T"
