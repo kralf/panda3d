@@ -1,1 +1,1 @@
-remake_add_executables(*.cxx LINK dtooldconfig TESTING)
+remake_add_executables(*.cxx LINK dconfig TESTING)

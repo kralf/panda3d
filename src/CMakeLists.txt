@@ -18,4 +18,5 @@ remake_include(
 remake_include()
 
 remake_add_directories(lib)
+remake_add_directories(metalib)
 remake_add_directories(bin)
