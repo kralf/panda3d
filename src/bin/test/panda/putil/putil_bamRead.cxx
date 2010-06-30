@@ -15,7 +15,7 @@
 #include "pandabase.h"
 #include "pnotify.h"
 
-#include "util_bam.h"
+#include "putil_bam.h"
 #include "bamReader.h"
 #include "datagramInputFile.h"
 

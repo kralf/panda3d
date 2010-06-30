@@ -17,7 +17,7 @@
 #include "dconfig.h"
 #include "config_util.h"
 
-#include "util_bam.h"
+#include "putil_bam.h"
 
 
 TypeHandle Person::_type_handle;

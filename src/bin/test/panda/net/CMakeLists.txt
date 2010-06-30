@@ -1,1 +1,1 @@
-remake_add_executables(*.cxx LINK net util TESTING)
+remake_add_executables(*.cxx LINK net putil TESTING)
