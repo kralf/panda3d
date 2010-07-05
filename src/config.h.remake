@@ -1,7 +1,7 @@
 #ifndef HAVE_CONFIG_H
 #define HAVE_CONFIG_H
 
-#undef HAVE_PYTHON
+#define HAVE_PYTHON 1
 #undef PYTHON_FRAMEWORK
 #define COMPILE_IN_DEFAULT_FONT 1
 #define HAVE_MAYA 1
