@@ -17,7 +17,11 @@
 
 #include "pandabase.h"
 #include "pnotify.h"
+#ifdef DO_PSTATS
+#include "mutexTrueImpl.h"
+#else
 #include "mutexImpl.h"
+#endif
 
 class Thread;
 

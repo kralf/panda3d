@@ -17,6 +17,13 @@
 
 #include "pandabase.h"
 
+#ifdef HAVE_PNG
+// If we are going to be including png.h (in the unrelated file
+// pnmFileTypePNG.h), be sure to include it before including setjmp.h.
+// Ugly hack due to png weirdness with setjmp.
+#include <png.h>
+#endif
+
 #include "pnmFileType.h"
 #include "pnmReader.h"
 #include "pnmWriter.h"

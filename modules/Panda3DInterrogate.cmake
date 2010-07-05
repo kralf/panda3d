@@ -39,42 +39,54 @@ define_property(DIRECTORY PROPERTY PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES
 #   \required[value] target The name of the build target to add the
 #     interrogated source code for.
 #   \required[list] glob A list of glob expressions that are resolved
-#     in order to find the input source files for Interrogate.
-#   \optional[value] BUILDING:suffix The value of the building suffix
-#     that will be used to construct the -DBUILDING_{BUILDING} definition
-#     to be passed to Interrogate, defaults to the upper-case conversion
-#     of the target name.
+#     in order to find the input source files for Interrogate, defaulting
+#     to *.h and *.cxx.
+#   \optional[value] MODULE:module The name of the Panda3D module that
+#     will be be passed to Interrogate, defaults to the target name.
+#   \optional[list] EXCLUDE:glob An optional list of glob expressions
+#     resolving to those files that shall be excluded from the Interrogate
+#     sources.
 macro(panda3d_interrogate panda3d_target)
-  remake_arguments(PREFIX panda3d_ VAR BUILDING ARGN globs ${ARGN})
-  string(TOUPPER ${panda3d_target} panda3d_default_building)
-  remake_set(panda3d_building SELF DEFAULT ${panda3d_default_building})
-  remake_set(panda3d_includes SELF DEFAULT *.h *.cxx)
+  remake_arguments(PREFIX panda3d_ VAR MODULE LIST EXCLUDE ARGN globs ${ARGN})
+  remake_set(panda3d_module SELF DEFAULT ${panda3d_target})
   remake_set(panda3d_globs SELF DEFAULT *.h *.cxx)
 
-  remake_set(panda3d_args -fnames -string -refcount -assert -python-native)
-  remake_set(panda3d_defs -Dvolatile -Dmutable -DCPPPARSER
-    -D__STDC__=1 -D__cplusplus -D__inline -D__const=const -DFORCE_INLINING
-    -DBUILDING_${panda3d_building})
+  string(TOUPPER ${panda3d_module} panda3d_building)
+  remake_set(panda3d_args -fnames -string -refcount -assert -python-native
+    -srcdir ${CMAKE_CURRENT_SOURCE_DIR})
+  remake_set(panda3d_defs -Dvolatile -Dmutable -DCPPPARSER -D__STDC__=1
+    -D__cplusplus -D__inline -D__const=const -DBUILDING_${panda3d_building})
+  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    remake_list_push(panda3d_defs -D_LP64)
+  else(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    remake_list_push(panda3d_defs -D__i386__)
+  endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+
+  remake_set(panda3d_include_flags)
+  remake_set(panda3d_interrogate_include_flags)
+
+  get_property(panda3d_interrogate_include_dirs DIRECTORY PROPERTY
+    PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES)
+  foreach(panda3d_interrogate_include_dir ${panda3d_interrogate_include_dirs})
+    remake_list_push(panda3d_include_flags
+      "-I${panda3d_interrogate_include_dir}")
+    remake_list_push(panda3d_interrogate_include_flags
+      "-S${panda3d_interrogate_include_dir}")
+  endforeach(panda3d_interrogate_include_dir)
 
   get_property(panda3d_include_dirs DIRECTORY PROPERTY INCLUDE_DIRECTORIES)
-  remake_set(panda3d_include_flags)
   foreach(panda3d_include_dir ${panda3d_include_dirs})
     remake_list_push(panda3d_include_flags "-I${panda3d_include_dir}")
   endforeach(panda3d_include_dir)
 
-  get_property(panda3d_interrogate_include_dirs DIRECTORY PROPERTY
-    PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES)
-  remake_set(panda3d_interrogate_include_flags)
-  foreach(panda3d_interrogate_include_dir ${panda3d_interrogate_include_dirs})
-    remake_list_push(panda3d_interrogate_include_flags
-      "-S${panda3d_interrogate_include_dir}")
-  endforeach(panda3d_interrogate_include_dir)
+  remake_file_glob(panda3d_input ${panda3d_globs} EXCLUDE ${panda3d_exclude})
+  list(SORT panda3d_input)
 
   remake_generate_custom(Interrogate ${panda3d_target}
     interrogate_file ${panda3d_args} ${panda3d_defs}
       ${panda3d_include_flags} ${panda3d_interrogate_include_flags}
       -oc %SOURCES% -od lib${panda3d_target}.in %INPUT%
-    INPUT ${panda3d_globs}
+    INPUT ${panda3d_input}
     SOURCES ${panda3d_target}_igate.cxx
     OTHERS lib${panda3d_target}.in)
 endmacro(panda3d_interrogate)

@@ -4,7 +4,7 @@ remake_find_package(freetype2 CONFIG)
 remake_find_package(JPEG)
 remake_find_package(PNG)
 remake_find_package(TIFF)
-remake_find_package(ode CONFIG)
+remake_find_library(ode ode.h)
 remake_find_package(gl CONFIG)
 remake_find_package(PythonLibs)
 

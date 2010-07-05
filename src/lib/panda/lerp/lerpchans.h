@@ -73,27 +73,27 @@ public:
 template <class value>
 class LerpChannel {
 public:
-  virtual GetValue(float p);
+  virtual void GetValue(float p);
 };
 
 template <class value>
-class TabularChannel : public LerpChannel {
+class TabularChannel : public LerpChannel<value> {
 };
 
 template <class value>
-class ProceduralChannel : public LerpChannel {
+class ProceduralChannel : public LerpChannel<value> {
 };
 
 template <class value>
-class CompositeChannel : public LerpChannel {
+class CompositeChannel : public LerpChannel<value> {
 };
 
 template <class value>
-class BlendChannel : public CompositeChannel {
+class BlendChannel : public CompositeChannel<value> {
 };
 
 template <class value>
-class ConcatenationChannel : public CompositeChannel {
+class ConcatenationChannel : public CompositeChannel<value> {
 };
 
 #endif /* __LERPCHANS_H__ */

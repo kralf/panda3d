@@ -6,5 +6,4 @@ panda3d_interrogate_include(
   ../dtool/cppparser/include
 )
 
-# remake_add_directories()
-remake_add_directories(pbase express)
+remake_add_directories()
