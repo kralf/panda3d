@@ -83,7 +83,7 @@ macro(panda3d_interrogate panda3d_target)
   list(SORT panda3d_input)
 
   remake_generate_custom(Interrogate ${panda3d_target}
-    interrogate_file ${panda3d_args} ${panda3d_defs}
+    interrogator ${panda3d_args} ${panda3d_defs}
       ${panda3d_include_flags} ${panda3d_interrogate_include_flags}
       -oc %SOURCES% -od lib${panda3d_target}.in %INPUT%
     INPUT ${panda3d_input}

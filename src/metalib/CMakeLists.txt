@@ -3,3 +3,7 @@ remake_add_directories(
   COMPONENT dtool
 )
 remake_add_directories(panda)
+remake_add_directories(
+  direct
+  COMPONENT direct
+)
