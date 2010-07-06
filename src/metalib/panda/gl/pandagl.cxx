@@ -54,12 +54,12 @@ init_libpandagl() {
 }
 
 ////////////////////////////////////////////////////////////////////
-//     Function: get_pipe_type_pandagl
+//     Function: get_pipe_type
 //  Description: Returns the TypeHandle index of the recommended
 //               graphics pipe type defined by this module.
 ////////////////////////////////////////////////////////////////////
 int
-get_pipe_type_pandagl() {
+get_pipe_type() {
 #ifdef HAVE_WGL
   return wglGraphicsPipe::get_class_type().get_index();
 #endif

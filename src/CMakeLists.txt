@@ -14,6 +14,7 @@ remake_include(
   ${PYTHON_INCLUDE_PATH}
 )
 
+remake_project_get(CONFIGURATION_DESTINATION DESTINATION)
 #remake_project_header(config.h.remake)
 remake_include()
 

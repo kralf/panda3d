@@ -55,7 +55,7 @@ PT(AudioManager) AudioManager::create_AudioManager() {
     lib_load = true;
     if (!audio_library_name.empty() && !(audio_library_name == "null")) {
       Filename dl_name = Filename::dso_filename(
-          "lib"+string(audio_library_name)+".so");
+          PANDA_LIBRARY_PREFIX + string(audio_library_name) + ".so");
       dl_name.to_os_specific();
       audio_debug("  dl_name=\""<<dl_name<<"\"");
       void *handle = load_dso(get_plugin_path().get_value(), dl_name);

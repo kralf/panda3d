@@ -165,7 +165,8 @@ get_type_from_extension(const string &extension) {
       // this whole function needs to be protected from multiple
       // entry.
       string name = (*di).second;
-      Filename dlname = Filename::dso_filename("lib" + name + ".so");
+      Filename dlname = Filename::dso_filename(
+        PANDA_LIBRARY_PREFIX + name + ".so");
       _deferred_types.erase(di);
 
       loader_cat->info()

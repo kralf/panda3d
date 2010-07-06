@@ -1140,7 +1140,8 @@ load_filters() {
   for (int i = 0; i < num_aux; i++) {
     string name = texture_filter.get_unique_value(i);
     
-    Filename dlname = Filename::dso_filename("lib" + name + ".so");
+    Filename dlname = Filename::dso_filename(
+      PANDA_LIBRARY_PREFIX + name + ".so");
     gobj_cat->info()
       << "loading texture filter: " << dlname.to_os_specific() << endl;
     void *tmp = load_dso(get_plugin_path().get_value(), dlname);

@@ -346,7 +346,8 @@ load_file_types() {
       if (words.size() == 1) {
         // Exactly one word: load the named library immediately.
         string name = words[0];
-        Filename dlname = Filename::dso_filename("lib" + name + ".so");
+        Filename dlname = Filename::dso_filename(
+          PANDA_LIBRARY_PREFIX + name + ".so");
         loader_cat.info()
           << "loading file type module: " << name << endl;
         void *tmp = load_dso(get_plugin_path().get_value(), dlname);

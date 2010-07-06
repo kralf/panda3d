@@ -435,7 +435,8 @@ load_named_module(const string &name) {
   }
 
   // We have not yet loaded this module.  Load it now.
-  Filename dlname = Filename::dso_filename("lib" + name + ".so");
+  Filename dlname = Filename::dso_filename(
+    PANDA_LIBRARY_PREFIX + name + ".so");
   display_cat.info()
     << "loading display module: " << dlname.to_os_specific() << endl;
   void *handle = load_dso(get_plugin_path().get_value(), dlname);
@@ -448,7 +449,7 @@ load_named_module(const string &name) {
   // Now get the module's recommended pipe type.  This requires
   // calling a specially-named function that should have been exported
   // from the module.
-  string symbol_name = "get_pipe_type_" + name;
+  string symbol_name = "get_pipe_type";
   void *dso_symbol = get_dso_symbol(handle, symbol_name);
   if (display_cat.is_debug()) {
     display_cat.debug()
@@ -462,7 +463,7 @@ load_named_module(const string &name) {
   }
   
   // We successfully loaded the module, and we found the
-  // get_pipe_type_* recommendation function.  Call it to figure
+  // get_pipe_type recommendation function.  Call it to figure
   // out what pipe type we should expect.
   typedef int FuncType();
   int pipe_type_index = (*(FuncType *)dso_symbol)();
