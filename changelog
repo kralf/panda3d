@@ -1,0 +1,85 @@
+panda3d (1.6.2) stable; urgency=high
+
+  * Fixed a static-init issue in ptloader on Windows
+  * Fixed texture scaling issue when using buffers
+  * x2egg is no longer broken
+  * Threading in OSX build fixed
+  * Fixed issue with flickering colors in Shader Generator
+  * Eggcacher now uses less RAM
+  * Missing 'models' dirs in packpanda games fixed
+  * Eggcacher step in Panda3D installer is now optional
+  * Fixes broken shortcut links in Start Menu on Windows
+  * Shader Generator now supports clip planes
+  * Bug with combine modes in Shader Generator fixed
+  * Fixed bug with Texture::make_copy()
+  * Bug with Actor LOD fixed
+  * Fixed bug with missing geometry in Collada converter
+  * OdeUtil.collide instability fixed
+  * OdeBody setData/getData methods exposed to Python
+
+ -- pro-rsoft <niertie1@gmail.com>  Wed, 13 May 2009 19:00:00 +0100
+
+panda3d (1.6.1) stable; urgency=medium
+
+  * Threading layer is now enabled by default
+  * cTrav.showCollisions fixed
+  * Fixed broken MovieTexture
+  * OpenAL is now stable on Linux, too
+  * OpenAL now supports dynamic playrate changing
+  * MayaPandaTool now handles NURBS correctly
+  * Fixed particle panel and directtools bugs
+  * Fix crash with collada exporter on Windows
+  * ARToolkit jittering fixed
+  * Now possible to override shader vertex/fragment profiles
+  * Maya exporter fixed on OSX
+  * Fixed depth texture crash for padded textures
+  * Fixed bug that made OdeUtil.collide return empty geoms
+  * Fixed crash with render.flattenStrong() when using trackball
+  * Several improvements to the ODE layer
+  * Performance improvements to GeoMipTerrain
+  * GeoMipTerrain.setBorderStitching to fix seams between terrains
+  * installpanda.py for installing Panda on Linux without deb/rpm
+  * Several other minor bugfixes
+
+ -- pro-rsoft <niertie1@gmail.com>  Tue, 23 Apr 2009 03:33:00 +0100
+
+panda3d (1.6.0) stable; urgency=low
+
+  * Lightweight threading framework without runtime overhead
+  * Makepanda now fully supports OSX
+  * DDS textures are now supported
+  * COLLADA->egg converter added
+  * New C++-based Task system, which includes async threading support
+  * Support for asynchronous on-demand loading of textures and/or animations
+  * New software-based renderer "tinydisplay"
+  * More pythonic features: iterable methods, implicit parameter casting
+  * Packpanda now also supports Linux
+  * Added libsquish support for DXT compression
+  * New MeshDrawer class for realtime mesh manipulation
+  * Infamous FBO bug fixed
+  * Preliminary support for Volumetric Lighting
+  * Shader k-parameters can now contain underscores
+  * Fixed OpenCVTexture and ARToolKit on Linux
+  * GeoMipTerrain now supports multi-channel heightmaps
+  * GeoMipTerrain features new near/far LOD system
+  * GeoMipTerrain performance improved
+  * CallbackNode added to support low-level drawing callbacks from Python
+  * Fixed some minor but annoying OpenAL/FFMpeg issues
+  * Fixed bug with lcontrol and rcontrol on Linux
+  * Fixed bug regarding icon filenames
+  * Multisampling fixed on Linux and OSX
+  * Left and right scrolling events now available
+  * Several improvements to API reference
+  * ShaderGenerator now supports several more blend modes and color scale
+  * .x converter now supports AnimTicksPerSecond
+  * vfs-mount-url can load models directly off the web
+  * Smoother transitions in FadeLodNode
+  * Dynamically-generated outline on fonts: loader.loadFont(outlineWidth = xxx)
+  * Texture.getRamImageAs()
+  * base.toggleTexMem()
+  * Text generation performance optimization
+  * Various performance optimizations
+  * Several more minor bugs fixed
+
+ -- pro-rsoft <niertie1@gmail.com>  Tue, 31 Mar 2009 07:53:00 +0100
+

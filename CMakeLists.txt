@@ -12,4 +12,10 @@ remake_project(
   HOME "http://panda3d.org"
   LICENSE "Modified BSD License"
   INSTALL /usr
+  NOTES ReleaseNotes
+)
+
+remake_add_directories(
+  models
+  COMPONENT models
 )
