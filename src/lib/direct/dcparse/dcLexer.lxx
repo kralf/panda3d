@@ -8,7 +8,7 @@
 %{
 #include "dcLexerDefs.h"
 #include "dcParserDefs.h"
-#include "dcParser.h"
+#include "dcParser.hxx"
 #include "dcFile.h"
 #include "dcindent.h"
 

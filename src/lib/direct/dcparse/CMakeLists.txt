@@ -1,3 +1,6 @@
+remake_add_generated(FLEX dcparse *.lxx LANG CXX PREFIX dcyy)
+remake_add_generated(BISON dcparse *.yxx LANG CXX PREFIX dcyy HEADERS)
+
 panda3d_interrogate(dcparse)
 
 remake_add_library(dcparse *.cxx)
