@@ -3,5 +3,5 @@ remake_add_generated(BISON dcparse *.yxx LANG CXX PREFIX dcyy HEADERS)
 
 panda3d_interrogate(dcparse)
 
-remake_add_library(dcparse *.cxx)
+remake_add_library(dcparse *.cxx LINK panda)
 remake_add_headers(*.h *.I *.T)

@@ -4,6 +4,10 @@ remake_add_directories(
 )
 remake_add_directories(panda)
 remake_add_directories(
+  direct
+  COMPONENT direct
+)
+remake_add_directories(
   utils
   COMPONENT utils
 )
