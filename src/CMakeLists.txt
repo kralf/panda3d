@@ -14,6 +14,11 @@ remake_include(
   ${PYTHON_INCLUDE_PATH}
 )
 
+remake_component(tools)
+if(PANDA3D_TOOLS_COMPONENT_BUILD)
+  remake_find_package(GTK+2 CONFIG gtk+-2.0)
+endif(PANDA3D_TOOLS_COMPONENT_BUILD)
+
 remake_project_get(CONFIGURATION_DESTINATION DESTINATION)
 #remake_project_header(config.h.remake)
 remake_include()
