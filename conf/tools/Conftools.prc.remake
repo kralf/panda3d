@@ -9,4 +9,4 @@
 
 # This module allows direct loading of formats like .flt, .mb, or .dxf
 
-load-file-type ptloader
+load-file-type tools_loader
