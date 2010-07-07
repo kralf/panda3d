@@ -22,19 +22,40 @@ remake_add_directories(
 
 remake_pack_deb(
   COMPONENT dtool
-  DESCRIPTION "deployment tool"
+  DESCRIPTION "dtool"
 )
 remake_pack_deb(
   panda3d-dtool
 )
+remake_pack_deb(
+  COMPONENT tools
+  panda3d-tools
+  DESCRIPTION "tools"
+)
+remake_pack_deb(
+  COMPONENT test
+  DESCRIPTION "testing binaries"
+  panda3d-dtool panda3d panda3d-tools
+)
 
 remake_pack_deb(
   COMPONENT dtool-dev
-  DESCRIPTION "deployment development headers"
+  DESCRIPTION "dtool development headers"
   panda3d-dtool
 )
 remake_pack_deb(
   COMPONENT dev
   DESCRIPTION "development headers"
-  panda3d-dtool-dev
+  panda3d panda3d-dtool-dev
+)
+remake_pack_deb(
+  COMPONENT tools-dev
+  DESCRIPTION "tools development headers"
+  panda3d-tools panda3d-dev
+)
+
+remake_pack_deb(
+  ARCH all
+  COMPONENT models
+  DESCRIPTION "models"
 )
