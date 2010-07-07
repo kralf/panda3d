@@ -19,7 +19,7 @@
 # files of more exotic types (like .flt, .mb, .lwo, and .dxf) to be
 # loaded directly into Panda.
 
-load-file-type egg pandaegg
+load-file-type egg panda_egg
 
 # The following lines define some handy object types to use within the
 # egg syntax.  This remaps <ObjectType> { name } into whatever egg
@@ -86,7 +86,7 @@ egg-object-type-glow            <Scalar> blend { add }
 
 # This module allows direct loading of formats like .flt, .mb, or .dxf
 
-load-file-type p3ptloader
+load-file-type ptloader
 
 # Define a new egg object type.  See the comments in _panda.prc about this.
 

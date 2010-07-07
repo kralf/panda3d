@@ -21,6 +21,7 @@
 #include "typedReferenceCount.h"
 #include "mutexImpl.h"
 #include "interrogate_request.h"
+#include "export_dtool.h"
 
 #if defined(WIN32_VC) && defined(_DEBUG)
 #include <crtdbg.h>

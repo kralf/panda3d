@@ -436,7 +436,7 @@ load_named_module(const string &name) {
 
   // We have not yet loaded this module.  Load it now.
   Filename dlname = Filename::dso_filename(
-    PANDA_LIBRARY_PREFIX + name + ".so");
+    "lib" PANDA_LIBRARY_PREFIX + name + ".so");
   display_cat.info()
     << "loading display module: " << dlname.to_os_specific() << endl;
   void *handle = load_dso(get_plugin_path().get_value(), dlname);

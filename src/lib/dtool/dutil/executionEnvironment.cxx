@@ -442,7 +442,9 @@ read_args() {
     maps.getline(buffer, PATH_MAX);
     char *tail = strrchr(buffer,'/');
     char *head = strchr(buffer,'/');
-    if (tail && head && (strcmp(tail,"/libp3dtool.so")==0)) {
+    if (tail && head &&
+      (strcmp(tail, "/lib" PANDA_LIBRARY_PREFIX "dtool.so")==0))
+    {
       _dtool_name = head;
     }
   }
