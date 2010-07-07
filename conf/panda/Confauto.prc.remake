@@ -84,10 +84,6 @@ egg-object-type-ghost           <Scalar> collide-mask { 0 }
 # renders the object in add mode instead of the normal opaque mode.
 egg-object-type-glow            <Scalar> blend { add }
 
-# This module allows direct loading of formats like .flt, .mb, or .dxf
-
-load-file-type ptloader
-
 # Define a new egg object type.  See the comments in _panda.prc about this.
 
 egg-object-type-direct-widget   <Scalar> collide-mask { 0x80000000 } <Collide> { Polyset descend }

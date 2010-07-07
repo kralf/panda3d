@@ -1,2 +1,5 @@
-remake_project_get(FILE_DESTINATION DESTINATION)
-remake_add_configurations(*.remake)
+remake_add_directories(panda)
+remake_add_directories(
+  tools
+  COMPONENT tools
+)

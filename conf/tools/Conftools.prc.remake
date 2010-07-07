@@ -1,0 +1,12 @@
+###########################################################
+###                                                     ###
+### Panda3D Configuration File - Auto-Generated Portion ###
+###                                                     ###
+### Editing this file is not recommended. Most of these ###
+### directives can be overriden in Config.prc           ###
+###                                                     ###
+###########################################################
+
+# This module allows direct loading of formats like .flt, .mb, or .dxf
+
+load-file-type ptloader
