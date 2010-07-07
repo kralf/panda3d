@@ -4,7 +4,7 @@
 #define HAVE_PYTHON 1
 #undef PYTHON_FRAMEWORK
 #define COMPILE_IN_DEFAULT_FONT 1
-#define HAVE_MAYA 1
+#undef HAVE_MAYA
 #undef MAYA_PRE_5_0
 #undef HAVE_SOFTIMAGE
 #undef SSL_097
