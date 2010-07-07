@@ -29,7 +29,7 @@ remake_pack_deb(
 )
 remake_pack_deb(
   COMPONENT tools
-  panda3d-tools
+  panda3d
   DESCRIPTION "tools"
 )
 remake_pack_deb(
