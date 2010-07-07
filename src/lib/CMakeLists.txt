@@ -8,6 +8,6 @@ remake_add_directories(
   COMPONENT direct
 )
 remake_add_directories(
-  utils
-  COMPONENT utils
+  tools
+  COMPONENT tools
 )
