@@ -15,10 +15,7 @@ remake_project(
   NOTES ReleaseNotes
 )
 
-remake_add_directories(
-  models
-  COMPONENT models
-)
+remake_add_directories(data)
 
 remake_pack_deb(
   COMPONENT dtool
