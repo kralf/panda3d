@@ -84,14 +84,6 @@ egg-object-type-ghost           <Scalar> collide-mask { 0 }
 # renders the object in add mode instead of the normal opaque mode.
 egg-object-type-glow            <Scalar> blend { add }
 
-# Define a new egg object type.  See the comments in _panda.prc about this.
-
-egg-object-type-direct-widget   <Scalar> collide-mask { 0x80000000 } <Collide> { Polyset descend }
-
-# Define a new cull bin that will render on top of everything else.
-
-cull-bin gui-popup 60 unsorted
-
 # The following two lines are a fix for flaky hardware clocks.
 
 lock-to-one-cpu #t

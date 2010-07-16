@@ -11,24 +11,10 @@
 //
 ///////////////////////////////////////////////////////////////////////
 
-#define BUILDING_EGGCACHER 1
-
 #ifdef WIN32
 
-#ifdef BUILDING_GENPYCODE
-#define LINK_SOURCE "\\bin\\genpycode.exe"
+#define LINK_SOURCE "\\bin\\egg_cacher.exe"
 #define LINK_TARGET "\\python\\python.exe"
-#endif
-
-#ifdef BUILDING_PACKPANDA
-#define LINK_SOURCE "\\bin\\packpanda.exe"
-#define LINK_TARGET "\\python\\python.exe"
-#endif
-
-#ifdef BUILDING_EGGCACHER
-#define LINK_SOURCE "\\bin\\eggcacher.exe"
-#define LINK_TARGET "\\python\\python.exe"
-#endif
 
 #include <windows.h>
 #include <winuser.h>
@@ -95,15 +81,7 @@ int main(int argc, char **argv)
   
   // Calculate MODCMD
   
-#ifdef BUILDING_GENPYCODE
-  sprintf(modcmd,"python -c \"import direct.ffi.jGenPyCode\" %s",args);
-#endif
-#ifdef BUILDING_PACKPANDA
-  sprintf(modcmd,"python -c \"import direct.directscripts.packpanda\" %s",args);
-#endif
-#ifdef BUILDING_EGGCACHER
-  sprintf(modcmd,"python -c \"import direct.directscripts.eggcacher\" %s",args);
-#endif
+  sprintf(modcmd,"python -c \"import direct.directscripts.EggCacher\" %s",args);
 
   // Run it.
 
@@ -128,17 +106,7 @@ int main(int argc, char **argv)
 
 #if defined(__linux__) || defined(__APPLE__)
 
-#ifdef BUILDING_GENPYCODE
-#define LINK_SOURCE "/bin/genpycode"
-#endif
-
-#ifdef BUILDING_PACKPANDA
-#define LINK_SOURCE "/bin/packpanda"
-#endif
-
-#ifdef BUILDING_EGGCACHER
 #define LINK_SOURCE "/bin/eggcacher"
-#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -202,18 +170,9 @@ int main(int argc, char **argv)
   
   modargc=0;
   modargv[modargc++] = (char*)"python";
-#ifdef BUILDING_GENPYCODE
-    modargv[modargc++] = (char*)"-c";
-    modargv[modargc++] = (char*)"import direct.ffi.jGenPyCode";
-#endif
-#ifdef BUILDING_PACKPANDA
-    modargv[modargc++] = (char*)"-c";
-    modargv[modargc++] = (char*)"import direct.directscripts.packpanda";
-#endif
-#ifdef BUILDING_EGGCACHER
-    modargv[modargc++] = (char*)"-c";
-    modargv[modargc++] = (char*)"import direct.directscripts.eggcacher";
-#endif
+  modargv[modargc++] = (char*)"-c";
+  modargv[modargc++] = (char*)"import direct.directscripts.EggCacher";
+
   for (int i=1; i<argc; i++) modargv[modargc++] = argv[i];
   modargv[modargc] = 0;
   

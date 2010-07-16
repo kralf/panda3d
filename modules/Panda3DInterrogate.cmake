@@ -26,6 +26,8 @@ remake_minimum_required(VERSION 0.3)
 #   The Panda3D Interrogate module defines convenience macros for generating
 #   the Panda3D Python bindings.
 
+remake_set(PANDA3D_INTERROGATE_DIR Panda3DFiles/Panda3DInterrogate)
+
 define_property(DIRECTORY PROPERTY PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES
   INHERITED
   BRIEF_DOCS "List of Panda3D Interrogate include file directories."
@@ -82,13 +84,18 @@ macro(panda3d_interrogate panda3d_target)
   remake_file_glob(panda3d_input ${panda3d_globs} EXCLUDE ${panda3d_exclude})
   list(SORT panda3d_input)
 
+  remake_file(panda3d_dir ${CMAKE_BINARY_DIR}/${PANDA3D_INTERROGATE_DIR})
+  if(NOT EXISTS ${panda3d_dir})
+    remake_file_mkdir(${panda3d_dir})
+  endif(NOT EXISTS ${panda3d_dir})
+
   remake_generate_custom(Interrogate ${panda3d_target}
     interrogator ${panda3d_args} ${panda3d_defs}
       ${panda3d_include_flags} ${panda3d_interrogate_include_flags}
-      -oc %SOURCES% -od lib${panda3d_target}.in %INPUT%
+      -oc %SOURCES% -od ${panda3d_dir}/${panda3d_target}.in %INPUT%
     INPUT ${panda3d_input}
     SOURCES ${panda3d_target}_igate.cxx
-    OTHERS lib${panda3d_target}.in)
+    OTHERS ${panda3d_dir}/${panda3d_target}.in)
 endmacro(panda3d_interrogate)
 
 ### \brief Add directories to the Interrogate include path of Panda3D.
