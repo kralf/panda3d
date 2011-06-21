@@ -3,8 +3,8 @@
 __all__ = ['Loader']
 
 from pandac.PandaModules import *
-from direct.directnotify.DirectNotifyGlobal import *
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directnotify.DirectNotifyGlobal import *
+from panda3d.direct.showbase.DirectObject import DirectObject
 import types
 
 # You can specify a phaseChecker callback to check

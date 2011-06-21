@@ -7,8 +7,8 @@ __all__ = ['OnScreenDebug']
 from pandac.PandaModules import *
 
 import types
-from direct.gui import OnscreenText
-from direct.directtools import DirectUtil
+from panda3d.direct.gui import OnscreenText
+from panda3d.direct.directtools import DirectUtil
 
 class OnScreenDebug:
     def __init__(self):

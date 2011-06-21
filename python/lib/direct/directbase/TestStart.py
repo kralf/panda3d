@@ -2,8 +2,8 @@ print 'TestStart: Starting up test environment.'
 
 from pandac.PandaModules import *
 
-from direct.showbase.PythonUtil import *
-from direct.showbase import ShowBase
+from panda3d.direct.showbase.PythonUtil import *
+from panda3d.direct.showbase import ShowBase
 ShowBase.ShowBase()
 
 # Put an axis in the world:

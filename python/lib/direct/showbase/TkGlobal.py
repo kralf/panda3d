@@ -3,8 +3,8 @@
 __all__ = ['taskMgr']
 
 from Tkinter import *
-from direct.task.TaskManagerGlobal import *
-from direct.task.Task import Task
+from panda3d.direct.task.TaskManagerGlobal import *
+from panda3d.direct.task.Task import Task
 import Pmw
 import sys
 

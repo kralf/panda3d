@@ -1,7 +1,7 @@
 """ParentMgr module: contains the ParentMgr class"""
 
-from direct.directnotify import DirectNotifyGlobal
-from direct.showbase.PythonUtil import isDefaultValue
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase.PythonUtil import isDefaultValue
 import types
 
 class ParentMgr:

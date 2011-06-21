@@ -1,8 +1,8 @@
 
 from pandac.PandaModules import *
-from direct.particles import ParticleEffect
-from direct.particles import Particles
-from direct.particles import ForceGroup
+from panda3d.direct.particles import ParticleEffect
+from panda3d.direct.particles import Particles
+from panda3d.direct.particles import ForceGroup
 
 class ParticleFloorTest(NodePath):
     def __init__(self):
@@ -47,7 +47,7 @@ class ParticleFloorTest(NodePath):
         self.f.enable()
 
 if __name__ == "__main__":
-    from direct.directbase.TestStart import *
+    from panda3d.direct.directbase.TestStart import *
     pt=ParticleFloorTest()
     pt.reparentTo(render)
     pt.start()

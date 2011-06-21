@@ -24,7 +24,7 @@ itself is always basically planar; for more accurate convex
 reflections, you will need to use a sphere map or a cube map."""
 
 from pandac.PandaModules import *
-from direct.task import Task
+from panda3d.direct.task import Task
 
 def setupMirror(name, width, height):
     # The return value is a NodePath that contains a rectangle that

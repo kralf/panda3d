@@ -2,10 +2,10 @@
 
 __all__ = ['StateData']
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.DirectObject import DirectObject
 
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 
 class StateData(DirectObject):
     """

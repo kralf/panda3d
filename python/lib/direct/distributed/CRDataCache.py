@@ -1,4 +1,4 @@
-from direct.distributed.CachedDOData import CachedDOData
+from panda3d.direct.distributed.CachedDOData import CachedDOData
 
 class CRDataCache:
     # Stores cached data for DistributedObjects between instantiations on the client

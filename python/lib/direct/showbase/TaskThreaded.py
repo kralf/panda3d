@@ -2,8 +2,8 @@
 
 __all__ = ['TaskThreaded', 'TaskThread']
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.task import Task
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.task import Task
 
 class TaskThreaded:
     """ derive from this if you need to do a bunch of CPU-intensive

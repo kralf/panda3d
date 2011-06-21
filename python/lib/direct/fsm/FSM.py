@@ -7,10 +7,10 @@ The new Finite State Machine module.  This replaces the modules
 previously called FSM.py (now called ClassicFSM.py).
 """
 
-from direct.showbase.DirectObject import DirectObject
-from direct.directnotify import DirectNotifyGlobal
-from direct.showbase import PythonUtil
-from direct.stdpy.Threading import RLock
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase import PythonUtil
+from panda3d.direct.stdpy.Threading import RLock
 import types
 import string
 
@@ -157,7 +157,7 @@ class FSM(DirectObject):
         self.__requestQueue = []
 
         if __debug__:
-            from direct.fsm.ClassicFSM import _debugFsms
+            from panda3d.direct.fsm.ClassicFSM import _debugFsms
             import weakref
             _debugFsms[name]=weakref.ref(self)
 

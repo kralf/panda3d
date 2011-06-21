@@ -1,8 +1,8 @@
 """DistributedObjectUD module: contains the DistributedObjectUD class"""
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.distributed.DistributedObjectBase import DistributedObjectBase
-from direct.showbase import PythonUtil
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.distributed.DistributedObjectBase import DistributedObjectBase
+from panda3d.direct.showbase import PythonUtil
 from pandac.PandaModules import *
 #from PyDatagram import PyDatagram
 #from PyDatagramIterator import PyDatagramIterator
@@ -114,7 +114,7 @@ class DistributedObjectUD(DistributedObjectBase):
                     # print a stack trace so we can detect whether this is the
                     # result of a network msg.
                     # this is slow.
-                    from direct.showbase.PythonUtil import StackTrace
+                    from panda3d.direct.showbase.PythonUtil import StackTrace
                     DistributedObjectUD.notify.warning(
                         'stack trace: %s' % StackTrace())
                         """

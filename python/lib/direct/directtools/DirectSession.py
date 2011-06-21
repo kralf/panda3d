@@ -6,8 +6,8 @@ import string
 from pandac.PandaModules import *
 from DirectUtil import *
 
-from direct.showbase.DirectObject import DirectObject
-from direct.task import Task
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.task import Task
 
 from DirectGlobals import DIRECT_NO_MOD
 from DirectCameraControl import DirectCameraControl
@@ -16,13 +16,13 @@ from DirectSelection import SelectionRay, COA_ORIGIN, SelectedNodePaths
 from DirectGrid import DirectGrid
 #from DirectGeometry import *
 from DirectLights import DirectLights
-from direct.cluster.ClusterClient import createClusterClient, DummyClusterClient
-from direct.cluster.ClusterServer import ClusterServer
-from direct.tkpanels import Placer
-from direct.tkwidgets import Slider
-from direct.tkwidgets import SceneGraphExplorer
-from direct.gui import OnscreenText
-from direct.showbase import Loader
+from panda3d.direct.cluster.ClusterClient import createClusterClient, DummyClusterClient
+from panda3d.direct.cluster.ClusterServer import ClusterServer
+from panda3d.direct.tkpanels import Placer
+from panda3d.direct.tkwidgets import Slider
+from panda3d.direct.tkwidgets import SceneGraphExplorer
+from panda3d.direct.gui import OnscreenText
+from panda3d.direct.showbase import Loader
 
 class DirectSession(DirectObject):
 
@@ -95,20 +95,20 @@ class DirectSession(DirectObject):
         self.radamec = None
         self.fastrak = []
         if base.config.GetBool('want-vrpn', 0):
-            from direct.directdevices import DirectDeviceManager
+            from panda3d.direct.directdevices import DirectDeviceManager
             self.deviceManager = DirectDeviceManager.DirectDeviceManager()
             # Automatically create any devices specified in config file
             joybox = base.config.GetString('vrpn-joybox-device', '')
             radamec = base.config.GetString('vrpn-radamec-device', '')
             fastrak = base.config.GetString('vrpn-fastrak-device', '')
             if joybox:
-                from direct.directdevices import DirectJoybox
+                from panda3d.direct.directdevices import DirectJoybox
                 self.joybox = DirectJoybox.DirectJoybox(joybox)
             if radamec:
-                from direct.directdevices import DirectRadamec
+                from panda3d.direct.directdevices import DirectRadamec
                 self.radamec = DirectRadamec.DirectRadamec(radamec)
             if fastrak:
-                from direct.directdevices import DirectFastrak
+                from panda3d.direct.directdevices import DirectFastrak
                 # parse string into format device:N where N is the sensor name
                 fastrak = string.split(fastrak)
                 for i in range(len(fastrak))[1:]:
@@ -184,8 +184,8 @@ class DirectSession(DirectObject):
         self.passThroughKeys = ['v','b','l','p', 'r', 'shift-r', 's', 't','shift-a', 'w'] 
 
         if base.wantTk:
-            from direct.showbase import TkGlobal
-            from direct.tkpanels import DirectSessionPanel
+            from panda3d.direct.showbase import TkGlobal
+            from panda3d.direct.tkpanels import DirectSessionPanel
             self.panel = DirectSessionPanel.DirectSessionPanel(parent = tkroot)
         try:
             # Has the clusterMode been set externally (i.e. via the

@@ -1,4 +1,4 @@
 print 'DirectStart: Starting the game.'
 
-from direct.showbase import ShowBase
+from panda3d.direct.showbase import ShowBase
 ShowBase.ShowBase()

@@ -1,5 +1,5 @@
 import os
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 from pandac.PandaModules import VirtualFileSystem
 from pandac.PandaModules import Filename
 from pandac.PandaModules import DSearchPath

@@ -15,7 +15,7 @@ import FFIConstants
 import FFIOverload
 
 
-from direct.showbase.PythonUtil import *
+from panda3d.direct.showbase.PythonUtil import *
 
 TypedObjectDescriptor = None
 
@@ -750,7 +750,7 @@ class ClassTypeDescriptor(BaseTypeDescriptor):
         indent(file, 0, '# CMODULE [' + self.moduleName + ']\n')
         # Everybody imports types for type checking
         indent(file, 0, 'from types import IntType, LongType, FloatType, NoneType, StringType\n')
-        indent(file, 0, 'from direct.ffi import FFIExternalObject\n')
+        indent(file, 0, 'from panda3d.direct.ffi import FFIExternalObject\n')
         indent(file, 0, '\n')
 
         indent(file, 0, '# Import all the C modules this class uses\n')
@@ -759,7 +759,7 @@ class ClassTypeDescriptor(BaseTypeDescriptor):
                 indent(file, 0, 'import ' + moduleName + '\n')
                 indent(file, 0, 'import ' + moduleName + 'Downcasts\n')
         indent(file, 0, '\n')
-        indent(file, 0, 'from direct.ffi import FFIExternalObject\n')
+        indent(file, 0, 'from panda3d.direct.ffi import FFIExternalObject\n')
 
 
 

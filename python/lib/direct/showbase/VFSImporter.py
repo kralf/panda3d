@@ -1,4 +1,4 @@
-from direct.stdpy.File import open
+from panda3d.direct.stdpy.File import open
 from pandac.PandaModules import Filename, VirtualFileSystem, VirtualFileMountSystem
 import sys
 import new

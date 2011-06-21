@@ -2,11 +2,11 @@
 
 from pandac.PandaModules import *
 #from TaskManagerGlobal import *
-from direct.distributed.MsgTypes import *
-from direct.task import Task
-from direct.directnotify import DirectNotifyGlobal
-from direct.distributed.PyDatagram import PyDatagram
-from direct.distributed.PyDatagramIterator import PyDatagramIterator
+from panda3d.direct.distributed.MsgTypes import *
+from panda3d.direct.task import Task
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.distributed.PyDatagram import PyDatagram
+from panda3d.direct.distributed.PyDatagramIterator import PyDatagramIterator
 import time
 import types
 

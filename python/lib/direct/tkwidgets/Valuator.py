@@ -2,13 +2,13 @@
 
 __all__ = ['Valuator', 'ValuatorGroup', 'ValuatorGroupPanel']
 
-from direct.showbase.DirectObject import *
-from direct.showbase.TkGlobal import *
+from panda3d.direct.showbase.DirectObject import *
+from panda3d.direct.showbase.TkGlobal import *
 from Tkinter import *
 import tkColorChooser
 import WidgetPropertiesDialog
 import string, Pmw
-from direct.directtools.DirectUtil import getTkColorString
+from panda3d.direct.directtools.DirectUtil import getTkColorString
 
 VALUATOR_MINI = 'mini'
 VALUATOR_FULL = 'full'

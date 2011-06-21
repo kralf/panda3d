@@ -4,7 +4,7 @@ CInterval-extensions module: contains methods to extend functionality
 of the CInterval class
 """
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 notify = directNotify.newCategory("Interval")
 
 def setT(self, t):
@@ -41,9 +41,9 @@ def popupControls(self, tl = None):
     """
     Popup control panel for interval.
     """
-    from direct.showbase.TkGlobal import Toplevel, Frame, Button, LEFT, X, Pmw
+    from panda3d.direct.showbase.TkGlobal import Toplevel, Frame, Button, LEFT, X, Pmw
     import math
-    from direct.tkwidgets import EntryScale
+    from panda3d.direct.tkwidgets import EntryScale
     if tl == None:
         tl = Toplevel()
         tl.title('Interval Controls')

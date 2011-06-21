@@ -14,11 +14,11 @@ although it does send messeges that allow a listener to play sounds or
 animations based on walker events.
 """
 
-from direct.directnotify import DirectNotifyGlobal
-from direct.showbase import DirectObject
-from direct.controls.ControlManager import CollisionHandlerRayStart
-from direct.showbase.InputStateGlobal import inputState
-from direct.task.Task import Task
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase import DirectObject
+from panda3d.direct.controls.ControlManager import CollisionHandlerRayStart
+from panda3d.direct.showbase.InputStateGlobal import inputState
+from panda3d.direct.task.Task import Task
 from pandac.PandaModules import *
 
 class NonPhysicsWalker(DirectObject.DirectObject):

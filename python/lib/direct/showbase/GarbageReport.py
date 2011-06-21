@@ -2,10 +2,10 @@
 
 __all__ = ['FakeObject', '_createGarbage', 'GarbageReport', 'GarbageLogger']
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.PythonUtil import safeRepr, fastRepr, printListEnumGen, printNumberedTypesGen
-from direct.showbase.PythonUtil import AlphabetCounter
-from direct.showbase.Job import Job
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.PythonUtil import safeRepr, fastRepr, printListEnumGen, printNumberedTypesGen
+from panda3d.direct.showbase.PythonUtil import AlphabetCounter
+from panda3d.direct.showbase.Job import Job
 import gc
 import types
 

@@ -19,7 +19,7 @@ p.checkin(x)
 """
 
 
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 
 class Pool:
 

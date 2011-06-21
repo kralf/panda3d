@@ -1,5 +1,5 @@
-from direct.showbase.DirectObject import DirectObject
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directnotify import DirectNotifyGlobal
 from pandac.PandaModules import *
 from PhasedObject import PhasedObject
 

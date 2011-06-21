@@ -404,15 +404,15 @@ def __lerp(self, functorFunc, duration, blendType, taskName=None):
         # functorFunc is a function which can be called to create a functor.
         # functor creation is defered so initial state (sampled in functorFunc)
         # will be appropriate for the time the lerp is spawned
-        from direct.task import Task
-        from direct.showbase import LerpBlendHelpers
-        from direct.task.TaskManagerGlobal import taskMgr
+        from panda3d.direct.task import Task
+        from panda3d.direct.showbase import LerpBlendHelpers
+        from panda3d.direct.task.TaskManagerGlobal import taskMgr
 
         # make the task function
         def lerpTaskFunc(task):
             from pandac.PandaModules import Lerp
             from pandac.PandaModules import ClockObject
-            from direct.task.Task import Task, cont, done
+            from panda3d.direct.task.Task import Task, cont, done
             if task.init == 1:
                 # make the lerp
                 functor = task.functorFunc()
@@ -451,7 +451,7 @@ def __autoLerp(self, functorFunc, time, blendType, taskName):
         This lerp uses C++ to handle the stepping. Bonus is
         its more efficient, trade-off is there is less control"""
         from pandac.PandaModules import AutonomousLerp
-        from direct.showbase import LerpBlendHelpers
+        from panda3d.direct.showbase import LerpBlendHelpers
         # make a lerp that lives in C++ land
         functor = functorFunc()
         lerp = AutonomousLerp.AutonomousLerp(functor, time,
@@ -1090,7 +1090,7 @@ del lerpScaleXYZ
 #####################################################################
 def place(self):
         base.startDirect(fWantTk = 1)
-        from direct.tkpanels import Placer
+        from panda3d.direct.tkpanels import Placer
         return Placer.place(self)
 
 Dtool_funcToMethod(place, NodePath)
@@ -1098,7 +1098,7 @@ del place
 #####################################################################
 def explore(self):
         base.startDirect(fWantTk = 1)
-        from direct.tkwidgets import SceneGraphExplorer
+        from panda3d.direct.tkwidgets import SceneGraphExplorer
         return SceneGraphExplorer.explore(self)
 
 Dtool_funcToMethod(explore, NodePath)
@@ -1106,7 +1106,7 @@ del explore
 #####################################################################
 def rgbPanel(self, cb = None):
         base.startTk()
-        from direct.tkwidgets import Slider
+        from panda3d.direct.tkwidgets import Slider
         return Slider.rgbPanel(self, cb)
 
 Dtool_funcToMethod(rgbPanel, NodePath)
@@ -1159,105 +1159,105 @@ Dtool_funcToMethod(hideCS, NodePath)
 del hideCS
 #####################################################################
 def posInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpPosInterval(self, *args, **kw)
 
 Dtool_funcToMethod(posInterval, NodePath)
 del posInterval
 #####################################################################
 def hprInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpHprInterval(self, *args, **kw)
 
 Dtool_funcToMethod(hprInterval, NodePath)
 del hprInterval
 #####################################################################
 def quatInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpQuatInterval(self, *args, **kw)
 
 Dtool_funcToMethod(quatInterval, NodePath)
 del quatInterval
 #####################################################################
 def scaleInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpScaleInterval(self, *args, **kw)
 
 Dtool_funcToMethod(scaleInterval, NodePath)
 del scaleInterval
 #####################################################################
 def shearInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpShearInterval(self, *args, **kw)
 
 Dtool_funcToMethod(shearInterval, NodePath)
 del shearInterval
 #####################################################################
 def posHprInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpPosHprInterval(self, *args, **kw)
 
 Dtool_funcToMethod(posHprInterval, NodePath)
 del posHprInterval
 #####################################################################
 def posQuatInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpPosQuatInterval(self, *args, **kw)
 
 Dtool_funcToMethod(posQuatInterval, NodePath)
 del posQuatInterval
 #####################################################################
 def hprScaleInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpHprScaleInterval(self, *args, **kw)
 
 Dtool_funcToMethod(hprScaleInterval, NodePath)
 del hprScaleInterval
 #####################################################################
 def quatScaleInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpQuatScaleInterval(self, *args, **kw)
 
 Dtool_funcToMethod(quatScaleInterval, NodePath)
 del quatScaleInterval
 #####################################################################
 def posHprScaleInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpPosHprScaleInterval(self, *args, **kw)
 
 Dtool_funcToMethod(posHprScaleInterval, NodePath)
 del posHprScaleInterval
 #####################################################################
 def posQuatScaleInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpPosQuatScaleInterval(self, *args, **kw)
 
 Dtool_funcToMethod(posQuatScaleInterval, NodePath)
 del posQuatScaleInterval
 #####################################################################
 def posHprScaleShearInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpPosHprScaleShearInterval(self, *args, **kw)
 
 Dtool_funcToMethod(posHprScaleShearInterval, NodePath)
 del posHprScaleShearInterval
 #####################################################################
 def posQuatScaleShearInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpPosQuatScaleShearInterval(self, *args, **kw)
 
 Dtool_funcToMethod(posQuatScaleShearInterval, NodePath)
 del posQuatScaleShearInterval
 #####################################################################
 def colorInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpColorInterval(self, *args, **kw)
 
 Dtool_funcToMethod(colorInterval, NodePath)
 del colorInterval
 #####################################################################
 def colorScaleInterval(self, *args, **kw):
-        from direct.interval import LerpInterval
+        from panda3d.direct.interval import LerpInterval
         return LerpInterval.LerpColorScaleInterval(self, *args, **kw)
 
 Dtool_funcToMethod(colorScaleInterval, NodePath)

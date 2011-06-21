@@ -1,4 +1,4 @@
-from direct.directnotify.DirectNotifyGlobal import *
+from panda3d.direct.directnotify.DirectNotifyGlobal import *
 
 class PhasedObject:
     """

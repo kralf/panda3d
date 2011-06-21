@@ -1,21 +1,21 @@
 
 from pandac.PandaModules import *
-from direct.directbase.DirectStart import *
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directbase.DirectStart import *
+from panda3d.direct.showbase.DirectObject import DirectObject
 from PieMenu import *
-import direct.gui.DirectGuiGlobals as DGG
-from direct.showbase.TkGlobal import *
-from direct.directtools.DirectUtil import *
-from direct.directtools.DirectGeometry import *
-from direct.tkwidgets.SceneGraphExplorer import *
-from direct.directnotify import DirectNotifyGlobal
+import panda3d.direct.gui.DirectGuiGlobals as DGG
+from panda3d.direct.showbase.TkGlobal import *
+from panda3d.direct.directtools.DirectUtil import *
+from panda3d.direct.directtools.DirectGeometry import *
+from panda3d.direct.tkwidgets.SceneGraphExplorer import *
+from panda3d.direct.directnotify import DirectNotifyGlobal
 from tkMessageBox import showinfo
 from tkFileDialog import *
 from Tkinter import *
 #from whrandom import *
 from random import *
-from direct.tkwidgets import Floater
-from direct.tkwidgets import VectorWidgets
+from panda3d.direct.tkwidgets import Floater
+from panda3d.direct.tkwidgets import VectorWidgets
 import string
 import os
 import getopt
@@ -23,15 +23,15 @@ import sys
 #import whrandom
 import random
 import types
-from direct.task import Task
+from panda3d.direct.task import Task
 import Pmw
 import __builtin__
 
 # [gjeon] to control avatar movement in drive mode
-from direct.controls import ControlManager
-from direct.controls import GravityWalker
-from direct.controls import NonPhysicsWalker
-from direct.interval.LerpInterval import LerpFunctionInterval
+from panda3d.direct.controls import ControlManager
+from panda3d.direct.controls import GravityWalker
+from panda3d.direct.controls import NonPhysicsWalker
+from panda3d.direct.interval.LerpInterval import LerpFunctionInterval
 
 from otp.avatar import LocalAvatar
 
@@ -3321,7 +3321,7 @@ class LevelEditor(NodePath, DirectObject):
         # First clear out old labels if any
         self.clearZoneLabels()
         visGroups = self.getDNAVisGroups(self.NPToplevel)
-        from direct.gui import DirectGui
+        from panda3d.direct.gui import DirectGui
         for np, dna in visGroups:
             name = dna.getName()
             label = DirectGui.DirectLabel(text = name,

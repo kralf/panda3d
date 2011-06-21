@@ -1,6 +1,6 @@
 from pandac.libpandaexpressModules import TrueClock
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.PythonUtil import (
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.PythonUtil import (
     StdoutCapture, _installProfileCustomFuncs,_removeProfileCustomFuncs,
     _profileWithoutGarbageLeak, _getProfileResultFileInfo, _setProfileResultsFileInfo,
     _clearProfileResultFileInfo, )

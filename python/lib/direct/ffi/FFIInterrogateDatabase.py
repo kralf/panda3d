@@ -13,7 +13,7 @@ import FFISpecs
 import FFIRename
 import FFIConstants
 import FFIOverload
-from direct.showbase.PythonUtil import *
+from panda3d.direct.showbase.PythonUtil import *
 
 FFIConstants.notify.info('Importing interrogate library: ' + FFIConstants.InterrogateModuleName)
 
@@ -52,7 +52,7 @@ def outputGlobalFileImports(file, methodList, CModuleName):
 
     # Import Python's builtin types
     file.write('from types import IntType, LongType, FloatType, NoneType, StringType\n')
-    file.write('from direct.ffi import FFIExternalObject\n')
+    file.write('from panda3d.direct.ffi import FFIExternalObject\n')
 
 
     # Import the C modules
@@ -165,7 +165,7 @@ def outputImportFileImports(file, typeList, CModuleName):
     file.write('\n')
 
     file.write('# Put the classes in the wrapper class map\n')
-    file.write('from direct.ffi.FFIExternalObject import registerInTypeMap\n')
+    file.write('from panda3d.direct.ffi.FFIExternalObject import registerInTypeMap\n')
     file.write('\n')
     for moduleName in moduleList:
         file.write('registerInTypeMap(' + moduleName + ')\n')
@@ -768,7 +768,7 @@ class FFIInterrogateDatabase:
 
         print "Squeezing %s files." % (len(files))
 
-        from direct.showbase import PandaSqueezeTool
+        from panda3d.direct.showbase import PandaSqueezeTool
         
         PandaSqueezeTool.squeeze(squeezedName, unsqueezedName,
                                  files, outputDir)

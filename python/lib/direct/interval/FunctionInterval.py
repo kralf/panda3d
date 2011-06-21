@@ -3,8 +3,8 @@
 __all__ = ['FunctionInterval', 'EventInterval', 'AcceptInterval', 'IgnoreInterval', 'ParentInterval', 'WrtParentInterval', 'PosInterval', 'HprInterval', 'ScaleInterval', 'PosHprInterval', 'HprScaleInterval', 'PosHprScaleInterval', 'Func', 'Wait']
 
 from pandac.PandaModules import *
-from direct.showbase.MessengerGlobal import *
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.MessengerGlobal import *
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 import Interval
 import types
 
@@ -411,7 +411,7 @@ t2.play()
 
 smiley = loader.loadModel('models/misc/smiley')
 
-from direct.actor import Actor
+from panda3d.direct.actor import Actor
 donald = Actor.Actor()
 donald.loadModel("phase_6/models/char/donald-wheel-1000")
 donald.loadAnims({"steer":"phase_6/models/char/donald-wheel-wheel"})

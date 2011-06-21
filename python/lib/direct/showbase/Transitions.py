@@ -4,9 +4,9 @@ __all__ = ['Transitions']
 
 
 from pandac.PandaModules import *
-from direct.gui.DirectGui import *
-from direct.task import Task
-from direct.interval.IntervalGlobal import *
+from panda3d.direct.gui.DirectGui import *
+from panda3d.direct.task import Task
+from panda3d.direct.interval.IntervalGlobal import *
 
 class Transitions:
 

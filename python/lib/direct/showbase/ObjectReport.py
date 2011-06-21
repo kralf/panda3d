@@ -2,15 +2,15 @@
 
 __all__ = ['ExclusiveObjectPool', 'ObjectReport']
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase import DirectObject, ObjectPool, GarbageReport
-from direct.showbase.PythonUtil import makeList, Sync
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase import DirectObject, ObjectPool, GarbageReport
+from panda3d.direct.showbase.PythonUtil import makeList, Sync
 import gc
 import sys
 import __builtin__
 
 """
->>> from direct.showbase import ObjectReport
+>>> from panda3d.direct.showbase import ObjectReport
 
 >>> o=ObjectReport.ObjectReport('baseline')
 >>> run()

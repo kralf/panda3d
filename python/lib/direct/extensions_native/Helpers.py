@@ -1,7 +1,8 @@
 ###  Tools
 __all__ = ["Dtool_ObjectToDict", "Dtool_funcToMethod", "Dtool_PreloadDLL"]
 
-import imp,sys,os
+from panda3d import config
+import imp, sys, os
 
 # The following code exists to work around a problem that exists
 # with Python 2.5 or greater.
@@ -24,7 +25,7 @@ elif sys.platform == "darwin":
     # On OSX, the dynamic libraries usually end in .dylib, but
     # sometimes we need .so.
     try:
-        from direct.extensions_native.extensions_darwin import dll_ext
+        from panda3d.direct.extensions_native.extensions_darwin import dll_ext
     except ImportError:
         dll_ext = '.dylib'
 else:
@@ -58,21 +59,24 @@ def Dtool_PreloadDLL(module):
 
     # Search for the appropriate directory.
     target = None
-    filename = module + dll_suffix + dll_ext
-    for dir in sys.path + [sys.prefix]:
-        lib = os.path.join(dir, filename)
-        if (os.path.exists(lib)):
-            target = dir
-            break
+    filename = "lib" + PANDA_LIBRARY_PREFIX + module + dll_suffix + dll_ext
+    if (os.path.exists(filename)):
+      target = filename
+    else:
+      for dir in sys.path + [sys.prefix]:
+          lib = os.path.join(dir, filename)
+          if (os.path.exists(lib)):
+              target = dir
+              break
     if target == None:
-        message = "DLL loader cannot find %s." % (module)
+        message = "DLL loader cannot find %s." % (filename)
         raise ImportError, message
 
     # Now import the file explicitly.
     pathname = os.path.join(target, filename)
     imp.load_dynamic(module, pathname)
 
-Dtool_PreloadDLL("libpandaexpress")
+Dtool_PreloadDLL("panda_express")
 from libpandaexpress import *
 
 def Dtool_ObjectToDict(clas, name, obj):

@@ -1,7 +1,7 @@
 import sys, string, math, types
 from pandac.PandaModules import *
-import direct.gui.DirectGuiGlobals as DGG
-from direct.gui.DirectGui import *
+import panda3d.direct.gui.DirectGuiGlobals as DGG
+from panda3d.direct.gui.DirectGui import *
 
 from PieMenu import *
 from ScrollMenu import *

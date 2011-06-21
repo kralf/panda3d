@@ -5,10 +5,10 @@ Floater Class: Velocity style controller for floating point values with
 
 __all__ = ['Floater', 'FloaterWidget', 'FloaterGroup']
 
-from direct.showbase.TkGlobal import *
+from panda3d.direct.showbase.TkGlobal import *
 from Tkinter import *
 from Valuator import Valuator, VALUATOR_MINI, VALUATOR_FULL
-from direct.task import Task
+from panda3d.direct.task import Task
 import math, sys, string, Pmw
 
 FLOATER_WIDTH = 22

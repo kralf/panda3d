@@ -115,7 +115,7 @@ class DirectNotify:
             category.setDebug(1)
             
     def popupControls(self, tl = None):
-        from direct.tkpanels import NotifyPanel
+        from panda3d.direct.tkpanels import NotifyPanel
         NotifyPanel.NotifyPanel(self, tl)
         
     def giveNotify(self,cls):

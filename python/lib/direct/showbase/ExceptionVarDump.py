@@ -1,6 +1,6 @@
 from pandac.PandaModules import ConfigConfigureGetConfigConfigShowbase as config
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.PythonUtil import fastRepr
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.PythonUtil import fastRepr
 from exceptions import Exception
 import sys
 import types

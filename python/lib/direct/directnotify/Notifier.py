@@ -3,7 +3,7 @@ Notifier module: contains methods for handling information output
 for the programmer/user
 """
 from LoggerGlobal import defaultLogger
-from direct.showbase import PythonUtil
+from panda3d.direct.showbase import PythonUtil
 import time
 import types
 

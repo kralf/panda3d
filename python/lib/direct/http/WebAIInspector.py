@@ -8,9 +8,9 @@ The port will need to be defined when the instance is inited.
 
 import string, time, direct, inspect, socket
 from operator import itemgetter
-from direct.http import WebRequest
+from panda3d.direct.http import WebRequest
 from socket import gethostname
-from direct.task.Task import Task
+from panda3d.direct.task.Task import Task
 from sys import platform
 from pirates.uberdog.AIMagicWordTrade import AIMagicWordTrade
 from pirates.quest.QuestDB import QuestDict

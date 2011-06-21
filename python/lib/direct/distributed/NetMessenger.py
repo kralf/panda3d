@@ -1,9 +1,9 @@
 
 from cPickle import dumps, loads
 
-from direct.directnotify import DirectNotifyGlobal
-from direct.distributed.PyDatagram import PyDatagram
-from direct.showbase.Messenger import Messenger
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.distributed.PyDatagram import PyDatagram
+from panda3d.direct.showbase.Messenger import Messenger
 
 
 # Messages do not need to be in the MESSAGE_TYPES list.

@@ -1,6 +1,6 @@
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.DirectObject import DirectObject
-from direct.showbase.Job import Job
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.Job import Job
 import gc, __builtin__
 
 class MessengerLeakObject(DirectObject):

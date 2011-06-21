@@ -4,7 +4,7 @@ __all__ = ['OnscreenImage']
 
 from pandac.PandaModules import *
 import DirectGuiGlobals as DGG
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 import string,types
 
 class OnscreenImage(DirectObject, NodePath):

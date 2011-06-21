@@ -1,4 +1,4 @@
-from direct.distributed import DoHierarchy
+from panda3d.direct.distributed import DoHierarchy
 import re
 
 #hack:

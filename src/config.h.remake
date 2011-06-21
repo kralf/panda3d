@@ -99,16 +99,16 @@
 #undef HAVE_FMODEX
 #undef HAVE_OPENAL
 #undef HAVE_NVIDIACG
-#undef HAVE_FREETYPE
+#define HAVE_FREETYPE 1
 #undef HAVE_FFTW
-#undef HAVE_OPENSSL
+#define HAVE_OPENSSL 1
 #undef HAVE_NET
 #undef HAVE_CG
 #undef HAVE_CGGL
 #undef HAVE_CGDX9
 #undef HAVE_FFMPEG
 #undef HAVE_ARTOOLKIT
-#undef HAVE_ODE
+#define HAVE_ODE 1
 #undef HAVE_OPENCV
 #undef HAVE_DIRECTCAM
 #undef HAVE_SQUISH

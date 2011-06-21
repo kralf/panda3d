@@ -1,5 +1,5 @@
-from direct.showbase.DirectObject import DirectObject
-from direct.directtools.DirectGeometry import *
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directtools.DirectGeometry import *
 
 from pandac.PandaModules import NodePath
 

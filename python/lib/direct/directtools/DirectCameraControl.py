@@ -1,10 +1,10 @@
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 from DirectUtil import *
 from DirectGeometry import *
 from DirectGlobals import *
-from direct.interval.IntervalGlobal import Sequence, Func
-from direct.directnotify import DirectNotifyGlobal
-from direct.task import Task
+from panda3d.direct.interval.IntervalGlobal import Sequence, Func
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.task import Task
 
 CAM_MOVE_DURATION = 1.2
 COA_MARKER_SF = 0.0075

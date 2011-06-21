@@ -1,6 +1,6 @@
 """CRCache module: contains the CRCache class"""
 
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 import DistributedObject
 
 class CRCache:

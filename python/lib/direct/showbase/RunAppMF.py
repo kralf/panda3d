@@ -12,9 +12,9 @@ Also see MakeAppMF.py.
 """
 
 import sys
-from direct.showbase import VFSImporter
+from panda3d.direct.showbase import VFSImporter
 from pandac.PandaModules import VirtualFileSystem, Filename, Multifile, loadPrcFileData, getModelPath
-from direct.stdpy import File
+from panda3d.direct.stdpy import File
 import os
 import __builtin__
 

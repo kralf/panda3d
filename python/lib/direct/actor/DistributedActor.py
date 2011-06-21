@@ -2,7 +2,7 @@
 
 __all__ = ['DistributedActor']
 
-from direct.distributed import DistributedNode
+from panda3d.direct.distributed import DistributedNode
 
 import Actor
 

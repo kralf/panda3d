@@ -1,4 +1,4 @@
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 
 if __debug__:
     from pandac.PandaModules import PStatCollector
@@ -99,7 +99,7 @@ class Job(DirectObject):
             self._generator = None
 
 if __debug__: # __dev__ not yet available at this point
-    from direct.showbase.Job import Job
+    from panda3d.direct.showbase.Job import Job
     class TestJob(Job):
         def __init__(self):
             Job.__init__(self, 'TestJob')

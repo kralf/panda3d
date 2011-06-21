@@ -1,11 +1,11 @@
 
 if __name__ == "__main__":
-    from direct.directbase.TestStart import *
+    from panda3d.direct.directbase.TestStart import *
     
     from pandac.LinearVectorForce import LinearVectorForce
     from pandac.Vec3 import Vec3
     import ParticleEffect
-    from direct.tkpanels import ParticlePanel
+    from panda3d.direct.tkpanels import ParticlePanel
     import Particles
     import ForceGroup
     

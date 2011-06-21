@@ -1,4 +1,4 @@
-from direct.showbase.PythonUtil import *
+from panda3d.direct.showbase.PythonUtil import *
 from types import *
 import string
 import FFIConstants

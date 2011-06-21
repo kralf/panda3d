@@ -8,8 +8,8 @@ This module and class exist only for backward compatibility with
 existing code.  New code should use the FSM module instead.
 """
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.DirectObject import DirectObject
 import types
 import weakref
 
@@ -369,7 +369,7 @@ class ClassicFSM(DirectObject):
             return 0
 
     def view(self):
-        from direct.tkpanels import FSMInspector
+        from panda3d.direct.tkpanels import FSMInspector
         FSMInspector.FSMInspector(self)
 
     def isInternalStateInFlux(self):

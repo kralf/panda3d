@@ -2,7 +2,7 @@
 from pandac.PandaModules import *
 import Particles
 import ForceGroup
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 
 class ParticleEffect(NodePath):
     notify = DirectNotifyGlobal.directNotify.newCategory('ParticleEffect')

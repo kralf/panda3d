@@ -87,7 +87,7 @@ class RotationTest(NodePath):
         #self.actorNode.updateTransform()
 
 if __name__ == "__main__":
-    from direct.directbase.ThreeUpStart import *
+    from panda3d.direct.directbase.ThreeUpStart import *
     test=RotationTest()
     test.reparentTo(render)
     test.setup()

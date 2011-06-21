@@ -2,8 +2,8 @@
 # distributed objects
 
 from pandac.PandaModules import *
-from direct.directnotify import DirectNotifyGlobal
-from direct.showbase import DirectObject
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase import DirectObject
 import math
 
 # The following two parameters, NetworkTimeBits and

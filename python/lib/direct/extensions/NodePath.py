@@ -310,9 +310,9 @@ def __lerp(self, functorFunc, duration, blendType, taskName=None):
     # functorFunc is a function which can be called to create a functor.
     # functor creation is defered so initial state (sampled in functorFunc)
     # will be appropriate for the time the lerp is spawned
-    from direct.task import Task
-    from direct.showbase import LerpBlendHelpers
-    from direct.task.TaskManagerGlobal import taskMgr
+    from panda3d.direct.task import Task
+    from panda3d.direct.showbase import LerpBlendHelpers
+    from panda3d.direct.task.TaskManagerGlobal import taskMgr
 
     # upon death remove the functorFunc
     def lerpUponDeath(task):
@@ -330,7 +330,7 @@ def __lerp(self, functorFunc, duration, blendType, taskName=None):
     def lerpTaskFunc(task):
         from pandac.Lerp import Lerp
         from pandac.ClockObject import ClockObject
-        from direct.task.Task import Task, cont, done
+        from panda3d.direct.task.Task import Task, cont, done
         if task.init == 1:
             # make the lerp
             functor = task.functorFunc()
@@ -367,7 +367,7 @@ def __autoLerp(self, functorFunc, time, blendType, taskName):
     This lerp uses C++ to handle the stepping. Bonus is
     its more efficient, trade-off is there is less control"""
     from pandac import AutonomousLerp
-    from direct.showbase import LerpBlendHelpers
+    from panda3d.direct.showbase import LerpBlendHelpers
     # make a lerp that lives in C++ land
     functor = functorFunc()
     lerp = AutonomousLerp.AutonomousLerp(functor, time,
@@ -934,17 +934,17 @@ def lerpScaleXYZ(self, sx, sy, sz, time, other=None,
 
 def place(self):
     base.startDirect(fWantTk = 1)
-    from direct.tkpanels import Placer
+    from panda3d.direct.tkpanels import Placer
     return Placer.place(self)
 
 def explore(self):
     base.startDirect(fWantTk = 1)
-    from direct.tkwidgets import SceneGraphExplorer
+    from panda3d.direct.tkwidgets import SceneGraphExplorer
     return SceneGraphExplorer.explore(self)
 
 def rgbPanel(self, cb = None):
     base.startTk()
-    from direct.tkwidgets import Slider
+    from panda3d.direct.tkwidgets import Slider
     return Slider.rgbPanel(self, cb)
 
 def select(self):
@@ -982,63 +982,63 @@ def hideCS(self, mask = None):
             np.hide()
 
 def posInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpPosInterval(self, *args, **kw)
 
 def hprInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpHprInterval(self, *args, **kw)
 
 def quatInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpQuatInterval(self, *args, **kw)
 
 def scaleInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpScaleInterval(self, *args, **kw)
 
 def shearInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpShearInterval(self, *args, **kw)
 
 def posHprInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpPosHprInterval(self, *args, **kw)
 
 def posQuatInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpPosQuatInterval(self, *args, **kw)
 
 def hprScaleInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpHprScaleInterval(self, *args, **kw)
 
 def quatScaleInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpQuatScaleInterval(self, *args, **kw)
 
 def posHprScaleInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpPosHprScaleInterval(self, *args, **kw)
 
 def posQuatScaleInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpPosQuatScaleInterval(self, *args, **kw)
 
 def posHprScaleShearInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpPosHprScaleShearInterval(self, *args, **kw)
 
 def posQuatScaleShearInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpPosQuatScaleShearInterval(self, *args, **kw)
 
 def colorInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpColorInterval(self, *args, **kw)
 
 def colorScaleInterval(self, *args, **kw):
-    from direct.interval import LerpInterval
+    from panda3d.direct.interval import LerpInterval
     return LerpInterval.LerpColorScaleInterval(self, *args, **kw)
 
 def attachCollisionSphere(self, name, cx, cy, cz, r, fromCollide, intoCollide):

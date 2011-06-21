@@ -2,8 +2,8 @@
 
 __all__ = ['FSMInspector', 'StateInspector']
 
-from direct.tkwidgets.AppShell import *
-from direct.showbase.TkGlobal import *
+from panda3d.direct.tkwidgets.AppShell import *
+from panda3d.direct.showbase.TkGlobal import *
 from tkSimpleDialog import askstring
 from Tkinter import *
 import Pmw, math, operator
@@ -454,10 +454,10 @@ want-tk #t
 
 2)      start up the show and create a Finite State Machine
 
-from direct.showbase.ShowBaseGlobal import *
+from panda3d.direct.showbase.ShowBaseGlobal import *
 
-from direct.fsm import ClassicFSM
-from direct.fsm import State
+from panda3d.direct.fsm import ClassicFSM
+from panda3d.direct.fsm import State
 
 def enterState():
     print 'enterState'
@@ -524,7 +524,7 @@ occasionally results in everything locking up.  This procedure seems to
 avoid the problem for me:
 
 # Start up the show
-from direct.showbase.ShowBaseGlobal import *
+from panda3d.direct.showbase.ShowBaseGlobal import *
 
 # You will see the window and a Tk panel pop open
 

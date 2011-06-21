@@ -173,7 +173,7 @@ def replaceTaskMgrFunc(replaceFuncList):
 def replaceStateFunc(replaceFuncList):
     if not sys.modules.get('base.direct.fsm.State'):
         return
-    from direct.fsm.State import State
+    from panda3d.direct.fsm.State import State
     for oldFunc, funcName, newFunc in replaceFuncList:
         res = State.replaceMethod(oldFunc, newFunc)
         if res:
@@ -206,7 +206,7 @@ def replaceIvalFunc(replaceFuncList):
     # a global ivalMgr.
     if not sys.modules.get('base.direct.interval.IntervalManager'):
         return
-    from direct.interval.FunctionInterval import FunctionInterval
+    from panda3d.direct.interval.FunctionInterval import FunctionInterval
     for oldFunc, funcName, newFunc in replaceFuncList:    
         res = FunctionInterval.replaceMethod(oldFunc, newFunc)
         if res:

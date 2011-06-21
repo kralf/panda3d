@@ -7,10 +7,10 @@ Contains the ParticleInterval class
 """
 
 from pandac.PandaModules import *
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 from Interval import Interval
 
-from direct.particles import ParticleEffect
+from panda3d.direct.particles import ParticleEffect
 
 class ParticleInterval(Interval):
     """

@@ -4,7 +4,7 @@
 #
 # How to use this module:
 #
-#   from direct.directscripts import GenDocs
+#   from panda3d.direct.directscripts import GenDocs
 #   GenDocs.generate(version, indirlist, directdirlist, docdir, header, footer, urlprefix, urlsuffix)
 #
 #   - version is the panda version number

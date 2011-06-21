@@ -2,9 +2,9 @@
 
 __all__ = ['TaskManagerPanel', 'TaskManagerWidget']
 
-from direct.tkwidgets.AppShell import *
+from panda3d.direct.tkwidgets.AppShell import *
 from Tkinter import *
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 import Pmw
 
 class TaskManagerPanel(AppShell):
@@ -52,7 +52,7 @@ class TaskManagerWidget(DirectObject):
         tasks managed by the taskManager.
         """
         # Make sure TK mainloop is running
-        from direct.showbase import TkGlobal
+        from panda3d.direct.showbase import TkGlobal
         # Record parent (used by ok cancel dialog boxes)
         self.parent = parent
         # Record taskManager

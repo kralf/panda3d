@@ -1,6 +1,6 @@
-from direct.showbase.InputStateGlobal import inputState
-from direct.directnotify import DirectNotifyGlobal
-from direct.controls import NonPhysicsWalker
+from panda3d.direct.showbase.InputStateGlobal import inputState
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.controls import NonPhysicsWalker
 
 class SwimWalker(NonPhysicsWalker.NonPhysicsWalker):
     notify = DirectNotifyGlobal.directNotify.newCategory("SwimWalker")

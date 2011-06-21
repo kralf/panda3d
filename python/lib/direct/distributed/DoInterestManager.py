@@ -9,12 +9,12 @@ p.s. A great deal of this code is just code moved from ClientRepository.py.
 
 from pandac.PandaModules import *
 from MsgTypes import *
-from direct.showbase.PythonUtil import *
-from direct.showbase import DirectObject
+from panda3d.direct.showbase.PythonUtil import *
+from panda3d.direct.showbase import DirectObject
 from PyDatagram import PyDatagram
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 import types
-from direct.showbase.PythonUtil import report
+from panda3d.direct.showbase.PythonUtil import report
 
 class InterestState:
     StateActive = 'Active'

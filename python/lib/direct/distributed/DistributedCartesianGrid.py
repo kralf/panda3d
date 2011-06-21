@@ -1,18 +1,18 @@
 
 from pandac.PandaModules import *
-from direct.interval.IntervalGlobal import *
+from panda3d.direct.interval.IntervalGlobal import *
 
-from direct.distributed.DistributedNode import DistributedNode
-from direct.task import Task
-from direct.gui import DirectGuiGlobals
-from direct.showbase.EventGroup import EventGroup
-from direct.showbase.PythonUtil import report
-from direct.distributed.GridParent import GridParent
+from panda3d.direct.distributed.DistributedNode import DistributedNode
+from panda3d.direct.task import Task
+from panda3d.direct.gui import DirectGuiGlobals
+from panda3d.direct.showbase.EventGroup import EventGroup
+from panda3d.direct.showbase.PythonUtil import report
+from panda3d.direct.distributed.GridParent import GridParent
 
 if __debug__:
     # For grid drawing
-    from direct.directtools.DirectGeometry import *
-    from direct.showbase.PythonUtil import randFloat
+    from panda3d.direct.directtools.DirectGeometry import *
+    from panda3d.direct.showbase.PythonUtil import randFloat
 
 from CartesianGridBase import CartesianGridBase
 

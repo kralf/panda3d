@@ -1,7 +1,7 @@
 """SampleObject module: contains the SampleObject class"""
 
-from direct.directnotify.DirectNotifyGlobal import *
-from direct.distributed.DistributedObject import *
+from panda3d.direct.directnotify.DirectNotifyGlobal import *
+from panda3d.direct.distributed.DistributedObject import *
 
 class SampleObject(DistributedObject):
 

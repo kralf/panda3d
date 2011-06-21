@@ -4,7 +4,7 @@ __all__ = ['EventManager']
 
 
 from MessengerGlobal import *
-from direct.directnotify.DirectNotifyGlobal import *
+from panda3d.direct.directnotify.DirectNotifyGlobal import *
 
 # This module may not import pandac.PandaModules, since it is imported
 # by the Toontown Launcher before the complete PandaModules have been
@@ -208,10 +208,10 @@ class EventManager:
                 self.eventHandler = EventManager.EventHandler(self.eventQueue)
 
         # Should be safe to import the global taskMgr by now.
-        from direct.task.TaskManagerGlobal import taskMgr
+        from panda3d.direct.task.TaskManagerGlobal import taskMgr
         taskMgr.add(self.eventLoopTask, 'eventManager')
 
     def shutdown(self):
         # Should be safe to import the global taskMgr by now.
-        from direct.task.TaskManagerGlobal import taskMgr
+        from panda3d.direct.task.TaskManagerGlobal import taskMgr
         taskMgr.remove('eventManager')

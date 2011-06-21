@@ -1,8 +1,8 @@
 """RelatedObjectMgr module: contains the RelatedObjectMgr class"""
 
-# from direct.showbase.ShowBaseGlobal import *
-from direct.showbase import DirectObject
-from direct.directnotify import DirectNotifyGlobal
+# from panda3d.direct.showbase.ShowBaseGlobal import *
+from panda3d.direct.showbase import DirectObject
+from panda3d.direct.directnotify import DirectNotifyGlobal
 
 class RelatedObjectMgr(DirectObject.DirectObject):
     """

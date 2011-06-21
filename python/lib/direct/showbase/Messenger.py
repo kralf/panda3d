@@ -4,8 +4,8 @@ __all__ = ['Messenger']
 
 
 from PythonUtil import *
-from direct.directnotify import DirectNotifyGlobal
-from direct.stdpy.Threading import Lock
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.stdpy.Threading import Lock
 import types
 
 class Messenger:

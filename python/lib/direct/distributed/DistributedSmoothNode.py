@@ -4,7 +4,7 @@ from pandac.PandaModules import *
 from ClockDelta import *
 import DistributedNode
 import DistributedSmoothNodeBase
-from direct.task.Task import cont
+from panda3d.direct.task.Task import cont
 
 # This number defines our tolerance for out-of-sync telemetry packets.
 # If a packet appears to have originated from more than MaxFuture

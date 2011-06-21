@@ -1,6 +1,6 @@
 
 from pandac.PandaModules import *
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 from DirectUtil import *
 from DirectGeometry import *
 

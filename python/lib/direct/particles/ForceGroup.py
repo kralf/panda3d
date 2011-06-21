@@ -1,8 +1,8 @@
 from pandac.PandaModules import *
-from direct.showbase.DirectObject import DirectObject
-from direct.showbase.PhysicsManagerGlobal import *
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.PhysicsManagerGlobal import *
 
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 import sys
 
 class ForceGroup(DirectObject):

@@ -4,8 +4,8 @@
 # both ClusterClient and ClusterServer.
 
 from pandac.PandaModules import *
-from direct.distributed.PyDatagram import PyDatagram
-from direct.distributed.PyDatagramIterator import PyDatagramIterator
+from panda3d.direct.distributed.PyDatagram import PyDatagram
+from panda3d.direct.distributed.PyDatagramIterator import PyDatagramIterator
 import time
 
 #these are the types of messages that are currently supported.
@@ -43,7 +43,7 @@ SERVER_STARTUP_STRING = (
     '__builtin__.clusterSyncFlag = %d;' +
     '__builtin__.clusterDaemonClient = \'%s\';' +
     '__builtin__.clusterDaemonPort = %d;'
-    'from direct.directbase.DirectStart import *; run()"')
+    'from panda3d.direct.directbase.DirectStart import *; run()"')
 
 class ClusterMsgHandler:
     """ClusterMsgHandler: wrapper for PC clusters/multi-piping networking"""

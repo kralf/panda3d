@@ -7,8 +7,8 @@ created by Doug Hellmann (doughellmann@mindspring.com).
 
 __all__ = ['AppShell']
 
-from direct.showbase.DirectObject import DirectObject
-from direct.showbase.TkGlobal import *
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.TkGlobal import *
 from tkFileDialog import *
 from Tkinter import *
 import Pmw

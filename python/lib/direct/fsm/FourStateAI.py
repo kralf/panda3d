@@ -4,11 +4,11 @@ __all__ = ['FourStateAI']
 
 
 
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 #import DistributedObjectAI
 import ClassicFSM
 import State
-from direct.task import Task
+from panda3d.direct.task import Task
 
 
 class FourStateAI:

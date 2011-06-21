@@ -13,9 +13,9 @@ __all__ = [
     ]
 
 from pandac.PandaModules import *
-from direct.directnotify.DirectNotifyGlobal import *
+from panda3d.direct.directnotify.DirectNotifyGlobal import *
 import Interval
-from direct.showbase import LerpBlendHelpers
+from panda3d.direct.showbase import LerpBlendHelpers
 
 #
 # Most of the intervals defined in this module--the group up here at

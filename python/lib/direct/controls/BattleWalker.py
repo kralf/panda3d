@@ -1,6 +1,6 @@
 
-from direct.showbase.InputStateGlobal import inputState
-from direct.task.Task import Task
+from panda3d.direct.showbase.InputStateGlobal import inputState
+from panda3d.direct.task.Task import Task
 from pandac.PandaModules import *
 import GravityWalker
 

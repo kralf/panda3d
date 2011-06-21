@@ -10,8 +10,8 @@ Or it may do that later, right now it puts a node on the surface under
 the its parent node.
 """
 
-from direct.controls.ControlManager import CollisionHandlerRayStart
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.controls.ControlManager import CollisionHandlerRayStart
+from panda3d.direct.directnotify import DirectNotifyGlobal
 from pandac.PandaModules import *
 import DirectObject
 

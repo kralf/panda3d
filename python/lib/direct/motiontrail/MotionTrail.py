@@ -1,9 +1,9 @@
 
 
 from pandac.PandaModules import *
-from direct.task import Task
+from panda3d.direct.task import Task
 from otp.otpbase import OTPRender
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 
 
 def remove_task ( ):

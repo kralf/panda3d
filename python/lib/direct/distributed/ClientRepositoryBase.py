@@ -1,11 +1,11 @@
 from pandac.PandaModules import *
 from MsgTypes import *
-from direct.task import Task
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.task import Task
+from panda3d.direct.directnotify import DirectNotifyGlobal
 import CRCache
-from direct.distributed.CRDataCache import CRDataCache
-from direct.distributed.ConnectionRepository import ConnectionRepository
-from direct.showbase import PythonUtil
+from panda3d.direct.distributed.CRDataCache import CRDataCache
+from panda3d.direct.distributed.ConnectionRepository import ConnectionRepository
+from panda3d.direct.showbase import PythonUtil
 import ParentMgr
 import RelatedObjectMgr
 import time

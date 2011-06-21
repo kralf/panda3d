@@ -1,8 +1,8 @@
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 from DirectGlobals import *
 from DirectUtil import *
 from DirectGeometry import *
-from direct.task import Task
+from panda3d.direct.task import Task
 import types
 
 class DirectManipulationControl(DirectObject):

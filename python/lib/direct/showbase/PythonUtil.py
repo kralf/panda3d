@@ -52,10 +52,10 @@ import __builtin__
 from StringIO import StringIO
 import marshal
 
-from direct.directutil import Verify
+from panda3d.direct.directutil import Verify
 # Don't import libpandaexpressModules, which doesn't get built until
 # genPyCode.
-import direct.extensions_native.Helpers
+import panda3d.direct.extensions_native.Helpers
 from libpandaexpress import ConfigVariableBool
 
 ScalarTypes = (types.FloatType, types.IntType, types.LongType)
@@ -657,7 +657,7 @@ def adjust(command = None, dim = 1, parent = None, **kw):
     10.0
     """
     # Make sure we enable Tk
-    from direct.tkwidgets import Valuator
+    from panda3d.direct.tkwidgets import Valuator
     # Set command if specified
     if command:
         kw['command'] = lambda x: apply(command, x)
@@ -2459,7 +2459,7 @@ safeReprNotify = None
 
 def _getSafeReprNotify():
     global safeReprNotify
-    from direct.directnotify.DirectNotifyGlobal import directNotify
+    from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
     safeReprNotify = directNotify.newCategory("safeRepr")
 
 def safeRepr(obj):
@@ -3145,7 +3145,7 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
         return decorator
 
 
-    from direct.distributed.ClockDelta import globalClockDelta
+    from panda3d.direct.distributed.ClockDelta import globalClockDelta
 
     def decorator(f):
         def wrap(*args,**kwargs):
@@ -3248,7 +3248,7 @@ def exceptionLogged(append=True):
     def _decoratorFunc(f, append=append):
         global exceptionLoggedNotify
         if exceptionLoggedNotify is None:
-            from direct.directnotify.DirectNotifyGlobal import directNotify
+            from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
             exceptionLoggedNotify = directNotify.newCategory("ExceptionLogged")
         def _exceptionLogged(*args, **kArgs):
             try:
@@ -3357,7 +3357,7 @@ class GoldenRectangle:
 
 class HotkeyBreaker:
     def __init__(self,breakKeys = []):
-        from direct.showbase.DirectObject import DirectObject
+        from panda3d.direct.showbase.DirectObject import DirectObject
         self.do = DirectObject()
         self.breakKeys = {}
         if not isinstance(breakKeys, (list,tuple)):

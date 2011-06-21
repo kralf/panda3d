@@ -3,9 +3,9 @@
 __all__ = ['DirectObject']
 
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 from MessengerGlobal import messenger
-from direct.showbase.PythonUtil import ClassTree
+from panda3d.direct.showbase.PythonUtil import ClassTree
 
 class DirectObject:
     """

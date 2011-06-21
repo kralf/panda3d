@@ -1,6 +1,6 @@
 
 from DistributedObjectAI import DistributedObjectAI
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 
 
 class DistributedObjectGlobalAI(DistributedObjectAI):

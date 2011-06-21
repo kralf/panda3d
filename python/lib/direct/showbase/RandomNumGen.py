@@ -2,7 +2,7 @@
 
 __all__ = ['randHash', 'RandomNumGen']
 
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 from pandac.PandaModules import Mersenne
 
 def randHash(num):

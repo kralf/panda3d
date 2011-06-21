@@ -4,7 +4,7 @@ __all__ = ['OnscreenGeom']
 
 from pandac.PandaModules import *
 import DirectGuiGlobals as DGG
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 import string,types
 
 class OnscreenGeom(DirectObject, NodePath):

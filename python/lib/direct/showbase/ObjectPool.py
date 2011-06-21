@@ -2,10 +2,10 @@
 
 __all__ = ['Diff', 'ObjectPool']
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.PythonUtil import invertDictLossless, makeList, safeRepr
-from direct.showbase.PythonUtil import getNumberedTypedString, getNumberedTypedSortedString
-from direct.showbase.PythonUtil import getNumberedTypedSortedStringWithReferrersGen
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.PythonUtil import invertDictLossless, makeList, safeRepr
+from panda3d.direct.showbase.PythonUtil import getNumberedTypedString, getNumberedTypedSortedString
+from panda3d.direct.showbase.PythonUtil import getNumberedTypedSortedStringWithReferrersGen
 import types
 import gc
 

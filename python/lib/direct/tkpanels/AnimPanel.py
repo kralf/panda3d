@@ -7,12 +7,12 @@ __all__ = ['AnimPanel', 'ActorControl']
 ### SEE END OF FILE FOR EXAMPLE USEAGE ###
 
 # Import Tkinter, Pmw, and the floater code from this directory tree.
-from direct.tkwidgets.AppShell import *
-from direct.showbase.TkGlobal import *
+from panda3d.direct.tkwidgets.AppShell import *
+from panda3d.direct.showbase.TkGlobal import *
 from tkSimpleDialog import askfloat
 from Tkinter import *
 import Pmw, string, math, types
-from direct.task import Task
+from panda3d.direct.task import Task
 
 FRAMES = 0
 SECONDS = 1
@@ -617,7 +617,7 @@ class ActorControl(Pmw.MegaWidget):
 
 """
 # EXAMPLE CODE
-from direct.actor import Actor
+from panda3d.direct.actor import Actor
 import AnimPanel
 
 a = Actor.Actor({250:{"head":"phase_3/models/char/dogMM_Shorts-head-250",

@@ -4,11 +4,11 @@ __all__ = ['FourState']
 
 
 
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 #import DistributedObject
 import ClassicFSM
 import State
-from direct.task import Task
+from panda3d.direct.task import Task
 
 
 class FourState:

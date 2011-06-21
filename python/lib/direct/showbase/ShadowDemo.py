@@ -15,7 +15,7 @@ way to do shadows.
 """
 
 from pandac.PandaModules import *
-from direct.task import Task
+from panda3d.direct.task import Task
 
 sc = None
 
@@ -195,8 +195,8 @@ def arbitraryShadow(node):
 ##def testShadow():
 ##    a = piratesAvatarShadow()
 ##
-##from direct.showbase.ShadowDemo import *
-##from direct.interval.IntervalGlobal import *
+##from panda3d.direct.showbase.ShadowDemo import *
+##from panda3d.direct.interval.IntervalGlobal import *
 ##b = loader.loadModel('/i/beta/PotC/Maya/Pirates/scenes/models/sets/buildings/spanish_buildings/TavernIntExt/tavern_ext/bar.egg')
 ##bs = arbitraryShadow(b)
 ##s = loader.loadModel('smiley')

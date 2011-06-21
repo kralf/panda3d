@@ -1,7 +1,7 @@
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.PythonUtil import Queue, fastRepr, invertDictLossless
-from direct.showbase.PythonUtil import itype, safeRepr
-from direct.showbase.Job import Job
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.PythonUtil import Queue, fastRepr, invertDictLossless
+from panda3d.direct.showbase.PythonUtil import itype, safeRepr
+from panda3d.direct.showbase.Job import Job
 import types
 
 class ContainerReport(Job):

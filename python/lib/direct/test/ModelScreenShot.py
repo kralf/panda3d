@@ -1,14 +1,14 @@
 import direct
 from pandac.PandaModules import loadPrcFileData
 
-from direct.showbase.DirectObject import DirectObject
-from direct.directbase.DirectStart import *
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directbase.DirectStart import *
 from pandac.PandaModules import *
-import direct.gui.DirectGuiGlobals as DGG
-from direct.gui.DirectGui import *
-from direct.task import Task
+import panda3d.direct.gui.DirectGuiGlobals as DGG
+from panda3d.direct.gui.DirectGui import *
+from panda3d.direct.task import Task
 
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 import math
 from operator import *
 

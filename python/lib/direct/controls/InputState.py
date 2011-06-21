@@ -1,7 +1,7 @@
 
 
-from direct.directnotify import DirectNotifyGlobal
-from direct.showbase import DirectObject
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase import DirectObject
 
 # internal class, don't create these on your own
 class InputStateToken:

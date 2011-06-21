@@ -1,5 +1,5 @@
 from pandac.PandaModules import *
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 
 class TexViewer(DirectObject):
     """ A simple class to pop up a card onscreen to see the contents

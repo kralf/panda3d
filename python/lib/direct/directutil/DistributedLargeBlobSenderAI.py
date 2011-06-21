@@ -1,7 +1,7 @@
 """DistributedLargeBlobSenderAI module: contains the DistributedLargeBlobSenderAI class"""
 
-from direct.distributed import DistributedObjectAI
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.distributed import DistributedObjectAI
+from panda3d.direct.directnotify import DirectNotifyGlobal
 import LargeBlobSenderConsts
 
 class DistributedLargeBlobSenderAI(DistributedObjectAI.DistributedObjectAI):

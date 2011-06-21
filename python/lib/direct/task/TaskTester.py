@@ -2,8 +2,8 @@
 
 __all__ = []
 
-from direct.task.TaskManagerGlobal import *
-import direct.task.Task
+from panda3d.direct.task.TaskManagerGlobal import *
+import panda3d.direct.task.Task
 import random
 
 numTasks = 10000

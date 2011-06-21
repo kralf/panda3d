@@ -90,7 +90,7 @@ macro(panda3d_interrogate panda3d_target)
   endif(NOT EXISTS ${panda3d_dir})
 
   remake_generate_custom(Interrogate ${panda3d_target}
-    interrogator ${panda3d_args} ${panda3d_defs}
+    interrogate ${panda3d_args} ${panda3d_defs}
       ${panda3d_include_flags} ${panda3d_interrogate_include_flags}
       -oc %SOURCES% -od ${panda3d_dir}/${panda3d_target}.in %INPUT%
     INPUT ${panda3d_input}

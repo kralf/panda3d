@@ -15,8 +15,8 @@ implementation. """
 
 import sys as _sys
 
-from direct.stdpy import Thread
-from direct.stdpy.Thread import stack_size, _local as local
+from panda3d.direct.stdpy import Thread
+from panda3d.direct.stdpy.Thread import stack_size, _local as local
 from pandac import PandaModules as pm
 _sleep = pm.Thread.sleep
 

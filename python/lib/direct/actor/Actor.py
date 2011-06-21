@@ -3,7 +3,7 @@
 __all__ = ['Actor']
 
 from pandac.PandaModules import *
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 from pandac.PandaModules import LODNode
 import types, copy
 
@@ -1515,8 +1515,8 @@ class Actor(DirectObject, NodePath):
 
     # actions
     def animPanel(self):
-        from direct.showbase import TkGlobal
-        from direct.tkpanels import AnimPanel
+        from panda3d.direct.showbase import TkGlobal
+        from panda3d.direct.tkpanels import AnimPanel
         return AnimPanel.AnimPanel(self)
 
     def stop(self, animName=None, partName=None):
@@ -2424,7 +2424,7 @@ class Actor(DirectObject, NodePath):
 
 
     def actorInterval(self, *args, **kw):
-        from direct.interval import ActorInterval
+        from panda3d.direct.interval import ActorInterval
         return ActorInterval.ActorInterval(self, *args, **kw)
 
     def getAnimBlends(self, animName=None, partName=None, lodName=None):

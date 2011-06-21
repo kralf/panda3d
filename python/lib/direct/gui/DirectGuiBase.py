@@ -8,11 +8,11 @@ import DirectGuiGlobals as DGG
 from OnscreenText import *
 from OnscreenGeom import *
 from OnscreenImage import *
-from direct.directtools.DirectUtil import ROUND_TO
-from direct.showbase import DirectObject
-from direct.task import Task
-from direct.showbase import ShowBase
-from direct.showbase.PythonUtil import recordCreationStackStr
+from panda3d.direct.directtools.DirectUtil import ROUND_TO
+from panda3d.direct.showbase import DirectObject
+from panda3d.direct.task import Task
+from panda3d.direct.showbase import ShowBase
+from panda3d.direct.showbase.PythonUtil import recordCreationStackStr
 from pandac.PandaModules import PStatCollector
 import string, types
 
@@ -633,7 +633,7 @@ class DirectGuiBase(DirectObject.DirectObject):
         # Need to tack on gui item specific id
         gEvent = event + self.guiId
         if base.config.GetBool('debug-directgui-msgs', False):
-            from direct.showbase.PythonUtil import StackTrace
+            from panda3d.direct.showbase.PythonUtil import StackTrace
             print gEvent
             print StackTrace()
         self.accept(gEvent, command, extraArgs = extraArgs)

@@ -3,17 +3,17 @@
 __all__ = ['ParticlePanel']
 
 # Import Tkinter, Pmw, and the floater code from this directory tree.
-from direct.tkwidgets.AppShell import *
-from direct.showbase.TkGlobal import *
+from panda3d.direct.tkwidgets.AppShell import *
+from panda3d.direct.showbase.TkGlobal import *
 from tkFileDialog import *
 from tkSimpleDialog import askstring
-from direct.tkwidgets import Dial
-from direct.tkwidgets import Floater
-from direct.tkwidgets import Slider
-from direct.tkwidgets import VectorWidgets
-from direct.particles import ForceGroup
-from direct.particles import Particles
-from direct.particles import ParticleEffect
+from panda3d.direct.tkwidgets import Dial
+from panda3d.direct.tkwidgets import Floater
+from panda3d.direct.tkwidgets import Slider
+from panda3d.direct.tkwidgets import VectorWidgets
+from panda3d.direct.particles import ForceGroup
+from panda3d.direct.particles import Particles
+from panda3d.direct.particles import ParticleEffect
 from Tkinter import *
 import Pmw, os,Placer
 
@@ -2776,7 +2776,7 @@ if __name__ == '__main__':
     try:
         base
     except:
-        from direct.directbase import DirectStart
+        from panda3d.direct.directbase import DirectStart
 
     root = Pmw.initialise()
     pp = ParticlePanel()

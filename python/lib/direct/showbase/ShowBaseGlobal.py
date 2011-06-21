@@ -14,7 +14,7 @@ assert base
 directNotify.setDconfigLevels()
 
 def inspect(anObject):
-    from direct.tkpanels import Inspector
+    from panda3d.direct.tkpanels import Inspector
     return Inspector.inspect(anObject)
 
 import __builtin__

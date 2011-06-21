@@ -9,7 +9,7 @@ from OnscreenText import OnscreenText
 import string,types
 # import this to make sure it gets pulled into the publish
 import encodings.utf_8
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.DirectObject import DirectObject
 
 # DirectEntry States:
 ENTRY_FOCUS_STATE    = PGEntry.SFocus      # 0

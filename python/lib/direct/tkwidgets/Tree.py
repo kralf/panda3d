@@ -22,7 +22,7 @@ __all__ = ['TreeNode', 'TreeItem']
 import os
 import sys
 import string
-from direct.showbase.TkGlobal import *
+from panda3d.direct.showbase.TkGlobal import *
 from Tkinter import *
 import Pmw
 from pandac.PandaModules import *

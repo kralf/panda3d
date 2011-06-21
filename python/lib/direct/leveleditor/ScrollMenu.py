@@ -3,7 +3,7 @@
 # that can be embedded in a LevelAttribute instance
 ###########################################################
 
-from direct.gui.DirectGui import *
+from panda3d.direct.gui.DirectGui import *
 from toontown.toonbase import ToontownGlobals
 
 class ScrollMenu:

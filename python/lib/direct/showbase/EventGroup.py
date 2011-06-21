@@ -2,8 +2,8 @@
 
 __all__ = ['EventGroup']
 
-from direct.showbase import DirectObject
-from direct.showbase.PythonUtil import SerialNumGen, Functor
+from panda3d.direct.showbase import DirectObject
+from panda3d.direct.showbase.PythonUtil import SerialNumGen, Functor
 
 class EventGroup(DirectObject.DirectObject):
     """This class allows you to group together multiple events and treat

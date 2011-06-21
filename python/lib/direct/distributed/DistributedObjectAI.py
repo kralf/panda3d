@@ -1,8 +1,8 @@
 """DistributedObjectAI module: contains the DistributedObjectAI class"""
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.distributed.DistributedObjectBase import DistributedObjectBase
-from direct.showbase import PythonUtil
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.distributed.DistributedObjectBase import DistributedObjectBase
+from panda3d.direct.showbase import PythonUtil
 from otp.ai.AIZoneData import AIZoneData
 from pandac.PandaModules import *
 #from PyDatagram import PyDatagram
@@ -118,7 +118,7 @@ class DistributedObjectAI(DistributedObjectBase):
                     # print a stack trace so we can detect whether this is the
                     # result of a network msg.
                     # this is slow.
-                    from direct.showbase.PythonUtil import StackTrace
+                    from panda3d.direct.showbase.PythonUtil import StackTrace
                     DistributedObjectAI.notify.warning(
                         'stack trace: %s' % StackTrace())
                         """

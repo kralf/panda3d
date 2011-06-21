@@ -1,8 +1,8 @@
 """DistributedSmoothNodeBase module: contains the DistributedSmoothNodeBase class"""
 
 from ClockDelta import *
-from direct.task import Task
-from direct.showbase.PythonUtil import randFloat, Enum
+from panda3d.direct.task import Task
+from panda3d.direct.showbase.PythonUtil import randFloat, Enum
 
 class DummyTaskClass:
     def setDelay(self, blah):

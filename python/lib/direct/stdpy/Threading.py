@@ -26,7 +26,7 @@ within the same application. """
 # definitions in this module. """
 import direct
 from pandac import PandaModules as pm
-from direct.stdpy import Thread as _thread
+from panda3d.direct.stdpy import Thread as _thread
 import sys as _sys
 
 import weakref

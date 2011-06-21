@@ -3,18 +3,18 @@
 __all__ = ['DirectSessionPanel']
 
 # Import Tkinter, Pmw, and the dial code
-from direct.showbase.TkGlobal import *
-from direct.tkwidgets.AppShell import *
+from panda3d.direct.showbase.TkGlobal import *
+from panda3d.direct.tkwidgets.AppShell import *
 from Tkinter import *
 from pandac.PandaModules import *
 import Pmw, string
-from direct.tkwidgets import Dial
-from direct.tkwidgets import Floater
-from direct.tkwidgets import Slider
-from direct.tkwidgets import VectorWidgets
-from direct.tkwidgets import SceneGraphExplorer
+from panda3d.direct.tkwidgets import Dial
+from panda3d.direct.tkwidgets import Floater
+from panda3d.direct.tkwidgets import Slider
+from panda3d.direct.tkwidgets import VectorWidgets
+from panda3d.direct.tkwidgets import SceneGraphExplorer
 from TaskManagerPanel import TaskManagerWidget
-from direct.tkwidgets import MemoryExplorer
+from panda3d.direct.tkwidgets import MemoryExplorer
 
 """
 Possible to add:

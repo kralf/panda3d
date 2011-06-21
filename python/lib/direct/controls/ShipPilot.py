@@ -16,9 +16,9 @@ animations based on control events.
 """
 
 from pandac.PandaModules import *
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.InputStateGlobal import inputState
-from direct.task.Task import Task
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.InputStateGlobal import inputState
+from panda3d.direct.task.Task import Task
 from PhysicsWalker import PhysicsWalker
 import math
 

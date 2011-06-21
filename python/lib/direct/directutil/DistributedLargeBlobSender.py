@@ -1,7 +1,7 @@
 """DistributedLargeBlobSender module: contains the DistributedLargeBlobSender class"""
 
-from direct.distributed import DistributedObject
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.distributed import DistributedObject
+from panda3d.direct.directnotify import DirectNotifyGlobal
 import LargeBlobSenderConsts
 
 class DistributedLargeBlobSender(DistributedObject.DistributedObject):

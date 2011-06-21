@@ -2,11 +2,11 @@
 
 __all__ = ['Interval']
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.DirectObject import DirectObject
 from pandac.PandaModules import *
-from direct.task.Task import Task, TaskManager
-from direct.showbase import PythonUtil
+from panda3d.direct.task.Task import Task, TaskManager
+from panda3d.direct.showbase import PythonUtil
 from pandac.PandaModules import *
 import math
 
@@ -411,12 +411,12 @@ class Interval(DirectObject):
         """
         Popup control panel for interval.
         """
-        from direct.showbase import TkGlobal
+        from panda3d.direct.showbase import TkGlobal
         import math
         # I moved this here because Toontown does not ship Tk
         from Tkinter import Toplevel, Frame, Button, LEFT, X
         import Pmw
-        from direct.tkwidgets import EntryScale
+        from panda3d.direct.tkwidgets import EntryScale
         if tl == None:
             tl = Toplevel()
             tl.title('Interval Controls')

@@ -5,10 +5,10 @@ Dial Class: Velocity style controller for floating point values with
 
 __all__ = ['Dial', 'AngleDial', 'DialWidget']
 
-from direct.showbase.TkGlobal import *
+from panda3d.direct.showbase.TkGlobal import *
 from Tkinter import *
 from Valuator import Valuator, VALUATOR_MINI, VALUATOR_FULL
-from direct.task import Task
+from panda3d.direct.task import Task
 import math, string, operator, Pmw
 from pandac.PandaModules import ClockObject
 

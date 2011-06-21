@@ -1,9 +1,9 @@
 from pandac.PandaModules import *
-from direct.task import Task
-from direct.directnotify import DirectNotifyGlobal
-from direct.distributed.DoInterestManager import DoInterestManager
-from direct.distributed.DoCollectionManager import DoCollectionManager
-from direct.showbase import GarbageReport
+from panda3d.direct.task import Task
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.distributed.DoInterestManager import DoInterestManager
+from panda3d.direct.distributed.DoCollectionManager import DoCollectionManager
+from panda3d.direct.showbase import GarbageReport
 from PyDatagram import PyDatagram
 from PyDatagramIterator import PyDatagramIterator
 

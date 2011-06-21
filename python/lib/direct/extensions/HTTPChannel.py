@@ -15,14 +15,14 @@ def spawnTask(self, name = None, callback = None, extraArgs = []):
     """
     if not name:
         name = self.getUrl().cStr()
-    from direct.task import Task
+    from panda3d.direct.task import Task
     task = Task.Task(self.doTask)
     task.callback = callback
     task.callbackArgs = extraArgs
     return taskMgr.add(task, name)
 
 def doTask(self, task):
-    from direct.task import Task
+    from panda3d.direct.task import Task
     if self.run():
         return Task.cont
     if task.callback:

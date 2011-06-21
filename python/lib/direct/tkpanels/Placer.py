@@ -4,11 +4,11 @@ __all__ = ['Placer', 'place']
 
 # Import Tkinter, Pmw, and the dial code from this directory tree.
 from pandac.PandaModules import *
-from direct.showbase.TkGlobal import *
-from direct.tkwidgets.AppShell import *
-from direct.tkwidgets import Dial
-from direct.tkwidgets import Floater
-from direct.directtools.DirectGlobals import ZERO_VEC, UNIT_VEC
+from panda3d.direct.showbase.TkGlobal import *
+from panda3d.direct.tkwidgets.AppShell import *
+from panda3d.direct.tkwidgets import Dial
+from panda3d.direct.tkwidgets import Floater
+from panda3d.direct.directtools.DirectGlobals import ZERO_VEC, UNIT_VEC
 from Tkinter import *
 import Pmw
 

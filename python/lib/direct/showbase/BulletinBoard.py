@@ -2,7 +2,7 @@
 
 __all__ = ['BulletinBoard']
 
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 
 class BulletinBoard:
     """This class implements a global location for key/value pairs to be

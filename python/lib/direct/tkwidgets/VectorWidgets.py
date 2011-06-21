@@ -2,7 +2,7 @@
 
 __all__ = ['VectorEntry', 'Vector2Entry', 'Vector3Entry', 'Vector4Entry', 'ColorEntry']
 
-from direct.showbase.TkGlobal import *
+from panda3d.direct.showbase.TkGlobal import *
 from Tkinter import *
 import Valuator
 import Floater

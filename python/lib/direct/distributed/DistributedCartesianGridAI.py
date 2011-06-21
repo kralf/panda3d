@@ -1,7 +1,7 @@
 
 from pandac.PandaModules import *
 
-from direct.task import Task
+from panda3d.direct.task import Task
 from DistributedNodeAI import DistributedNodeAI
 from CartesianGridBase import CartesianGridBase
 

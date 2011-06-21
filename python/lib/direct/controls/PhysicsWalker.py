@@ -14,11 +14,11 @@ although it does send messeges that allow a listener to play sounds or
 animations based on walker events.
 """
 
-from direct.directnotify import DirectNotifyGlobal
-from direct.showbase import DirectObject
-from direct.controls.ControlManager import CollisionHandlerRayStart
-from direct.showbase.InputStateGlobal import inputState
-from direct.task.Task import Task
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase import DirectObject
+from panda3d.direct.controls.ControlManager import CollisionHandlerRayStart
+from panda3d.direct.showbase.InputStateGlobal import inputState
+from panda3d.direct.task.Task import Task
 from pandac.PandaModules import *
 import math
 
@@ -70,7 +70,7 @@ class PhysicsWalker(DirectObject.DirectObject):
         if not self.wantDebugIndicator:
             return
         from pandac.PandaModules import *
-        from direct.interval.IntervalGlobal import *
+        from panda3d.direct.interval.IntervalGlobal import *
         from toontown.coghq import MovingPlatform
 
         if hasattr(self, "platform"):

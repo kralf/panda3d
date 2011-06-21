@@ -4,21 +4,21 @@ __all__ = ['MopathRecorder']
 
 # Import Tkinter, Pmw, and the dial code from this directory tree.
 from pandac.PandaModules import *
-from direct.showbase.DirectObject import DirectObject
-from direct.showbase.TkGlobal import *
-from direct.tkwidgets.AppShell import *
-from direct.directtools.DirectGlobals import *
-from direct.directtools.DirectUtil import *
-from direct.directtools.DirectGeometry import *
-from direct.directtools.DirectSelection import *
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.TkGlobal import *
+from panda3d.direct.tkwidgets.AppShell import *
+from panda3d.direct.directtools.DirectGlobals import *
+from panda3d.direct.directtools.DirectUtil import *
+from panda3d.direct.directtools.DirectGeometry import *
+from panda3d.direct.directtools.DirectSelection import *
 from tkFileDialog import *
 from Tkinter import *
 import Pmw, os, string
-from direct.tkwidgets import Dial
-from direct.tkwidgets import Floater
-from direct.tkwidgets import Slider
-from direct.tkwidgets import EntryScale
-from direct.tkwidgets import VectorWidgets
+from panda3d.direct.tkwidgets import Dial
+from panda3d.direct.tkwidgets import Floater
+from panda3d.direct.tkwidgets import Slider
+from panda3d.direct.tkwidgets import EntryScale
+from panda3d.direct.tkwidgets import VectorWidgets
 import __builtin__
 
 PRF_UTILITIES = [
@@ -1788,7 +1788,7 @@ class MopathRecorder(AppShell, DirectObject):
         kw['max'] = max
         kw['resolution'] = resolution
         #widget = apply(EntryScale.EntryScale, (parent,), kw)
-        from direct.tkwidgets import Slider
+        from panda3d.direct.tkwidgets import Slider
         widget = apply(Slider.Slider, (parent,), kw)
         # Do this after the widget so command isn't called on creation
         widget['command'] = command

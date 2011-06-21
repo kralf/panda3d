@@ -1,6 +1,6 @@
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.showbase.DirectObject import DirectObject
-from direct.showbase.EventGroup import EventGroup
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.EventGroup import EventGroup
 
 class InterestWatcher(DirectObject):
     """Object that observes all interests adds/removes over a period of time,

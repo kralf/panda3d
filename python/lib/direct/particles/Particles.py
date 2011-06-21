@@ -1,6 +1,6 @@
 from pandac.PandaModules import *
-from direct.particles.ParticleManagerGlobal import *
-from direct.showbase.PhysicsManagerGlobal import *
+from panda3d.direct.particles.ParticleManagerGlobal import *
+from panda3d.direct.showbase.PhysicsManagerGlobal import *
 
 from pandac.PandaModules import ParticleSystem
 from pandac.PandaModules import BaseParticleFactory
@@ -29,7 +29,7 @@ import SpriteParticleRendererExt
 
 import string
 import os
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 import sys
 
 class Particles(ParticleSystem):
@@ -133,7 +133,7 @@ class Particles(ParticleSystem):
             # This was moved here because we do not want to download
             # the direct tools with toontown.
             if __dev__:
-                from direct.directtools import DirectSelection
+                from panda3d.direct.directtools import DirectSelection
                 npath = NodePath('default-geom')
                 bbox = DirectSelection.DirectBoundingBox(npath)
                 self.renderer.setGeomNode(bbox.lines.node())

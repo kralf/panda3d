@@ -1,9 +1,9 @@
 from pandac.PandaModules import *
 from ClusterMsgs import *
-from direct.distributed.MsgTypes import *
-from direct.directnotify import DirectNotifyGlobal
-from direct.showbase import DirectObject
-from direct.task import Task
+from panda3d.direct.distributed.MsgTypes import *
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase import DirectObject
+from panda3d.direct.task import Task
 
 # NOTE: This assumes the following variables are set via bootstrap command line
 # arguments on server startup:

@@ -4,8 +4,8 @@ __all__ = ['ProjectileInterval']
 
 from pandac.PandaModules import *
 from Interval import Interval
-from direct.showbase.PythonUtil import lerp
-from direct.showbase import PythonUtil
+from panda3d.direct.showbase.PythonUtil import lerp
+from panda3d.direct.showbase import PythonUtil
 
 class ProjectileInterval(Interval):
     """ProjectileInterval class: moves a nodepath through the trajectory

@@ -1,4 +1,4 @@
-from direct.showbase.GarbageReport import GarbageReport
+from panda3d.direct.showbase.GarbageReport import GarbageReport
 
 class GarbageReportScheduler:
     # runs a garbage report every once in a while and logs the results

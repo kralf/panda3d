@@ -3,9 +3,9 @@
 from pandac.PandaModules import *
 from ClusterMsgs import *
 from ClusterConfig import *
-from direct.directnotify import DirectNotifyGlobal
-from direct.showbase import DirectObject
-from direct.task import Task
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase import DirectObject
+from panda3d.direct.task import Task
 import os
 
 class ClusterClient(DirectObject.DirectObject):

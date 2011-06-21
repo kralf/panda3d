@@ -2,7 +2,7 @@
 
 __all__ = ['WidgetPropertiesDialog']
 
-from direct.showbase.TkGlobal import *
+from panda3d.direct.showbase.TkGlobal import *
 from Tkinter import *
 import types, string, Pmw
 

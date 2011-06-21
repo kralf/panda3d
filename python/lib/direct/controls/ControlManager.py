@@ -1,18 +1,18 @@
 
-from direct.showbase.InputStateGlobal import inputState
+from panda3d.direct.showbase.InputStateGlobal import inputState
 #from DirectGui import *
 #from PythonUtil import *
 #from IntervalGlobal import *
 
 #from otp.avatar import Avatar
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.directnotify import DirectNotifyGlobal
 #import GhostWalker
 #import GravityWalker
 #import NonPhysicsWalker
 #import PhysicsWalker
 #if __debug__:
 #    import DevWalker
-from direct.task import Task
+from panda3d.direct.task import Task
 CollisionHandlerRayStart = 4000.0 # This is a hack, it may be better to use a line instead of a ray.
 
 class ControlManager:

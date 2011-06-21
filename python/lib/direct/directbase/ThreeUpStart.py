@@ -3,8 +3,8 @@ print 'ThreeUpStart: Starting up environment.'
 
 from pandac.PandaModules import *
 
-from direct.showbase.PythonUtil import *
-from direct.showbase import ThreeUpShow
+from panda3d.direct.showbase.PythonUtil import *
+from panda3d.direct.showbase import ThreeUpShow
 ThreeUpShow.ThreeUpShow()
 
 # Put an axis in the world:

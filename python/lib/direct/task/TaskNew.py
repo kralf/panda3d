@@ -6,9 +6,9 @@ __all__ = ['Task', 'TaskManager',
            'cont', 'done', 'again', 'pickup', 'exit',
            'sequence', 'loop', 'pause']
 
-from direct.directnotify.DirectNotifyGlobal import *
-from direct.showbase import ExceptionVarDump
-from direct.showbase.PythonUtil import *
+from panda3d.direct.directnotify.DirectNotifyGlobal import *
+from panda3d.direct.showbase import ExceptionVarDump
+from panda3d.direct.showbase.PythonUtil import *
 import signal
 import types
 import time
@@ -126,7 +126,7 @@ class TaskManager:
     def finalInit(self):
         # This function should be called once during startup, after
         # most things are imported.
-        from direct.fsm.StatePush import StateVar
+        from panda3d.direct.fsm.StatePush import StateVar
         self._profileTasks = StateVar(False)
         self.setProfileTasks(ConfigVariableBool('profile-task-spikes', 0).getValue())
         self._profileFrames = StateVar(False)
@@ -542,7 +542,7 @@ class TaskManager:
         return numFound
 
     def popupControls(self):
-        from direct.tkpanels import TaskManagerPanel
+        from panda3d.direct.tkpanels import TaskManagerPanel
         return TaskManagerPanel.TaskManagerPanel(self)
 
     def getProfileSession(self, name=None):
@@ -552,7 +552,7 @@ class TaskManager:
 
         # Defer this import until we need it: some Python
         # distributions don't provide the profile and pstats modules.
-        from direct.showbase.ProfileSession import ProfileSession
+        from panda3d.direct.showbase.ProfileSession import ProfileSession
         return ProfileSession(name)
 
     def profileFrames(self, num=None, session=None, callback=None):
@@ -579,7 +579,7 @@ class TaskManager:
         self._profileFrames.set(profileFrames)
         if (not self._frameProfiler) and profileFrames:
             # import here due to import dependencies
-            from direct.task.FrameProfiler import FrameProfiler
+            from panda3d.direct.task.FrameProfiler import FrameProfiler
             self._frameProfiler = FrameProfiler()
 
     def getProfileTasks(self):
@@ -592,7 +592,7 @@ class TaskManager:
         self._profileTasks.set(profileTasks)
         if (not self._taskProfiler) and profileTasks:
             # import here due to import dependencies
-            from direct.task.TaskProfiler import TaskProfiler
+            from panda3d.direct.task.TaskProfiler import TaskProfiler
             self._taskProfiler = TaskProfiler()
 
     def logTaskProfiles(self, name=None):
@@ -639,7 +639,7 @@ class TaskManager:
 
         # Defer this import until we need it: some Python
         # distributions don't provide the profile and pstats modules.
-        from direct.showbase.ProfileSession import ProfileSession
+        from panda3d.direct.showbase.ProfileSession import ProfileSession
         profileSession = ProfileSession('profiled-task-%s' % task.getName(),
                                         Functor(profileInfo.taskFunc, *profileInfo.taskArgs))
         ret = profileSession.run()
@@ -1205,7 +1205,7 @@ if __debug__:
         import sys
         import gc
         gc.enable()
-        from direct.showbase.DirectObject import DirectObject
+        from panda3d.direct.showbase.DirectObject import DirectObject
         class TestClass(DirectObject):
             def doTask(self, task):
                 return task.done

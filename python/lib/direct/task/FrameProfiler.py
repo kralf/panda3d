@@ -1,7 +1,7 @@
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.fsm.StatePush import FunctionCall
-from direct.showbase.PythonUtil import formatTimeExact, normalDistrib
-from direct.task import Task
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.fsm.StatePush import FunctionCall
+from panda3d.direct.showbase.PythonUtil import formatTimeExact, normalDistrib
+from panda3d.direct.task import Task
 
 class FrameProfiler:
     notify = directNotify.newCategory('FrameProfiler')

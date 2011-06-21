@@ -2,7 +2,7 @@
 
 __all__ = ['Factory']
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 
 class Factory:
     """This class manages a list of object types and their corresponding constructors.

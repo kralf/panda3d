@@ -1,0 +1,1 @@
+remake_add_scripts(gen_pycode)

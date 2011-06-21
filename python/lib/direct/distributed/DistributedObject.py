@@ -1,9 +1,9 @@
 """DistributedObject module: contains the DistributedObject class"""
 
 from pandac.PandaModules import *
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.distributed.DistributedObjectBase import DistributedObjectBase
-from direct.showbase.PythonUtil import StackTrace
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.distributed.DistributedObjectBase import DistributedObjectBase
+from panda3d.direct.showbase.PythonUtil import StackTrace
 #from PyDatagram import PyDatagram
 #from PyDatagramIterator import PyDatagramIterator
 

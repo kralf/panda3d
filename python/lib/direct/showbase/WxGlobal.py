@@ -1,5 +1,5 @@
 import wx
-from direct.task.Task import Task
+from panda3d.direct.task.Task import Task
 
 def wxLoop(self):
     # Do all the wxPython events waiting on this frame

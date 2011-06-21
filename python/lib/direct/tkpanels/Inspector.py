@@ -8,7 +8,7 @@ so that I can just type: inspect(anObject) any time."""
 __all__ = ['inspect', 'inspectorFor', 'Inspector', 'ModuleInspector', 'ClassInspector', 'InstanceInspector', 'FunctionInspector', 'InstanceMethodInspector', 'CodeInspector', 'ComplexInspector', 'DictionaryInspector', 'SequenceInspector', 'SliceInspector', 'InspectorWindow']
 
 import string
-from direct.showbase.TkGlobal import *
+from panda3d.direct.showbase.TkGlobal import *
 from Tkinter import *
 import Pmw
 
@@ -414,7 +414,7 @@ class InspectorWindow:
         part = self.topInspector().partNumber(partNumber)
         print part
         from pandac.PandaModules import NodePath
-        from direct.fsm import ClassicFSM
+        from panda3d.direct.fsm import ClassicFSM
         popupMenu = None
         if isinstance(part, NodePath):
             popupMenu = self.createPopupMenu(

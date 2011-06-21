@@ -1,6 +1,6 @@
 
-from direct.directnotify.DirectNotifyGlobal import directNotify
-from direct.distributed.DistributedObjectBase import DistributedObjectBase
+from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
+from panda3d.direct.distributed.DistributedObjectBase import DistributedObjectBase
 
 #from PyDatagram import PyDatagram
 #from PyDatagramIterator import PyDatagramIterator

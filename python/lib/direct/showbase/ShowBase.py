@@ -13,35 +13,35 @@ from pandac.PandaModules import *
 import __builtin__
 __builtin__.config = ConfigConfigureGetConfigConfigShowbase
 
-from direct.directnotify.DirectNotifyGlobal import *
+from panda3d.direct.directnotify.DirectNotifyGlobal import *
 from MessengerGlobal import *
 from BulletinBoardGlobal import *
-from direct.task.TaskManagerGlobal import *
+from panda3d.direct.task.TaskManagerGlobal import *
 from JobManagerGlobal import *
 from EventManagerGlobal import *
 from PythonUtil import *
-from direct.showbase import PythonUtil
-from direct.particles.ParticleManagerGlobal import *
+from panda3d.direct.showbase import PythonUtil
+from panda3d.direct.particles.ParticleManagerGlobal import *
 from PhysicsManagerGlobal import *
-#from direct.interval.IntervalManager import ivalMgr
-from direct.interval import IntervalManager
+#from panda3d.direct.interval.IntervalManager import ivalMgr
+from panda3d.direct.interval import IntervalManager
 from InputStateGlobal import inputState
-from direct.showbase.BufferViewer import BufferViewer
-from direct.task import Task
-from direct.directutil import Verify
-from direct.showbase import GarbageReport
+from panda3d.direct.showbase.BufferViewer import BufferViewer
+from panda3d.direct.task import Task
+from panda3d.direct.directutil import Verify
+from panda3d.direct.showbase import GarbageReport
 import EventManager
 import math,sys,os
 import Loader
 import time
 import gc
-from direct.fsm import ClassicFSM
-from direct.fsm import State
-from direct.showbase import ExceptionVarDump
+from panda3d.direct.fsm import ClassicFSM
+from panda3d.direct.fsm import State
+from panda3d.direct.showbase import ExceptionVarDump
 import DirectObject
 import SfxPlayer
 if __debug__:
-    from direct.directutil import DeltaProfiler
+    from panda3d.direct.directutil import DeltaProfiler
 import OnScreenDebug
 
 __builtin__.FADE_SORT_INDEX = 1000
@@ -1813,7 +1813,7 @@ class ShowBase(DirectObject.DirectObject):
             self.texmem = None
             return
 
-        from direct.showutil.TexMemWatcher import TexMemWatcher
+        from panda3d.direct.showutil.TexMemWatcher import TexMemWatcher
         self.texmem = TexMemWatcher()
 
     def toggleShowVertices(self):
@@ -2400,7 +2400,7 @@ class ShowBase(DirectObject.DirectObject):
         self.startWx(fWantWx)
         self.wantDirect = fWantDirect
         if self.wantDirect:
-            from direct.directtools import DirectSession
+            from panda3d.direct.directtools import DirectSession
             base.direct.enable()
         else:
             __builtin__.direct = self.direct = None

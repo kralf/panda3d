@@ -4,12 +4,12 @@ __all__ = []
 
 
 if __name__ == "__main__":
-    from direct.directbase import DirectStart
+    from panda3d.direct.directbase import DirectStart
     from pandac.PandaModules import *
     from IntervalGlobal import *
-    from direct.actor.Actor import *
+    from panda3d.direct.actor.Actor import *
 
-    from direct.directutil import Mopath
+    from panda3d.direct.directutil import Mopath
 
     boat = loader.loadModel('models/misc/smiley')
     boat.reparentTo(render)

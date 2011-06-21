@@ -1,6 +1,6 @@
 from otp.ai.AIBaseGlobal import *
-from direct.directnotify import DirectNotifyGlobal
-from direct.showbase.DirectObject import DirectObject
+from panda3d.direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.showbase.DirectObject import DirectObject
 from ConnectionRepository import *
 
 ASYNC_REQUEST_DEFAULT_TIMEOUT_IN_SECONDS = 8.0

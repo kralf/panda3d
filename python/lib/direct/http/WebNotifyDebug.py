@@ -1,6 +1,6 @@
-from direct.task import Task
-from direct.http import WebRequest
-from direct.directnotify import DirectNotifyGlobal
+from panda3d.direct.task import Task
+from panda3d.direct.http import WebRequest
+from panda3d.direct.directnotify import DirectNotifyGlobal
 import random, string
 
 class WebNotifyDebug:

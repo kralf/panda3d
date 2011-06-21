@@ -8,7 +8,7 @@ import os
 import glob
 import types
 import time
-from direct.ffi import FFIConstants
+from panda3d.direct.ffi import FFIConstants
 
 # Define a help string for the user
 helpString ="""
@@ -224,7 +224,7 @@ def doErrorCheck():
         FFIConstants.CodeModuleNameList = codeLibs
 
 def generateNativeWrappers():
-    from direct.extensions_native.Helpers import Dtool_PreloadDLL
+    from panda3d.direct.extensions_native.Helpers import Dtool_PreloadDLL
 
     # Empty out the output directories of unnecessary crud from
     # previous runs before we begin.
@@ -298,7 +298,7 @@ def run():
         generateNativeWrappers()
 
     else:
-        from direct.ffi import FFIInterrogateDatabase
+        from panda3d.direct.ffi import FFIInterrogateDatabase
         db = FFIInterrogateDatabase.FFIInterrogateDatabase(etcPath = etcPath)
         db.generateCode(outputCodeDir, extensionsDir)
 
@@ -306,7 +306,7 @@ def run():
             db.squeezeGeneratedCode(outputCodeDir, deleteSourceAfterSqueeze)
 
     if doHTML:
-        from direct.directscripts import GenDocs
+        from panda3d.direct.directscripts import GenDocs
         from pandac.PandaModules import PandaSystem
         versionString = '%s %s' % (
             PandaSystem.getDistributor(), PandaSystem.getVersionString())

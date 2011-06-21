@@ -77,7 +77,7 @@ class FallTest(NodePath):
         #self.actorNode.updateTransform()
 
 if __name__ == "__main__":
-    from direct.directbase.ThreeUpStart import *
+    from panda3d.direct.directbase.ThreeUpStart import *
     test=FallTest()
     test.reparentTo(render)
     test.setup()
