@@ -6,7 +6,7 @@ def __hash__(self):
     raise AttributeError, "ConfigVariables are not immutable."
 
 def ls(self):
-    from pandac.Notify import Notify
+    from panda3d.pandac.Notify import Notify
     self.write(Notify.out())
 
 def __int__(self):

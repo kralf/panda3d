@@ -2,8 +2,8 @@
 if __name__ == "__main__":
     from panda3d.direct.directbase.TestStart import *
     
-    from pandac.LinearVectorForce import LinearVectorForce
-    from pandac.Vec3 import Vec3
+    from panda3d.pandac.LinearVectorForce import LinearVectorForce
+    from panda3d.pandac.Vec3 import Vec3
     import ParticleEffect
     from panda3d.direct.tkpanels import ParticlePanel
     import Particles

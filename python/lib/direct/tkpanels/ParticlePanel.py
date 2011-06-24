@@ -17,7 +17,7 @@ from panda3d.direct.particles import ParticleEffect
 from Tkinter import *
 import Pmw, os,Placer
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 
 class ParticlePanel(AppShell):
     # Override class variables

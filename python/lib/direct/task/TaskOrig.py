@@ -4,18 +4,18 @@ __all__ = ['Task', 'TaskSortList', 'TaskManager',
            'exit', 'cont', 'done', 'again',
            'sequence', 'loop', 'pause']
 
-# This module may not import pandac.PandaModules, since it is imported
-# by the Toontown Launcher before the complete PandaModules have been
-# downloaded.  Instead, it imports only libpandaexpressModules, the
-# subset of PandaModules that we know is available immediately.
+# This module may not import panda3d.pandac.Modules, since it is imported
+# by the Toontown Launcher before the complete Modules have been
+# downloaded.  Instead, it imports only panda_express_modules, the
+# subset of Modules that we know is available immediately.
 # Methods that require more advanced C++ methods may import the
 # appropriate files within their own scope.
 
 # Actually, the above is no longer true.  The Task module is no longer
-# imported before PandaModules is available.  Instead, we make use of
+# imported before Modules is available.  Instead, we make use of
 # the much more limited MiniTask.py for initial startup.
 
-from pandac.libpandaexpressModules import *
+from panda3d.pandac.panda_express_modules import *
 
 from panda3d.direct.directnotify.DirectNotifyGlobal import *
 from panda3d.direct.showbase.PythonUtil import *
@@ -36,7 +36,7 @@ import types
 
 if __debug__:
     # For pstats
-    from pandac.PandaModules import PStatCollector
+    from panda3d.pandac.Modules import PStatCollector
 
 def print_exc_plus():
     """

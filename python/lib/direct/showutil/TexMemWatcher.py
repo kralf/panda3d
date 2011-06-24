@@ -1,4 +1,4 @@
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 from panda3d.direct.showbase.DirectObject import DirectObject
 import math
 import copy

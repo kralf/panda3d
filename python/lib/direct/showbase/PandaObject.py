@@ -3,7 +3,7 @@
 __all__ = []
 
 ## from DirectObject import *
-## from pandac.PandaModules import *
+## from panda3d.pandac.Modules import *
 ## 
 ## class PandaObject(DirectObject):
 ##     """

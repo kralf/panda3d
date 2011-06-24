@@ -20,6 +20,7 @@
 #include "odeJoint.h"
 #include "odeSpace.h"
 #include "odeGeom.h"
+#include "odeConvexGeom.h"
 #include "odeSurfaceParameters.h"
 #include "odeContactGeom.h"
 #include "odeContact.h"
@@ -42,6 +43,7 @@
 #include "odePlaneGeom.h"
 #include "odeCappedCylinderGeom.h"
 #include "odeCylinderGeom.h"
+#include "odeHeightFieldGeom.h"
 #include "odeRayGeom.h"
 #include "odeTriMeshData.h"
 #include "odeTriMeshGeom.h"
@@ -84,6 +86,7 @@ init_libode() {
   OdeJoint::init_type();
   OdeSpace::init_type();
   OdeGeom::init_type();
+  OdeConvexGeom::init_type();
   OdeSurfaceParameters::init_type();
   OdeContactGeom::init_type();
   OdeContact::init_type();
@@ -106,6 +109,7 @@ init_libode() {
   OdePlaneGeom::init_type();
   OdeCappedCylinderGeom::init_type();
   OdeCylinderGeom::init_type();
+  OdeHeightfieldGeom::init_type();
   OdeRayGeom::init_type();
   OdeTriMeshData::init_type();
   OdeTriMeshGeom::init_type();

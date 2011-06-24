@@ -2,7 +2,7 @@
 
 __all__ = ['OnscreenGeom']
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 import DirectGuiGlobals as DGG
 from panda3d.direct.showbase.DirectObject import DirectObject
 import string,types

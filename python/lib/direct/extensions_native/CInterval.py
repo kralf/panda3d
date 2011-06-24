@@ -1,4 +1,4 @@
-from Helpers import *
+from panda3d.direct.extensions_native.Helpers import *
 try:
   Dtool_PreloadDLL("libp3direct")
   from libp3direct import *

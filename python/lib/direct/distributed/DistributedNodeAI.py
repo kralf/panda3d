@@ -1,5 +1,5 @@
 from otp.ai.AIBaseGlobal import *
-from pandac.PandaModules import NodePath
+from panda3d.pandac.Modules import NodePath
 import DistributedObjectAI
 import GridParent
 import types

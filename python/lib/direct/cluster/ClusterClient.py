@@ -1,6 +1,6 @@
 """ClusterClient: Master for mutli-piping or PC clusters.  """
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 from ClusterMsgs import *
 from ClusterConfig import *
 from panda3d.direct.directnotify import DirectNotifyGlobal

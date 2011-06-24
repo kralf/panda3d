@@ -1,6 +1,6 @@
-from Helpers import *
-Dtool_PreloadDLL("libpandaegg")
-from libpandaegg import *
+from panda3d.direct.extensions_native.Helpers import *
+Dtool_PreloadDLL("panda_egg")
+from panda_egg import *
 
 ####################################################################
 #Dtool_funcToMethod(func, class)        

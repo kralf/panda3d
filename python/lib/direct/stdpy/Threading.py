@@ -21,11 +21,11 @@ easier to use and understand.
 It is permissible to mix-and-match both threading and threading2
 within the same application. """
 
-# We import PandaModules as the name pm, so we can avoid namespace
+# We import Modules as the name pm, so we can avoid namespace
 # collisions between native Panda objects, and our own class
 # definitions in this module. """
 import direct
-from pandac import PandaModules as pm
+from pandac import Modules as pm
 from panda3d.direct.stdpy import Thread as _thread
 import sys as _sys
 

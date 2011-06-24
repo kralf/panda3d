@@ -1,1 +1,1 @@
-remake_python_package()
+remake_python_package(NAME panda3d)

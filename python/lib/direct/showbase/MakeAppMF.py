@@ -28,7 +28,7 @@ Options:
 import sys
 import getopt
 import direct
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 
 vfs = VirtualFileSystem.getGlobalPtr()
 

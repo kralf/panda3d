@@ -2,7 +2,7 @@
 
 __all__ = ['Timer']
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 import Task
 
 class Timer:

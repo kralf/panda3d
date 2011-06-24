@@ -56,7 +56,7 @@ class Notifier:
         # The following call is necessary to make the output from C++
         # notify messages show the same timestamp as those generated
         # from Python-level notify messages.
-        from pandac.PandaModules import NotifyCategory
+        from panda3d.pandac.Modules import NotifyCategory
         NotifyCategory.setServerDelta(self.serverDelta)
 
         self.info("Notify clock adjusted by %s (and timezone adjusted by %s hours) to synchronize with server." % (PythonUtil.formatElapsedSeconds(delta), (time.timezone - timezone) / 3600))
@@ -86,7 +86,7 @@ class Notifier:
 
     # Severity funcs
     def setSeverity(self, severity):
-        from pandac.PandaModules import NSDebug, NSInfo, NSWarning, NSError
+        from panda3d.pandac.Modules import NSDebug, NSInfo, NSWarning, NSError
         if severity >= NSError:
             self.setWarning(0)
             self.setInfo(0)
@@ -105,7 +105,7 @@ class Notifier:
             self.setDebug(1)
 
     def getSeverity(self):
-        from pandac.PandaModules import NSDebug, NSInfo, NSWarning, NSError
+        from panda3d.pandac.Modules import NSDebug, NSInfo, NSWarning, NSError
         if self.getDebug():
             return NSDebug
         elif self.getInfo():

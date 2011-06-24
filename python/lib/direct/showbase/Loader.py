@@ -2,7 +2,7 @@
 
 __all__ = ['Loader']
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 from panda3d.direct.directnotify.DirectNotifyGlobal import *
 from panda3d.direct.showbase.DirectObject import DirectObject
 import types

@@ -1,6 +1,6 @@
-from Helpers import *
-Dtool_PreloadDLL("libpanda")
-from libpanda import *
+from panda3d.direct.extensions_native.Helpers import *
+Dtool_PreloadDLL("panda")
+from panda import *
 
 #####################################################################
 
@@ -15,7 +15,7 @@ del asList
 #####################################################################3333      
 
 def getTightBounds(self):
-    from pandac.PandaModules import Point3
+    from panda3d.pandac.Modules import Point3
     
     if self.getNumPaths() == 0:
         return (Point3.Point3(0), Point3.Point3(0))

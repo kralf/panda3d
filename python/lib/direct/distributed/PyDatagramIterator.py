@@ -3,7 +3,7 @@
 # class variable FuncDict and so we can import DCSubatomicType at the top
 # of the file rather than every time we call the putArg function.
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 # Import the type numbers
 
 class PyDatagramIterator(DatagramIterator):

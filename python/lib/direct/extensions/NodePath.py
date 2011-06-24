@@ -232,7 +232,7 @@ def printPosHprScale(self, other = None, sd = 2):
             ')\n')
 
 def printTransform(self, other = None, sd = 2, fRecursive = 0):
-    from pandac.PandaModules import Vec3
+    from panda3d.pandac.Modules import Vec3
     fmtStr = '%%0.%df' % sd
     name = self.getName()
     if other == None:
@@ -328,8 +328,8 @@ def __lerp(self, functorFunc, duration, blendType, taskName=None):
 
     # make the task function
     def lerpTaskFunc(task):
-        from pandac.Lerp import Lerp
-        from pandac.ClockObject import ClockObject
+        from panda3d.pandac.Lerp import Lerp
+        from panda3d.pandac.ClockObject import ClockObject
         from panda3d.direct.task.Task import Task, cont, done
         if task.init == 1:
             # make the lerp

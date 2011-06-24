@@ -36,8 +36,8 @@ PUBLISHED:
   OdeConvexGeom();
   virtual ~OdeConvexGeom();
 
-//   INLINE void set_convex(dReal *_planes, unsigned int _count, dReal
-//     *_points, unsigned int _pointcount, unsigned int *_polygons);
+  INLINE void set_convex(dReal *_planes, unsigned int _count, dReal
+    *_points, unsigned int _pointcount, unsigned int *_polygons);
 
 public:
   INLINE static int get_geom_class() { return dConvexClass; };

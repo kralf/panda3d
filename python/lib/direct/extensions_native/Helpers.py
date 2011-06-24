@@ -1,7 +1,7 @@
 ###  Tools
 __all__ = ["Dtool_ObjectToDict", "Dtool_funcToMethod", "Dtool_PreloadDLL"]
 
-from panda3d import config
+from panda3d.config import *
 import imp, sys, os
 
 # The following code exists to work around a problem that exists
@@ -39,7 +39,8 @@ if sys.platform == "win32":
     # First, search for the directory that contains all of our compiled
     # modules.
     target = None
-    filename = "libpandaexpress%s%s" % (dll_suffix, dll_ext)
+    filename = "lib" + PANDA_LIBRARY_PREFIX + "panda_express" + dll_suffix + \
+      dll_ext
     for dir in sys.path + [sys.prefix]:
         lib = os.path.join(dir, filename)
         if (os.path.exists(lib)):
@@ -77,7 +78,7 @@ def Dtool_PreloadDLL(module):
     imp.load_dynamic(module, pathname)
 
 Dtool_PreloadDLL("panda_express")
-from libpandaexpress import *
+from panda_express import *
 
 def Dtool_ObjectToDict(clas, name, obj):
     clas.DtoolClassDict[name] = obj;

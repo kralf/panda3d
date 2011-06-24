@@ -2,7 +2,7 @@
 
 __all__ = ['DirectFrame']
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 import DirectGuiGlobals as DGG
 from DirectGuiBase import *
 from OnscreenImage import OnscreenImage

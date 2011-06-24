@@ -23,5 +23,10 @@ OdeConvexGeom(dGeomID id) :
 }
 
 OdeConvexGeom::
+OdeConvexGeom() :
+  OdeGeom(dCreateConvex(0, 0, 0, 0, 0, 0)) {
+}
+
+OdeConvexGeom::
 ~OdeConvexGeom() {
 }

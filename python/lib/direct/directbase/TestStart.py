@@ -1,6 +1,6 @@
 print 'TestStart: Starting up test environment.'
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 
 from panda3d.direct.showbase.PythonUtil import *
 from panda3d.direct.showbase import ShowBase

@@ -2,7 +2,7 @@
 
 __all__ = ['DirectWaitBar']
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 import DirectGuiGlobals as DGG
 from DirectFrame import *
 import types

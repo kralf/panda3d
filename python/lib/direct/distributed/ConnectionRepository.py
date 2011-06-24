@@ -1,4 +1,4 @@
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 from panda3d.direct.task import Task
 from panda3d.direct.directnotify import DirectNotifyGlobal
 from panda3d.direct.distributed.DoInterestManager import DoInterestManager

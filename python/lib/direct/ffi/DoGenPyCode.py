@@ -32,6 +32,7 @@ default.
 
 Options:
   -h          print this message
+  -q          quiet
   -v          verbose
   -d          generate HTML documentation too
   -C dir      directory to write output code
@@ -41,6 +42,7 @@ Options:
   -e dir      directory to search for *.in files (may be repeated)
   -p dir      directory to search for Python source files (may be repeated)
   -r          remove the default library list; instrument only named libraries
+  -c          clean output directory before generating any output
   -O          no C++ comments or assertion statements
   -n          Don't use squeezeTool to squeeze the result into one .pyz file
   -s          Don't delete source files after squeezing
@@ -72,6 +74,8 @@ interrogateLib = ''
 codeLibs = []
 etcPath = []
 pythonSourcePath = []
+beQuiet = False
+emptyDir = False
 doSqueeze = True
 deleteSourceAfterSqueeze = True
 doHTML = False
@@ -84,6 +88,8 @@ def doGetopts():
     global interrogateLib
     global codeLibs
     global doSqueeze
+    global beQuiet
+    global emptyDir
     global deleteSourceAfterSqueeze
     global doHTML
     global etcPath
@@ -102,7 +108,7 @@ def doGetopts():
 
     # Extract the args the user passed in
     try:
-        opts, pargs = getopt.getopt(sys.argv[1:], 'hvdOC:H:x:Ni:e:p:rns')
+        opts, pargs = getopt.getopt(sys.argv[1:], 'hqvdOC:H:x:Ni:e:p:rns')
     except Exception, e:
         # User passed in a bad option, print the error and the help, then exit
         print e
@@ -115,6 +121,10 @@ def doGetopts():
         if (flag == '-h'):
             print helpString
             sys.exit()
+        elif (flag == '-q'):
+            beQuiet = True
+        elif (flag == '-c'):
+            emptyDir = True
         elif (flag == '-v'):
             if not FFIConstants.notify.getInfo():
                 FFIConstants.notify.setInfo(1)
@@ -228,51 +238,47 @@ def generateNativeWrappers():
 
     # Empty out the output directories of unnecessary crud from
     # previous runs before we begin.
-    for file in os.listdir(outputCodeDir):
-        pathname = os.path.join(outputCodeDir, file)
-        if not os.path.isdir(pathname):
-            os.unlink(pathname)
+    if emptyDir:
+      for file in os.listdir(outputCodeDir):
+          pathname = os.path.join(outputCodeDir, file)
+          if not os.path.isdir(pathname):
+              os.unlink(pathname)
 
     # Generate __init__.py
     initFilename = os.path.join(outputCodeDir, '__init__.py')
     init = open(initFilename, 'w')
 
-    # Generate PandaModules.py
-    pandaModulesFilename = os.path.join(outputCodeDir, 'PandaModules.py')
+    # Generate modules.py
+    pandaModulesFilename = os.path.join(outputCodeDir, 'Modules.py')
     pandaModules = open(pandaModulesFilename, 'w')
 
-    # Copy in any helper classes from the extensions_native directory
-    extensionHelperFiles = ['Helpers.py']
-    for name in extensionHelperFiles:
-        inFilename = os.path.join(extensionsDir, name)
-        outFilename = os.path.join(outputCodeDir, name)
-        if os.path.exists(inFilename):
-            inFile = open(inFilename, 'r')
-            outFile = open(outFilename, 'w')
-            outFile.write(inFile.read())
-
-    # Generate a series of "libpandaModules.py" etc. files, one for
+    # Generate a series of "panda_express.py" etc. files, one for
     # each named module.
     for moduleName in FFIConstants.CodeModuleNameList:
-        print 'Importing code library: ' + moduleName
+        if not beQuiet:
+          print 'Importing code library: ' + moduleName
         Dtool_PreloadDLL(moduleName)
         exec('import %s as module' % moduleName)
 
-        pandaModules.write('from %sModules import *\n' % (moduleName))
+        pandaModules.write('from %s import *\n' % (moduleName))
 
-        moduleModulesFilename = os.path.join(outputCodeDir, '%sModules.py' % (moduleName))
+        moduleModulesFilename = os.path.join(outputCodeDir, '%s.py' % \
+          (moduleName))
         moduleModules = open(moduleModulesFilename, 'w')
 
-        moduleModules.write('from Helpers import *\n')
+        moduleModules.write( \
+          'from panda3d.direct.extensions_native.Helpers import *\n')
         moduleModules.write('Dtool_PreloadDLL("%s")\n' % (moduleName))
         moduleModules.write('from %s import *\n\n' % (moduleName))
 
         # Now look for extensions
         for className, classDef in module.__dict__.items():
             if type(classDef) == types.TypeType:
-                extensionFilename = os.path.join(extensionsDir, '%s_extensions.py' % (className))
+                extensionFilename = os.path.join(extensionsDir, '%s.py' % \
+                  (className))
                 if os.path.exists(extensionFilename):
-                    print '  Found extensions for class: %s' % (className)
+                    if not beQuiet:
+                      print '  Found extensions for class: %s' % (className)
                     extension = open(extensionFilename, 'r')
                     moduleModules.write(extension.read())
                     moduleModules.write('\n')
@@ -307,7 +313,7 @@ def run():
 
     if doHTML:
         from panda3d.direct.directscripts import GenDocs
-        from pandac.PandaModules import PandaSystem
+        from panda3d.pandac.Modules import PandaSystem
         versionString = '%s %s' % (
             PandaSystem.getDistributor(), PandaSystem.getVersionString())
 

@@ -1,8 +1,3 @@
-remake_add_directories()
-
-remake_python_package_name(DEFAULT_PACKAGE
-  ${REMAKE_PYTHON_COMPONENT_SUFFIX})
-remake_python_package_name(CONFIG_PACKAGE config)
-remake_python_package_name(DIRECT_PACKAGE direct)
-remake_python_distribute(PACKAGES ${DEFAULT_PACKAGE} ${CONFIG_PACKAGE}
-  ${DIRECT_PACKAGE})
+remake_add_directories(config direct panda)
+remake_python_distribute(PACKAGES panda3d panda3d.config panda3d.direct)
+remake_add_directories(pandac)

@@ -1,6 +1,6 @@
 """ServerRepository module: contains the ServerRepository class"""
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 #from TaskManagerGlobal import *
 from panda3d.direct.distributed.MsgTypes import *
 from panda3d.direct.task import Task

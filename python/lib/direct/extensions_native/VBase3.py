@@ -2,9 +2,9 @@
 Methods to extend functionality of the VBase3 class
 """
 
-from Helpers import *
-Dtool_PreloadDLL("libpanda")
-from libpanda import *
+from panda3d.direct.extensions_native.Helpers import *
+Dtool_PreloadDLL("panda")
+from panda import *
 
 
 def pPrintValues(self):

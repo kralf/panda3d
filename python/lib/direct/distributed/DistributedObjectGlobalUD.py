@@ -35,7 +35,7 @@ class DistributedObjectGlobalUD(DistributedObjectUD):
     def __execMessage(self, message):
         if not self.ExecNamespace:
             # Import some useful variables into the ExecNamespace initially.
-            exec 'from pandac.PandaModules import *' in globals(), self.ExecNamespace
+            exec 'from panda3d.pandac.Modules import *' in globals(), self.ExecNamespace
             #self.importExecNamespace()
 
         # Now try to evaluate the expression using ChatInputNormal.ExecNamespace as

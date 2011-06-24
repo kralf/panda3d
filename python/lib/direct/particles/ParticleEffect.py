@@ -1,5 +1,5 @@
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 import Particles
 import ForceGroup
 from panda3d.direct.directnotify import DirectNotifyGlobal

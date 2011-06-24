@@ -1,5 +1,5 @@
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 
 from panda3d.direct.task import Task
 from DistributedNodeAI import DistributedNodeAI

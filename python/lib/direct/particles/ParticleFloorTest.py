@@ -1,5 +1,5 @@
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 from panda3d.direct.particles import ParticleEffect
 from panda3d.direct.particles import Particles
 from panda3d.direct.particles import ForceGroup

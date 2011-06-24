@@ -6,17 +6,17 @@ __all__ = ['EventManager']
 from MessengerGlobal import *
 from panda3d.direct.directnotify.DirectNotifyGlobal import *
 
-# This module may not import pandac.PandaModules, since it is imported
-# by the Toontown Launcher before the complete PandaModules have been
+# This module may not import panda3d.pandac.Modules, since it is imported
+# by the Toontown Launcher before the complete Modules have been
 # downloaded.
-#from pandac.PandaModules import *
+#from panda3d.pandac.Modules import *
 
 class EventManager:
 
     notify = None
 
     # delayed import, since this is imported by the Toontown Launcher
-    # before the complete PandaModules have been downloaded.
+    # before the complete Modules have been downloaded.
     PStatCollector = None
 
     # for efficiency, only call import once per module
@@ -43,7 +43,7 @@ class EventManager:
         """
         if self._wantPstats is None:
             self._wantPstats = config.GetBool('pstats-eventmanager', 0)
-            from pandac.PandaModules import PStatCollector
+            from panda3d.pandac.Modules import PStatCollector
             EventManager.PStatCollector = PStatCollector
         # use different methods for handling events with and without pstats tracking
         # for efficiency
@@ -84,7 +84,7 @@ class EventManager:
             ptr = eventParameter.getPtr()
 
             if EventManager.EventStorePandaNode is None:
-                from pandac.PandaModules import EventStorePandaNode
+                from panda3d.pandac.Modules import EventStorePandaNode
                 EventManager.EventStorePandaNode = EventStorePandaNode
             if isinstance(ptr, EventManager.EventStorePandaNode):
                 # Actually, it's a kludgey wrapper around a PandaNode
@@ -191,7 +191,7 @@ class EventManager:
 
     def restart(self):
         if None in (EventManager.EventQueue, EventManager.EventHandler):
-            from pandac.PandaModules import EventQueue, EventHandler
+            from panda3d.pandac.Modules import EventQueue, EventHandler
             EventManager.EventQueue = EventQueue
             EventManager.EventHandler = EventHandler
         

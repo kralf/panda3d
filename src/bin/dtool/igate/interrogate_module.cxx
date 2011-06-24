@@ -33,11 +33,9 @@
 #include <getopt.h>
 #endif
 
-Filename output_code_filename;
-string module_name;
-string library_name;
 bool build_c_wrappers = false;
 bool build_python_wrappers = false;
+bool quiet = false;
 bool build_python_native_wrappers = false;
 bool track_interpreter = false;
 
@@ -50,6 +48,7 @@ enum CommandOptions {
   CO_module,
   CO_library,
   CO_c,
+  CO_q,
   CO_python,
   CO_python_native,
   CO_track_interpreter,
@@ -60,6 +59,7 @@ static struct option long_options[] = {
   { "module", required_argument, NULL, CO_module },
   { "library", required_argument, NULL, CO_library },
   { "c", no_argument, NULL, CO_c },
+  { "q", no_argument, NULL, CO_q },
   { "python", no_argument, NULL, CO_python },
   { "python-native", no_argument, NULL, CO_python_native },
   { "track-interpreter", no_argument, NULL, CO_track_interpreter },
@@ -79,7 +79,8 @@ upcase_string(const string &str) {
 }
 */
 
-int write_python_table_native(ostream &out) 
+int write_python_table_native(ostream &out, string& module_name,
+                              string& library_name)
 {
   out << "\n#include \"dtoolbase.h\"\n"
       << "#include \"interrogate_request.h\"\n\n"
@@ -125,7 +126,8 @@ int write_python_table_native(ostream &out)
   std::set<std::string >::iterator ii;
   for(ii = Libraries.begin(); ii != Libraries.end(); ii++)
   {
-      printf("Referencing Library %s\n",(*ii).c_str());
+      if (!quiet)
+        cout << "Referencing Library " << *ii << endl;
       out << "extern  LibrayDef "<< *ii << "_moddef ;\n";
   }
 
@@ -159,7 +161,8 @@ int write_python_table_native(ostream &out)
 
 
 
-int write_python_table(ostream &out) 
+int write_python_table(ostream &out, string& module_name,
+                       string& library_name)
 {
   out << "\n#include \"dtoolbase.h\"\n"
       << "#include \"interrogate_request.h\"\n\n"
@@ -262,6 +265,10 @@ int main(int argc, char *argv[])
   extern int optind;
   int flag;
 
+  Filename output_code_filename;
+  string module_name;
+  string library_name;
+  
   flag = getopt_long_only(argc, argv, short_options, long_options, NULL);
   while (flag != EOF) {
     switch (flag) {
@@ -279,6 +286,10 @@ int main(int argc, char *argv[])
 
     case CO_c:
       build_c_wrappers = true;
+      break;
+
+    case CO_q:
+      quiet = true;
       break;
 
     case CO_python:
@@ -348,12 +359,12 @@ int main(int argc, char *argv[])
     } else {
 
       if (build_python_wrappers) {
-        int count = write_python_table(output_code);
+        int count = write_python_table(output_code, module_name, library_name);
         nout << count << " python function wrappers exported.\n";
       }
 
       if (build_python_native_wrappers) {
-        write_python_table_native(output_code);
+        write_python_table_native(output_code, module_name, library_name);
       }
 
     }

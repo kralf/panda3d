@@ -1,7 +1,7 @@
 
 print 'ThreeUpStart: Starting up environment.'
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 
 from panda3d.direct.showbase.PythonUtil import *
 from panda3d.direct.showbase import ThreeUpShow

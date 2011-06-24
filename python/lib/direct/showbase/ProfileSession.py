@@ -1,4 +1,4 @@
-from pandac.libpandaexpressModules import TrueClock
+from panda3d.pandac.panda_express_modules import TrueClock
 from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 from panda3d.direct.showbase.PythonUtil import (
     StdoutCapture, _installProfileCustomFuncs,_removeProfileCustomFuncs,

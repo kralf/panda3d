@@ -2,7 +2,7 @@
 
 __all__ = ['DirectScrolledListItem', 'DirectScrolledList']
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 import DirectGuiGlobals as DGG
 from panda3d.direct.directnotify import DirectNotifyGlobal
 from panda3d.direct.task.Task import Task

@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     def squeezePandaFiles():
         l = getSqueezeableFiles()
-        PandaSqueezeTool.squeeze("PandaModules", "PandaModulesUnsqueezed", l)
+        PandaSqueezeTool.squeeze("Modules", "ModulesUnsqueezed", l)
 
         # Clean up the source files now that they've been squeezed.  If
         # you don't like this behavior (e.g. if you want to inspect the

@@ -12,7 +12,7 @@ the its parent node.
 
 from panda3d.direct.controls.ControlManager import CollisionHandlerRayStart
 from panda3d.direct.directnotify import DirectNotifyGlobal
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 import DirectObject
 
 class ShadowPlacer(DirectObject.DirectObject):

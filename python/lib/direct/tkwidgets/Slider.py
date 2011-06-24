@@ -11,7 +11,7 @@ from Valuator import Valuator, rgbPanel, VALUATOR_MINI, VALUATOR_FULL
 from panda3d.direct.task import Task
 import math, sys, string
 import operator, Pmw
-from pandac.PandaModules import ClockObject
+from panda3d.pandac.Modules import ClockObject
 
 class Slider(Valuator):
     """

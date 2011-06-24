@@ -466,7 +466,7 @@ class MethodSpecification(FunctionSpecification):
     def outputInheritedMethodBody(self, methodClass, parentList, file, nesting, needsDowncast):
         # The method body will look something like
         #     upcastSelf = self.upcastToParentClass()
-        #     returnValue = libpanda.method(upcastSelf.this, arg)
+        #     returnValue = panda.method(upcastSelf.this, arg)
         #     returnValue.userManagesMemory = 1  (optional)
         #     return returnValue
         self.outputCFunctionComment(file, nesting+2)

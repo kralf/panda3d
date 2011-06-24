@@ -3,7 +3,7 @@ import math
 import types
 import string
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 from DirectUtil import *
 
 from panda3d.direct.showbase.DirectObject import DirectObject

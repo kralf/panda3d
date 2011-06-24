@@ -2,7 +2,7 @@
 
 __all__ = ['Audio3DManager']
 
-from pandac.PandaModules import VBase3
+from panda3d.pandac.Modules import VBase3
 from panda3d.direct.task import Task
 #
 class Audio3DManager:

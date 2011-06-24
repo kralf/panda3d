@@ -1,6 +1,6 @@
-from Helpers import *
-Dtool_PreloadDLL("libpandaexpress")
-from libpandaexpress import *
+from panda3d.direct.extensions_native.Helpers import *
+Dtool_PreloadDLL("panda_express")
+from panda_express import *
 
 ####################################################################
 #Dtool_funcToMethod(func, class)        

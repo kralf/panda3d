@@ -17,4 +17,4 @@ from MetaInterval import *
 from IntervalManager import *
 if __debug__:
     from TestInterval import *
-from pandac.PandaModules import WaitInterval
+from panda3d.pandac.Modules import WaitInterval

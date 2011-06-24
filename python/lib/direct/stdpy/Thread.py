@@ -13,15 +13,15 @@ __all__ = [
     'stack_size',
     ]
 
-# Import PandaModules as pm, so we don't have any namespace collisions.
-from pandac import PandaModules as pm
+# Import Modules as pm, so we don't have any namespace collisions.
+from pandac import Modules as pm
 
 class error(StandardError):
     pass
 
 class LockType:
     """ Implements a mutex lock.  Instead of directly subclassing
-    PandaModules.Mutex, we reimplement the lock here, to allow us to
+    Modules.Mutex, we reimplement the lock here, to allow us to
     provide the described Python lock semantics.  In particular, this
     allows a different thread to release the lock than the one that
     acquired it. """

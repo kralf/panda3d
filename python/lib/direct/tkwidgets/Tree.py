@@ -25,7 +25,7 @@ import string
 from panda3d.direct.showbase.TkGlobal import *
 from Tkinter import *
 import Pmw
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 
 # Initialize icon directory
 ICONDIR = ConfigVariableSearchPath('model-path').findFile(Filename('icons')).toOsSpecific()

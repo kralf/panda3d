@@ -12,8 +12,8 @@
 //
 ////////////////////////////////////////////////////////////////////
 
-// INLINE void OdeConvexGeom::
-// set_convex(dReal *_planes, unsigned int _count, dReal *_points, unsigned int
-//     _pointcount, unsigned int *_polygons) {
-//   dGeomSetConvex(_id, *_planes, _count, *_points, _pointcount, *_polygons);
-// }
+INLINE void OdeConvexGeom::
+set_convex(dReal *_planes, unsigned int _count, dReal *_points, unsigned int
+    _pointcount, unsigned int *_polygons) {
+  dGeomSetConvex(_id, _planes, _count, _points, _pointcount, _polygons);
+}

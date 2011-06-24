@@ -1,6 +1,6 @@
-from Helpers import *
-Dtool_PreloadDLL("libpanda")
-from libpanda import *
+from panda3d.direct.extensions_native.Helpers import *
+Dtool_PreloadDLL("panda")
+from panda import *
 
 ####################################################################
 #Dtool_funcToMethod(func, class)
@@ -157,7 +157,7 @@ Dtool_funcToMethod(getAncestry, NodePath)
 del getAncestry
 #####################################################################
 def getTightBounds(self):
-        from pandac.PandaModules import Point3
+        from panda3d.pandac.Modules import Point3
         v1 = Point3.Point3(0)
         v2 = Point3.Point3(0)
         self.calcTightBounds(v1, v2)
@@ -306,7 +306,7 @@ del printPosHprScale
 #####################################################################
 
 def printTransform(self, other = None, sd = 2, fRecursive = 0):
-    from pandac.PandaModules import Vec3
+    from panda3d.pandac.Modules import Vec3
     fmtStr = '%%0.%df' % sd
     name = self.getName()
     if other == None:
@@ -410,8 +410,8 @@ def __lerp(self, functorFunc, duration, blendType, taskName=None):
 
         # make the task function
         def lerpTaskFunc(task):
-            from pandac.PandaModules import Lerp
-            from pandac.PandaModules import ClockObject
+            from panda3d.pandac.Modules import Lerp
+            from panda3d.pandac.Modules import ClockObject
             from panda3d.direct.task.Task import Task, cont, done
             if task.init == 1:
                 # make the lerp
@@ -450,7 +450,7 @@ def __autoLerp(self, functorFunc, time, blendType, taskName):
         """_autoLerp(self, functor, float, string, string)
         This lerp uses C++ to handle the stepping. Bonus is
         its more efficient, trade-off is there is less control"""
-        from pandac.PandaModules import AutonomousLerp
+        from panda3d.pandac.Modules import AutonomousLerp
         from panda3d.direct.showbase import LerpBlendHelpers
         # make a lerp that lives in C++ land
         functor = functorFunc()
@@ -491,7 +491,7 @@ def lerpColorRGBA(self, r, g, b, a, time,
         string="noBlend", string=none, string=none)
         """
         def functorFunc(self = self, r = r, g = g, b = b, a = a):
-            from pandac.PandaModules import ColorLerpFunctor
+            from panda3d.pandac.Modules import ColorLerpFunctor
             # just end rgba values, use current color rgba values for start
             startColor = self.getColor()
             functor = ColorLerpFunctor.ColorLerpFunctor(
@@ -518,7 +518,7 @@ def lerpColorRGBARGBA(self, sr, sg, sb, sa, er, eg, eb, ea, time,
         """
         def functorFunc(self = self, sr = sr, sg = sg, sb = sb, sa = sa,
                         er = er, eg = eg, eb = eb, ea = ea):
-            from pandac.PandaModules import ColorLerpFunctor
+            from panda3d.pandac.Modules import ColorLerpFunctor
             # start and end rgba values
             functor = ColorLerpFunctor.ColorLerpFunctor(self, sr, sg, sb, sa,
                                                         er, eg, eb, ea)
@@ -540,7 +540,7 @@ def lerpColorVBase4(self, endColor, time,
         string=none)
         """
         def functorFunc(self = self, endColor = endColor):
-            from pandac.PandaModules import ColorLerpFunctor
+            from panda3d.pandac.Modules import ColorLerpFunctor
             # just end vec4, use current color for start
             startColor = self.getColor()
             functor = ColorLerpFunctor.ColorLerpFunctor(
@@ -564,7 +564,7 @@ def lerpColorVBase4VBase4(self, startColor, endColor, time,
         """
         def functorFunc(self = self, startColor = startColor,
                         endColor = endColor):
-            from pandac.PandaModules import ColorLerpFunctor
+            from panda3d.pandac.Modules import ColorLerpFunctor
             # start color and end vec
             functor = ColorLerpFunctor.ColorLerpFunctor(
                 self, startColor, endColor)
@@ -609,7 +609,7 @@ def lerpColorScaleRGBA(self, r, g, b, a, time,
         string="noBlend", string=none, string=none)
         """
         def functorFunc(self = self, r = r, g = g, b = b, a = a):
-            from pandac.PandaModules import ColorScaleLerpFunctor
+            from panda3d.pandac.Modules import ColorScaleLerpFunctor
             # just end rgba values, use current color rgba values for start
             startColor = self.getColor()
             functor = ColorScaleLerpFunctor.ColorScaleLerpFunctor(
@@ -636,7 +636,7 @@ def lerpColorScaleRGBARGBA(self, sr, sg, sb, sa, er, eg, eb, ea, time,
         """
         def functorFunc(self = self, sr = sr, sg = sg, sb = sb, sa = sa,
                         er = er, eg = eg, eb = eb, ea = ea):
-            from pandac.PandaModules import ColorScaleLerpFunctor
+            from panda3d.pandac.Modules import ColorScaleLerpFunctor
             # start and end rgba values
             functor = ColorScaleLerpFunctor.ColorScaleLerpFunctor(self, sr, sg, sb, sa,
                                                         er, eg, eb, ea)
@@ -658,7 +658,7 @@ def lerpColorScaleVBase4(self, endColor, time,
         string=none)
         """
         def functorFunc(self = self, endColor = endColor):
-            from pandac.PandaModules import ColorScaleLerpFunctor
+            from panda3d.pandac.Modules import ColorScaleLerpFunctor
             # just end vec4, use current color for start
             startColor = self.getColor()
             functor = ColorScaleLerpFunctor.ColorScaleLerpFunctor(
@@ -682,7 +682,7 @@ def lerpColorScaleVBase4VBase4(self, startColor, endColor, time,
         """
         def functorFunc(self = self, startColor = startColor,
                         endColor = endColor):
-            from pandac.PandaModules import ColorScaleLerpFunctor
+            from panda3d.pandac.Modules import ColorScaleLerpFunctor
             # start color and end vec
             functor = ColorScaleLerpFunctor.ColorScaleLerpFunctor(
                 self, startColor, endColor)
@@ -726,7 +726,7 @@ def lerpHprHPR(self, h, p, r, time, other=None,
         """
         def functorFunc(self = self, h = h, p = p, r = r,
                         other = other, shortest=shortest):
-            from pandac.PandaModules import HprLerpFunctor
+            from panda3d.pandac.Modules import HprLerpFunctor
             # it's individual hpr components
             if (other != None):
                 # lerp wrt other
@@ -765,7 +765,7 @@ def lerpHprVBase3(self, hpr, time, other=None,
         """
         def functorFunc(self = self, hpr = hpr,
                         other = other, shortest=shortest):
-            from pandac.PandaModules import HprLerpFunctor
+            from panda3d.pandac.Modules import HprLerpFunctor
             # it's a vbase3 hpr
             if (other != None):
                 # lerp wrt other
@@ -816,7 +816,7 @@ def lerpPosXYZ(self, x, y, z, time, other=None,
         Perform a pos lerp with three floats as the end point
         """
         def functorFunc(self = self, x = x, y = y, z = z, other = other):
-            from pandac.PandaModules import PosLerpFunctor
+            from panda3d.pandac.Modules import PosLerpFunctor
             if (other != None):
                 # lerp wrt other
                 startPos = self.getPos(other)
@@ -846,7 +846,7 @@ def lerpPosPoint3(self, pos, time, other=None,
         Perform a pos lerp with a Point3 as the end point
         """
         def functorFunc(self = self, pos = pos, other = other):
-            from pandac.PandaModules import PosLerpFunctor
+            from panda3d.pandac.Modules import PosLerpFunctor
             if (other != None):
                 #lerp wrt other
                 functor = PosLerpFunctor.PosLerpFunctor(
@@ -892,7 +892,7 @@ def lerpPosHprPoint3VBase3(self, pos, hpr, time, other=None,
         """
         def functorFunc(self = self, pos = pos, hpr = hpr,
                         other = other, shortest=shortest):
-            from pandac.PandaModules import PosHprLerpFunctor
+            from panda3d.pandac.Modules import PosHprLerpFunctor
             if (other != None):
                 # lerp wrt other
                 startPos = self.getPos(other)
@@ -929,7 +929,7 @@ def lerpPosHprXYZHPR(self, x, y, z, h, p, r, time, other=None,
         """
         def functorFunc(self = self, x = x, y = y, z = z,
                         h = h, p = p, r = r, other = other, shortest=shortest):
-            from pandac.PandaModules import PosHprLerpFunctor
+            from panda3d.pandac.Modules import PosHprLerpFunctor
             if (other != None):
                 # lerp wrt other
                 startPos = self.getPos(other)
@@ -974,7 +974,7 @@ def lerpPosHprScale(self, pos, hpr, scale, time, other=None,
         """
         def functorFunc(self = self, pos = pos, hpr = hpr,
                         scale = scale, other = other, shortest=shortest):
-            from pandac.PandaModules import PosHprScaleLerpFunctor
+            from panda3d.pandac.Modules import PosHprScaleLerpFunctor
             if (other != None):
                 # lerp wrt other
                 startPos = self.getPos(other)
@@ -1033,7 +1033,7 @@ def lerpScaleVBase3(self, scale, time, other=None,
         string=none, NodePath=None)
         """
         def functorFunc(self = self, scale = scale, other = other):
-            from pandac.PandaModules import ScaleLerpFunctor
+            from panda3d.pandac.Modules import ScaleLerpFunctor
             if (other != None):
                 # lerp wrt other
                 functor = ScaleLerpFunctor.ScaleLerpFunctor(self,
@@ -1061,7 +1061,7 @@ def lerpScaleXYZ(self, sx, sy, sz, time, other=None,
         string=none, string=none, NodePath=None)
         """
         def functorFunc(self = self, sx = sx, sy = sy, sz = sz, other = other):
-            from pandac.PandaModules import ScaleLerpFunctor
+            from panda3d.pandac.Modules import ScaleLerpFunctor
             if (other != None):
                 # lerp wrt other
                 startScale = self.getScale(other)
@@ -1264,8 +1264,8 @@ Dtool_funcToMethod(colorScaleInterval, NodePath)
 del colorScaleInterval
 #####################################################################
 def attachCollisionSphere(self, name, cx, cy, cz, r, fromCollide, intoCollide):
-        from pandac.PandaModules import CollisionSphere
-        from pandac.PandaModules import CollisionNode
+        from panda3d.pandac.Modules import CollisionSphere
+        from panda3d.pandac.Modules import CollisionNode
         coll = CollisionSphere.CollisionSphere(cx, cy, cz, r)
         collNode = CollisionNode.CollisionNode(name)
         collNode.addSolid(coll)
@@ -1278,8 +1278,8 @@ Dtool_funcToMethod(attachCollisionSphere, NodePath)
 del attachCollisionSphere
 #####################################################################
 def attachCollisionSegment(self, name, ax, ay, az, bx, by, bz, fromCollide, intoCollide):
-        from pandac.PandaModules import CollisionSegment
-        from pandac.PandaModules import CollisionNode
+        from panda3d.pandac.Modules import CollisionSegment
+        from panda3d.pandac.Modules import CollisionNode
         coll = CollisionSegment.CollisionSegment(ax, ay, az, bx, by, bz)
         collNode = CollisionNode.CollisionNode(name)
         collNode.addSolid(coll)
@@ -1292,8 +1292,8 @@ Dtool_funcToMethod(attachCollisionSegment, NodePath)
 del attachCollisionSegment
 #####################################################################
 def attachCollisionRay(self, name, ox, oy, oz, dx, dy, dz, fromCollide, intoCollide):
-        from pandac.PandaModules import CollisionRay
-        from pandac.PandaModules import CollisionNode
+        from panda3d.pandac.Modules import CollisionRay
+        from panda3d.pandac.Modules import CollisionNode
         coll = CollisionRay.CollisionRay(ox, oy, oz, dx, dy, dz)
         collNode = CollisionNode.CollisionNode(name)
         collNode.addSolid(coll)
@@ -1307,7 +1307,7 @@ del attachCollisionRay
 #####################################################################
 def flattenMultitex(self, stateFrom = None, target = None,
                         useGeom = 0, allowTexMat = 0, win = None):
-        from pandac.PandaModules import MultitexReducer
+        from panda3d.pandac.Modules import MultitexReducer
         mr = MultitexReducer.MultitexReducer()
         if target != None:
             mr.setTarget(target)

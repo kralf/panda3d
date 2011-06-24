@@ -2,7 +2,7 @@
 
 __all__ = ['ActorInterval', 'LerpAnimInterval']
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 from panda3d.direct.directnotify.DirectNotifyGlobal import *
 import Interval
 import math

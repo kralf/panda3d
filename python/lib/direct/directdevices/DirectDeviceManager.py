@@ -1,7 +1,7 @@
 """ Class used to create and control vrpn devices """
 
 from panda3d.direct.showbase.DirectObject import DirectObject
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 
 ANALOG_MIN = -0.95
 ANALOG_MAX = 0.95

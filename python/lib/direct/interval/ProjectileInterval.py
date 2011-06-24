@@ -2,7 +2,7 @@
 
 __all__ = ['ProjectileInterval']
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 from Interval import Interval
 from panda3d.direct.showbase.PythonUtil import lerp
 from panda3d.direct.showbase import PythonUtil

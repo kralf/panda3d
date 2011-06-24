@@ -7,7 +7,7 @@ __all__ = ['ShowBase', 'WindowControls']
 # Annoying and very noisy, but sometimes useful
 #import VerboseImport
 
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 
 # This needs to be available early for DirectGUI imports
 import __builtin__
@@ -108,7 +108,7 @@ class ShowBase(DirectObject.DirectObject):
         # whenever we resume from a pause.  This callback function is
         # a little hacky, but we can't call it directly from within
         # the TaskManager because he doesn't know about PStats (and
-        # has to run before libpanda is even loaded).
+        # has to run before panda is even loaded).
         taskMgr.resumeFunc = PStatClient.resumeAfterPause
 
         if(self.config.GetBool("want-dev",0)):
