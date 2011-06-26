@@ -25,7 +25,7 @@ within the same application. """
 # collisions between native Panda objects, and our own class
 # definitions in this module. """
 import direct
-from pandac import Modules as pm
+from panda3d.pandac import Modules as pm
 from panda3d.direct.stdpy import Thread as _thread
 import sys as _sys
 

@@ -167,16 +167,15 @@ endmacro(panda3d_interrogate_module)
 #     ${REMAKE_COMPONENT}-${REMAKE_PYTHON_COMPONENT_SUFFIX}.
 #   \required[value] command The generator command that will be passed to
 #     remake_generate_custom() to generate the Python module sources.
-#   \optional[list] arg An optional list of command line arguments to be
-#     passed to remake_generate_custom(). The module directory defined by
-#     panda3d_interrogate_module() may be substituted for the command-line
-#     placeholder %MODULE_PATH%.
-macro(panda3d_python_package)
-  remake_arguments(PREFIX panda3d_ VAR NAME ARGN command ${ARGN})
+#   \optional[list] PATH An optional list of path names that will be
+#     prepended to the PYTHONPATH environment variable.
+macro(panda3d_python_package panda3d_command)
+  remake_arguments(PREFIX panda3d_ VAR NAME LIST PATH ${ARGN})
   remake_component_name(panda3d_default_component ${REMAKE_COMPONENT}
     ${REMAKE_PYTHON_COMPONENT_SUFFIX})
   remake_python_package_name(panda3d_default_name ${panda3d_default_component})
   remake_set(panda3d_name SELF DEFAULT ${panda3d_default_name})
+  remake_set(panda3d_paths ${panda3d_path})
 
   remake_set(panda3d_others ${CMAKE_CURRENT_BINARY_DIR}/__init__.py
     ${CMAKE_CURRENT_BINARY_DIR}/Modules.py)
@@ -184,6 +183,7 @@ macro(panda3d_python_package)
     DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     ${panda3d_others} GENERATED)
 
+  remake_unset(panda3d_targets)
   remake_file_glob(panda3d_dirs ${PANDA3D_MODULE_DIR}/* DIRECTORIES)
   foreach(panda3d_dir ${panda3d_dirs})
     remake_file(panda3d_file ${panda3d_dir}/target)
@@ -191,18 +191,20 @@ macro(panda3d_python_package)
     remake_file(panda3d_file ${panda3d_dir}/directory)
     remake_file_read(panda3d_module_path ${panda3d_file})
 
-    remake_set(panda3d_source ${CMAKE_CURRENT_BINARY_DIR}/${panda3d_target}.py)
-    string(REPLACE %MODULE_PATH% ${panda3d_module_path} panda3d_replaced_command
-      "${panda3d_command}")
-
-    remake_generate_custom("Python module"
-      ${panda3d_replaced_command}
-      INPUT ${panda3d_target} GENERATED
-      SOURCES ${panda3d_source}
-      OTHERS ${panda3d_others})
-    remake_python_add_modules(PACKAGE ${panda3d_name}
-      ${panda3d_source} GENERATED)
+    remake_list_push(panda3d_targets ${panda3d_target})
+    remake_list_push(panda3d_paths ${panda3d_module_path})
+    remake_list_push(panda3d_sources
+      ${CMAKE_CURRENT_BINARY_DIR}/${panda3d_target}_module.py)
   endforeach(panda3d_dir)
+
+  string(REPLACE ";" ":" panda3d_python_path "${panda3d_paths}")
+  remake_generate_custom("Python module"
+    PYTHONPATH=${panda3d_python_path} python ${panda3d_command} -q -r %INPUT%
+    INPUT ${panda3d_targets} GENERATED
+    SOURCES ${panda3d_sources}
+    OTHERS ${panda3d_others})
+  remake_python_add_modules(PACKAGE ${panda3d_name}
+    ${panda3d_sources} GENERATED)
 endmacro(panda3d_python_package)
 
 ### \brief Add directories to the Interrogate include path of Panda3D.

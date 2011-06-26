@@ -4,6 +4,6 @@ remake_include(
   ../../lib/direct/*
 )
 
-remake_define(WITHIN_PANDA 1)
+remake_define(WITHIN_PANDA ON)
 
 remake_add_directories()

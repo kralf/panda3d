@@ -8,7 +8,7 @@ __all__ = [
     'file', 'open', 'listdir', 'walk', 'join'
     ]
 
-from pandac import Modules as pm
+from panda3d.pandac import Modules as pm
 import types
 
 _vfs = pm.VirtualFileSystem.getGlobalPtr()

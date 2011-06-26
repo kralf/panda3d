@@ -17,7 +17,7 @@ import sys as _sys
 
 from panda3d.direct.stdpy import Thread
 from panda3d.direct.stdpy.Thread import stack_size, _local as local
-from pandac import Modules as pm
+from panda3d.pandac import Modules as pm
 _sleep = pm.Thread.sleep
 
 from time import time as _time

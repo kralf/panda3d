@@ -1,1 +1,1 @@
-remake_add_files(RECURSE INSTALL samples)
+remake_add_files(*.py *.sha INSTALL samples)

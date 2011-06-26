@@ -19,7 +19,7 @@ DowncastMap = {}
 # The type map is used for upcasting and downcasting through
 # the panda inheritance chain
 def registerInTypeMap(pythonClass):
-    from pandac import TypedObject
+    from panda3d.pandac import TypedObject
     if issubclass(pythonClass, TypedObject.TypedObject):
         typeIndex = pythonClass.getClassType().getIndex()
         WrapperClassMap[typeIndex] = pythonClass
@@ -210,7 +210,7 @@ class FFIExternalObject:
         # We create a LineStream for the output function to write to, then we extract
         # the string out of it and return it as our str
         try:
-            from pandac import LineStream
+            from panda3d.pandac import LineStream
             lineStream = LineStream.LineStream()
             self.output(lineStream)
             baseRepr = lineStream.getLine()
@@ -229,7 +229,7 @@ class FFIExternalObject:
         # Lots of Panda classes have an write or output function defined that takes an Ostream
         # We create a LineStream for the write or output function to write to, then we extract
         # the string out of it and return it as our repr
-        from pandac import LineStream
+        from panda3d.pandac import LineStream
         lineStream = LineStream.LineStream()
         try:
             # First try the write function, that is the better one

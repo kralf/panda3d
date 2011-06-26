@@ -13,7 +13,7 @@ def setRelative(self, np, left, right, bottom, top):
     node parented within the render2d hierarchy.
 
     """
-    from pandac import Point3
+    from panda3d.pandac import Point3
 
     # Get the relative transform to the node.
     mat = np.getMat(render2d)

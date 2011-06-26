@@ -260,9 +260,9 @@ def generateNativeWrappers():
         Dtool_PreloadDLL(moduleName)
         exec('import %s as module' % moduleName)
 
-        pandaModules.write('from %s import *\n' % (moduleName))
+        pandaModules.write('from %s_module import *\n' % (moduleName))
 
-        moduleModulesFilename = os.path.join(outputCodeDir, '%s.py' % \
+        moduleModulesFilename = os.path.join(outputCodeDir, '%s_module.py' % \
           (moduleName))
         moduleModules = open(moduleModulesFilename, 'w')
 

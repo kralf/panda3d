@@ -1,10 +1,7 @@
 from panda3d.direct.extensions_native.Helpers import *
-try:
-  Dtool_PreloadDLL("libp3direct")
-  from libp3direct import *
-except:
-  Dtool_PreloadDLL("libdirect")
-  from libdirect import *
+
+Dtool_PreloadDLL("direct")
+from direct import *
 
 #####################################################################
 

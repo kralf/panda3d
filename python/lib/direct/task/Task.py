@@ -2,7 +2,7 @@
 TaskOrig.py, the original Python implementation of the task system,
 and TaskNew.py, the new C++ implementation. """
 
-from panda3d.pandac.panda_express_modules import ConfigVariableBool
+from panda3d.pandac.panda_express_module import ConfigVariableBool
 wantNewTasks = ConfigVariableBool('want-new-tasks', True).getValue()
 
 if wantNewTasks:

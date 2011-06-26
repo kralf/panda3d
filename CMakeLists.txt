@@ -41,11 +41,6 @@ remake_pack_deb(
   DESCRIPTION "Python modules"
 )
 remake_pack_deb(
-  COMPONENT samples
-  DESCRIPTION "sample applications"
-  panda3d-python
-)
-remake_pack_deb(
   COMPONENT test
   DESCRIPTION "testing binaries"
   panda3d-dtool panda3d panda3d-tools
@@ -76,4 +71,9 @@ remake_pack_deb(
   ARCH all
   COMPONENT models
   DESCRIPTION "models"
+)
+remake_pack_deb(
+  COMPONENT samples
+  DESCRIPTION "sample applications"
+  panda3d-python panda3d-models
 )

@@ -92,5 +92,3 @@ def Dtool_funcToMethod(func, clas, method_name=None):
     if not method_name:
             method_name = func.__name__
     clas.DtoolClassDict[method_name] = func;
-
-
