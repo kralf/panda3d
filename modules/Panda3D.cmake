@@ -22,9 +22,9 @@ include(ReMakeGenerate)
 
 remake_minimum_required(VERSION 0.3)
 
-### \brief Panda3D Interrogate code generation macros
-#   The Panda3D Interrogate module defines convenience macros for generating
-#   the Panda3D Python bindings.
+### \brief Panda3D code generation macros
+#   The Panda3D module defines convenience macros for generating the Panda3D
+#   Python bindings.
 
 remake_set(PANDA3D_INTERROGATE_DIR
   ${CMAKE_BINARY_DIR}/Panda3DFiles/Panda3DInterrogate)
@@ -87,23 +87,18 @@ macro(panda3d_interrogate panda3d_target)
   remake_file_glob(panda3d_input ${panda3d_globs} EXCLUDE ${panda3d_exclude})
   list(SORT panda3d_input)
 
-  remake_file(panda3d_dir ${PANDA3D_INTERROGATE_DIR}/${panda3d_module})
+  remake_file(panda3d_dir
+    ${PANDA3D_INTERROGATE_DIR}/${panda3d_module}/${panda3d_target})
   if(NOT EXISTS ${panda3d_dir})
     remake_file_mkdir(${panda3d_dir})
   endif(NOT EXISTS ${panda3d_dir})
-  remake_file(panda3d_output ${panda3d_dir}/${panda3d_target}.in)
-  if(NOT EXISTS ${panda3d_output})
-    remake_file_create(${panda3d_output})
-  endif(NOT EXISTS ${panda3d_output})
-
-  remake_generate_custom(Interrogate
-    interrogate ${panda3d_args} ${panda3d_defs}
-      ${panda3d_include_flags} ${panda3d_interrogate_include_flags}
-      -oc %SOURCES% -od ${panda3d_output} %INPUT%
-    TARGET ${panda3d_target}
-    INPUT ${panda3d_input}
-    SOURCES ${panda3d_target}_igate.cxx
-    OTHERS ${panda3d_output})
+  remake_file(panda3d_file ${panda3d_dir}/arguments)
+  remake_file_create(${panda3d_file})
+  remake_file_write(${panda3d_file} ${panda3d_args} ${panda3d_defs}
+    ${panda3d_include_flags} ${panda3d_interrogate_include_flags})
+  remake_file(panda3d_file ${panda3d_dir}/input)
+  remake_file_create(${panda3d_file})
+  remake_file_write(${panda3d_file} ${panda3d_input})
 endmacro(panda3d_interrogate)
 
 ### \brief Add Panda3D Interrogate module sources for a target.
@@ -118,15 +113,10 @@ macro(panda3d_interrogate_module panda3d_target)
   remake_arguments(PREFIX panda3d_ VAR MODULE ${ARGN})
   remake_set(panda3d_module SELF DEFAULT ${panda3d_target})
 
-  remake_set(panda3d_args -q -python-native -module ${panda3d_module}
-    -library ${panda3d_target})
-
   remake_file(panda3d_dir ${PANDA3D_MODULE_DIR}/${panda3d_module})
   if(NOT EXISTS ${panda3d_dir})
     remake_file_mkdir(${panda3d_dir})
   endif(NOT EXISTS ${panda3d_dir})
-
-  remake_file(panda3d_dir ${PANDA3D_MODULE_DIR}/${panda3d_module})
   remake_file(panda3d_file ${panda3d_dir}/target)
   remake_file_create(${panda3d_file})
   remake_file_write(${panda3d_file} ${panda3d_target})
@@ -135,16 +125,40 @@ macro(panda3d_interrogate_module panda3d_target)
   remake_file_write(${panda3d_file} ${CMAKE_CURRENT_BINARY_DIR})
 
   remake_file(panda3d_dir ${PANDA3D_INTERROGATE_DIR}/${panda3d_module})
-  remake_file_glob(panda3d_input ${panda3d_dir}/*.in)
+  remake_file_glob(panda3d_dirs ${panda3d_dir}/* DIRECTORIES)
 
+  remake_unset(panda3d_inputs panda3d_sources)
+  foreach(panda3d_dir ${panda3d_dirs})
+    get_filename_component(panda3d_igate_target ${panda3d_dir} NAME)
+    remake_file_read(panda3d_args ${panda3d_dir}/arguments)
+    remake_file_read(panda3d_input ${panda3d_dir}/input)
+    remake_set(panda3d_source
+      ${CMAKE_CURRENT_BINARY_DIR}/${panda3d_igate_target}_igate.cxx)
+    remake_set(panda3d_other
+      ${CMAKE_CURRENT_BINARY_DIR}/${panda3d_igate_target}.in)
+
+    remake_generate_custom(Interrogate
+      interrogate ${panda3d_args} -oc %SOURCES% -od %OTHERS% %INPUT%
+      INPUT ${panda3d_input}
+      SOURCES ${panda3d_source}
+      OTHERS ${panda3d_other})
+
+    remake_list_push(panda3d_inputs ${panda3d_other})
+    remake_list_push(panda3d_sources ${panda3d_source})
+  endforeach(panda3d_dir)
+
+  remake_set(panda3d_args -q -python-native -module ${panda3d_module}
+    -library ${panda3d_target})
   remake_generate_custom("Interrogate module"
     interrogate_module ${panda3d_args} -oc %SOURCES% %INPUT%
     TARGET ${panda3d_target}
-    INPUT ${panda3d_input} GENERATED
+    INPUT ${panda3d_inputs} GENERATED
     SOURCES ${panda3d_target}_module.cxx)
+  remake_target_add_sources(${panda3d_target} ${panda3d_sources})
+  set_source_files_properties(${panda3d_sources} PROPERTIES GENERATED ON)
 endmacro(panda3d_interrogate_module)
 
-### \brief Define a Python package for the Panda3D Interrogate modules.
+### \brief Define a Python package for the Panda3D modules.
 #   This macro defines a Python package to contain generated Panda3D Python
 #   modules. It attempts to call remake_generate_custom() and
 #   remake_python_package() with the appropriate arguments.
@@ -157,7 +171,7 @@ endmacro(panda3d_interrogate_module)
 #     passed to remake_generate_custom(). The module directory defined by
 #     panda3d_interrogate_module() may be substituted for the command-line
 #     placeholder %MODULE_PATH%.
-macro(panda3d_interrogate_package)
+macro(panda3d_python_package)
   remake_arguments(PREFIX panda3d_ VAR NAME ARGN command ${ARGN})
   remake_component_name(panda3d_default_component ${REMAKE_COMPONENT}
     ${REMAKE_PYTHON_COMPONENT_SUFFIX})
@@ -189,7 +203,7 @@ macro(panda3d_interrogate_package)
     remake_python_add_modules(PACKAGE ${panda3d_name}
       ${panda3d_source} GENERATED)
   endforeach(panda3d_dir)
-endmacro(panda3d_interrogate_package)
+endmacro(panda3d_python_package)
 
 ### \brief Add directories to the Interrogate include path of Panda3D.
 #   This macro adds a list of directories to the include path of Panda3D's

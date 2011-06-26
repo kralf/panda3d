@@ -1,1 +1,1 @@
-remake_add_executables(*.cxx LINK linmath TESTING)
+remake_add_executables(*.cxx LINK panda TESTING)

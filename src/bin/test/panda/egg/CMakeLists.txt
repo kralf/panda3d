@@ -1,1 +1,1 @@
-remake_add_executables(*.cxx LINK egg TESTING)
+remake_add_executables(*.cxx LINK panda_egg TESTING)

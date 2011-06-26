@@ -1,1 +1,1 @@
-remake_add_executables(*.cxx LINK collide TESTING)
+remake_add_executables(*.cxx LINK panda TESTING)

@@ -1,1 +1,1 @@
-remake_add_executables(*.cxx LINK gsgbase TESTING)
+remake_add_executables(*.cxx LINK panda TESTING)

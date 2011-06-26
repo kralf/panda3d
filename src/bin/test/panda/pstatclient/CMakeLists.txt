@@ -1,1 +1,1 @@
-remake_add_executables(*.cxx LINK pstatclient net TESTING)
+remake_add_executables(*.cxx LINK panda TESTING)

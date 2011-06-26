@@ -1,1 +1,1 @@
-remake_add_executables(*.cxx LINK pgui framework TESTING)
+remake_add_executables(*.cxx LINK panda TESTING)
