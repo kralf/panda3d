@@ -1,15 +1,15 @@
 #Author: Kwasi Mensah (kmensah@andrew.cmu.edu)
 #Date: 7/25/2005
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import Filename,Buffer,Shader
-from pandac.PandaModules import PandaNode,NodePath
-from pandac.PandaModules import AmbientLight,DirectionalLight
-from pandac.PandaModules import TextNode,Point3,Vec4
-from direct.showbase.DirectObject import DirectObject
-from direct.filter.CommonFilters import CommonFilters
-from direct.gui.OnscreenText import OnscreenText
-from direct.actor.Actor import Actor
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import Filename,Buffer,Shader
+from panda3d.pandac.Modules import PandaNode,NodePath
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.pandac.Modules import TextNode,Point3,Vec4
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.filter.CommonFilters import CommonFilters
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.actor.Actor import Actor
 import sys,os
 
 # Figure out what directory this program is in.
@@ -62,8 +62,8 @@ class GlowDemo(DirectObject):
         # load our model
 
         self.tron=Actor()
-        self.tron.loadModel("models/tron")
-        self.tron.loadAnims({"running":"models/tron_anim"})
+        self.tron.loadModel("samples/glow/models/tron")
+        self.tron.loadAnims({"running":"samples/glow/models/tron_anim"})
         self.tron.reparentTo(render)
         self.interval = self.tron.hprInterval(60,Point3(360,0,0))
         self.interval.loop()

@@ -7,17 +7,17 @@
 # version of normal mapping: just one point light, one ambient
 # light, and no shadows.
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import WindowProperties
-from pandac.PandaModules import Filename,Shader
-from pandac.PandaModules import AmbientLight,PointLight
-from pandac.PandaModules import TextNode
-from pandac.PandaModules import Point3,Vec3,Vec4
-from direct.task.Task import Task
-from direct.actor.Actor import Actor
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.filter.CommonFilters import *
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import WindowProperties
+from panda3d.pandac.Modules import Filename,Shader
+from panda3d.pandac.Modules import AmbientLight,PointLight
+from panda3d.pandac.Modules import TextNode
+from panda3d.pandac.Modules import Point3,Vec3,Vec4
+from panda3d.direct.task.Task import Task
+from panda3d.direct.actor.Actor import Actor
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.filter.CommonFilters import *
 import sys,os
 
 # Figure out what directory this program is in.
@@ -58,7 +58,8 @@ class NormalMapDemo(DirectObject):
         # empty room containing a pillar, a pyramid, and a bunch
         # of exaggeratedly bumpy textures.
 
-        self.room = loader.loadModel("models/abstractroom")
+        self.room = loader.loadModel( \
+          "models/samples/normal_mapping/abstractroom")
         self.room.reparentTo(render)
 
         # Make the mouse invisible, turn off normal mouse controls
@@ -110,7 +111,7 @@ class NormalMapDemo(DirectObject):
         self.room.setLight(alnp)
 
         # create a sphere to denote the light
-        sphere = loader.loadModel("models/sphere")
+        sphere = loader.loadModel("models/samples/normal_mapping/sphere")
         sphere.reparentTo(plnp)
 
         # load and apply the shader.  This is using panda's

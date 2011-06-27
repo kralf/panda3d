@@ -13,7 +13,8 @@ class NotifyPanel:
         notify levels for all available DIRECT and PANDA notify categories
         """
         # Make sure TK mainloop is running
-        from panda3d.direct.showbase.TkGlobal import Pmw, Toplevel, Frame, Label, Radiobutton
+        from panda3d.direct.showbase.TkGlobal import Pmw, Toplevel, Frame
+        from panda3d.direct.showbase.TkGlobal import Label, Radiobutton
         from panda3d.direct.showbase.TkGlobal import HORIZONTAL, X, W, NW, BOTH, LEFT, RIGHT, IntVar
         # To get severity levels
         from panda3d.pandac.Modules import NSFatal, NSError, NSWarning, NSInfo

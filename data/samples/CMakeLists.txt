@@ -1,1 +1,1 @@
-remake_add_files(* RECURSE INSTALL models/samples)
+remake_add_directories()

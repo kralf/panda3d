@@ -1,15 +1,15 @@
 #Author: Kwasi Mensah (kmensah@andrew.cmu.edu)
 #Date: 7/25/2005
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import Filename,Buffer,Shader
-from pandac.PandaModules import PandaNode,NodePath
-from pandac.PandaModules import ColorBlendAttrib
-from pandac.PandaModules import AmbientLight,DirectionalLight
-from pandac.PandaModules import TextNode,Point3,Vec4
-from direct.showbase.DirectObject import DirectObject
-from direct.gui.OnscreenText import OnscreenText
-from direct.actor.Actor import Actor
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import Filename,Buffer,Shader
+from panda3d.pandac.Modules import PandaNode,NodePath
+from panda3d.pandac.Modules import ColorBlendAttrib
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.pandac.Modules import TextNode,Point3,Vec4
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.actor.Actor import Actor
 import sys,os
 
 # Figure out what directory this program is in.
@@ -68,12 +68,12 @@ class GlowDemo(DirectObject):
         self.inst4 = addInstructions(0.80,"V: View the render-to-texture results")
 
         #create the shader that will determime what parts of the scene will glow
-        glowShader=Shader.load(MYDIR + "/glowShader.sha")
+        glowShader=Shader.load("samples/glow/glow_shader.sha")
 
         # load our model
         self.tron=Actor()
-        self.tron.loadModel("models/tron")
-        self.tron.loadAnims({"running":"models/tron_anim"})
+        self.tron.loadModel("models/samples/glow/tron")
+        self.tron.loadAnims({"running":"models/samples/glow/tron_anim"})
         self.tron.reparentTo(render)
         self.interval = self.tron.hprInterval(60,Point3(360,0,0))
         self.interval.loop()
@@ -107,8 +107,10 @@ class GlowDemo(DirectObject):
         glowCamera.node().setInitialState(tempnode.getState())
 
         # set up the pipeline: from glow scene to blur x to blur y to main window.
-        blurXBuffer=makeFilterBuffer(glowBuffer,  "Blur X", -2, MYDIR+"/XBlurShader.sha")
-        blurYBuffer=makeFilterBuffer(blurXBuffer, "Blur Y", -1, MYDIR+"/YBlurShader.sha")
+        blurXBuffer=makeFilterBuffer(glowBuffer,  "Blur X", -2, \
+          "samples/glow/glow_xblur.sha")
+        blurYBuffer=makeFilterBuffer(blurXBuffer, "Blur Y", -1, \
+          "samples/glow/glow_yblur.sha")
         self.finalcard = blurYBuffer.getTextureCard()
         self.finalcard.reparentTo(render2d)
         self.finalcard.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd))

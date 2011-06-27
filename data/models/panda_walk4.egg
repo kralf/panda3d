@@ -1,7 +1,7 @@
 <CoordinateSystem> { Z-Up }
 
 <Comment> {
-  "MaxEggPlugin nul.max -o 'C:\Panda\panda-walk4.egg' -a chan"
+  "MaxEggPlugin nul.max -o 'C:\Panda\panda_walk4.egg' -a chan"
 }
 <Table> {
   <Bundle> panda_walk_character {

@@ -159,7 +159,7 @@ class DirectOptionMenu(DirectButton):
 
         # Position popup Marker to the right of the button
         pm = self.popupMarker
-        pmw = (pm.getWidth() * pm.getScale()[0] +
+        Pmw = (pm.getWidth() * pm.getScale()[0] +
                2 * self['popupMarkerBorder'][0])
         if self.initFrameSize:
             # Use specified frame size
@@ -167,11 +167,11 @@ class DirectOptionMenu(DirectButton):
         else:
             # Or base it upon largest item
             bounds = [self.minX, self.maxX, self.minZ, self.maxZ]
-        pm.setPos(bounds[1] + pmw/2.0, 0,
+        pm.setPos(bounds[1] + Pmw/2.0, 0,
                   bounds[2] + (bounds[3] - bounds[2])/2.0)
         # Adjust popup menu button to fit all items (or use user specified
         # frame size
-        bounds[1] += pmw
+        bounds[1] += Pmw
         self['frameSize'] = (bounds[0], bounds[1], bounds[2], bounds[3])
         # Set initial state
         self.hidePopupMenu()

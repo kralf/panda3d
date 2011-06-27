@@ -8,16 +8,16 @@
 # and having it walk around on uneven terrain, as well
 # as implementing a fully rotatable camera.
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import CollisionTraverser,CollisionNode
-from pandac.PandaModules import CollisionHandlerQueue,CollisionRay
-from pandac.PandaModules import Filename
-from pandac.PandaModules import PandaNode,NodePath,Camera,TextNode
-from pandac.PandaModules import Vec3,Vec4,BitMask32
-from direct.gui.OnscreenText import OnscreenText
-from direct.actor.Actor import Actor
-from direct.task.Task import Task
-from direct.showbase.DirectObject import DirectObject
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import CollisionTraverser,CollisionNode
+from panda3d.pandac.Modules import CollisionHandlerQueue,CollisionRay
+from panda3d.pandac.Modules import Filename
+from panda3d.pandac.Modules import PandaNode,NodePath,Camera,TextNode
+from panda3d.pandac.Modules import Vec3,Vec4,BitMask32
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.actor.Actor import Actor
+from panda3d.direct.task.Task import Task
+from panda3d.direct.showbase.DirectObject import DirectObject
 import random, sys, os, math
 
 SPEED = 0.5
@@ -67,16 +67,16 @@ class World(DirectObject):
         # It also keeps the original mesh, so there are now two copies ---
         # one optimized for rendering, one for collisions.  
 
-        self.environ = loader.loadModel("models/world")      
+        self.environ = loader.loadModel("models/samples/roaming_ralph/world")
         self.environ.reparentTo(render)
         self.environ.setPos(0,0,0)
         
         # Create the main character, Ralph
 
         ralphStartPos = self.environ.find("**/start_point").getPos()
-        self.ralph = Actor("models/ralph",
-                                 {"run":"models/ralph-run",
-                                  "walk":"models/ralph-walk"})
+        self.ralph = Actor("models/samples/roaming_ralph/ralph",
+            {"run":"models/samples/roaming_ralph/ralph_run",
+             "walk":"models/samples/roaming_ralph/ralph_walk"})
         self.ralph.reparentTo(render)
         self.ralph.setScale(.2)
         self.ralph.setPos(ralphStartPos)

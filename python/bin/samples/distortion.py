@@ -1,10 +1,12 @@
 #Author: Tree Form starplant@gmail.com
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import FrameBufferProperties, TextNode, Vec4, BitMask32, Point3
-from pandac.PandaModules import WindowProperties, GraphicsOutput, Texture , GraphicsPipe
-from direct.showbase.DirectObject import DirectObject
-from direct.gui.OnscreenText import OnscreenText
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import FrameBufferProperties, TextNode, Vec4
+from panda3d.pandac.Modules import BitMask32, Point3
+from panda3d.pandac.Modules import WindowProperties, GraphicsOutput
+from panda3d.pandac.Modules import Texture, GraphicsPipe
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.gui.OnscreenText import OnscreenText
 from sys import exit
 
 font = loader.loadFont("cmss12")
@@ -33,37 +35,43 @@ class DistortionDemo(DirectObject):
         self.inst4 = addInstructions(0.85,"V: View the render-to-texture results")
         
         # Load background
-        self.seascape = loader.loadModel("models/plane")
+        self.seascape = loader.loadModel("models/samples/distortion/plane")
         self.seascape.reparentTo(render)
         self.seascape.setPosHpr(0, 145, 0, 0, 0, 0)
         self.seascape.setScale(100)
-        self.seascape.setTexture(loader.loadTexture("models/ocean.jpg"))
+
+        self.seascape.setTexture(loader.loadTexture( \
+          "models/samples/distortion/ocean.jpg"))
         
-        # Create the distortion buffer. This buffer renders like a normal scene,       
+        # Create the distortion buffer. This buffer renders like a normal scene,
+      
         self.distortionBuffer = self.makeFBO("model buffer")
         self.distortionBuffer.setSort(-3)
         self.distortionBuffer.setClearColor(Vec4(0, 0, 0, 0))
         
-        # We have to attach a camera to the distortion buffer. The distortion camera
-        # must have the same frustum as the main camera. As long as the aspect
-        # ratios match, the rest will take care of itself.
-        distortionCamera = base.makeCamera(self.distortionBuffer, scene = render,
-                                            lens = base.cam.node().getLens(), mask = BitMask32.bit(4))
+        # We have to attach a camera to the distortion buffer. The distortion
+        # camera must have the same frustum as the main camera. As long
+        # as the aspect ratios match, the rest will take care of itself.
+        distortionCamera = base.makeCamera(self.distortionBuffer, scene = \
+          render, lens = base.cam.node().getLens(), mask = BitMask32.bit(4))
         
         # load the object with the distortion
-        self.distortionObject = loader.loadModel("models/boat")
+        self.distortionObject = loader.loadModel( \
+          "models/samples/distortion/boat")
         self.distortionObject.setScale(1)
         self.distortionObject.setPos(0, 20, -3)
         self.distortionObject.hprInterval(10, Point3(360, 0, 0)).loop()
         self.distortionObject.reparentTo(render)
         
-        # Create the shader that will determime what parts of the scene will distortion
-        distortionShader = loader.loadShader("distortion.sha")
+        # Create the shader that will determime what parts of the scene will
+        # distortion
+        distortionShader = loader.loadShader( \
+          "samples/distortion/distortion.sha")
         self.distortionObject.setShader(distortionShader)
         self.distortionObject.hide(BitMask32.bit(4))
         
         # Textures
-        tex1 = loader.loadTexture("models/water.png")
+        tex1 = loader.loadTexture("models/samples/distortion/water.png")
         self.distortionObject.setShaderInput("waves", tex1)
         
         self.texDistortion = Texture()

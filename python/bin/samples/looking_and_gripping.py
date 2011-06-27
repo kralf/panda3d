@@ -10,14 +10,14 @@
 # parenting an object to a hand joint, the object will stay in the character's
 # hand even if the hand is moving through an animation.
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import AmbientLight,DirectionalLight
-from pandac.PandaModules import TextNode,NodePath,LightAttrib
-from pandac.PandaModules import Vec3,Vec4
-from direct.actor.Actor import Actor
-from direct.task.Task import Task
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.pandac.Modules import TextNode,NodePath,LightAttrib
+from panda3d.pandac.Modules import Vec3,Vec4
+from panda3d.direct.actor.Actor import Actor
+from panda3d.direct.task.Task import Task
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
 import sys
 
 #A simple function to make sure a value is in a given range, -1 to 1 by default
@@ -52,8 +52,9 @@ class World(DirectObject):
     base.disableMouse()                  #Disable mouse-based camera-control
     camera.setPos(0,-15, 2)              #Position the camera
 
-    self.eve = Actor("models/eve", #Load our animated charachter
-                           {'walk' : "models/eve_walk"})
+    self.eve = Actor("models/samples/looking_and_gripping/eve",
+                                         #Load our animated charachter
+          {'walk' : "models/samples/looking_and_gripping/eve_walk"})
     self.eve.reparentTo(render)          #Put it in the scene
 
     #Now we use controlJoint to get a NodePath that's in control of her neck
@@ -77,10 +78,14 @@ class World(DirectObject):
     #This is a table with models, positions, rotations, and scales of objects to
     #be attached to our exposed joint. These are stock models and so they needed
     #to be repositioned to look right.
-    positions = [("models/teapot", (0,-.66,-.95), (90,0,90), .4),
-                 ("models/candycane", (.15,-.99,-.22), (90,0,90), 1),
-                 ("models/banana", (.08,-.1,.09), (0,-90,0), 1.75),
-                 ("models/sword", (.11,.19,.06), (0,0,90), 1)]
+    positions = [("models/samples/looking_and_gripping/teapot", \
+                    (0,-.66,-.95), (90,0,90), .4),
+                 ("models/samples/looking_and_gripping/candycane", \
+                    (.15,-.99,-.22), (90,0,90), 1),
+                 ("models/samples/looking_and_gripping/banana", \
+                    (.08,-.1,.09), (0,-90,0), 1.75),
+                 ("models/samples/looking_and_gripping/sword", \
+                    (.11,.19,.06), (0,0,90), 1)]
     self.models = []                 #A list that will store our models objects
     for row in positions:
       np = loader.loadModel(row[0])              #Load the model

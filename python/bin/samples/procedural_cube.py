@@ -6,19 +6,19 @@
 #since they get broken down to trianlges anyway.
 #
 
-from direct.directbase import DirectStart
-from direct.showbase.DirectObject import DirectObject
-from direct.gui.DirectGui import *
-from direct.interval.IntervalGlobal import *
-from pandac.PandaModules import lookAt
-from pandac.PandaModules import GeomVertexFormat, GeomVertexData
-from pandac.PandaModules import Geom, GeomTriangles, GeomVertexWriter
-from pandac.PandaModules import Texture, GeomNode
-from pandac.PandaModules import PerspectiveLens
-from pandac.PandaModules import CardMaker
-from pandac.PandaModules import Light, Spotlight
-from pandac.PandaModules import TextNode
-from pandac.PandaModules import Vec3, Vec4, Point3
+from panda3d.direct.directbase import DirectStart
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.gui.DirectGui import *
+from panda3d.direct.interval.IntervalGlobal import *
+from panda3d.pandac.Modules import lookAt
+from panda3d.pandac.Modules import GeomVertexFormat, GeomVertexData
+from panda3d.pandac.Modules import Geom, GeomTriangles, GeomVertexWriter
+from panda3d.pandac.Modules import Texture, GeomNode
+from panda3d.pandac.Modules import PerspectiveLens
+from panda3d.pandac.Modules import CardMaker
+from panda3d.pandac.Modules import Light, Spotlight
+from panda3d.pandac.Modules import TextNode
+from panda3d.pandac.Modules import Vec3, Vec4, Point3
 import sys, os
 
 base.disableMouse()
@@ -135,7 +135,7 @@ cube.setTwoSided(True)
 
 class MyTapper(DirectObject):
 	def __init__(self):
-		self.testTexture=loader.loadTexture("maps/envir-reeds.png")
+		self.testTexture=loader.loadTexture("maps/envir_reeds.png")
 		self.accept("1", self.toggleTex)
 		self.accept("2", self.toggleLightsSide)
 		self.accept("3", self.toggleLightsUp)

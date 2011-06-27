@@ -6,15 +6,15 @@
 # lighting
 #
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import PerspectiveLens
-from pandac.PandaModules import NodePath
-from pandac.PandaModules import AmbientLight,DirectionalLight
-from pandac.PandaModules import PointLight,Spotlight
-from pandac.PandaModules import TextNode
-from pandac.PandaModules import Vec3,Vec4
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import PerspectiveLens
+from panda3d.pandac.Modules import NodePath
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.pandac.Modules import PointLight,Spotlight
+from panda3d.pandac.Modules import TextNode
+from panda3d.pandac.Modules import Vec3,Vec4
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
 import math, sys, colorsys
 
 #Simple function to keep a value in a given range (by default 0 to 1)
@@ -49,7 +49,7 @@ class World(DirectObject):
     self.spotlightExponentText = self.makeStatusLabel(8)
     self.lightingPerPixelText = self.makeStatusLabel(9)
 
-    self.disco = loader.loadModel("models/disco_hall")
+    self.disco = loader.loadModel("models/samples/disco_lights/disco_hall")
     self.disco.reparentTo(render)
     self.disco.setPosHpr(0, 50, -4, 90, 0, 0)
 
@@ -63,7 +63,8 @@ class World(DirectObject):
 
     # Now we create a directional light. Directional lights add shading from a
     # given angle. This is good for far away sources like the sun
-    self.directionalLight = render.attachNewNode( DirectionalLight( "directionalLight" ) )
+    self.directionalLight = render.attachNewNode( DirectionalLight(
+"directionalLight" ) )
     self.directionalLight.node().setColor( Vec4( .35, .35, .35, 1 ) )
     # The direction of a directional light is set as a 3D vector
     self.directionalLight.node().setDirection( Vec3( 1, 1, -2 ) )
@@ -89,25 +90,27 @@ class World(DirectObject):
     # Now we create three colored Point lights. Point lights are lights that
     # radiate from a single point, like a light bulb. Like spotlights, they
     # are given position by attaching them to NodePaths in the world
-    self.redHelper = loader.loadModel('models/sphere')
+    self.redHelper = loader.loadModel('models/samples/disco_lights/sphere')
     self.redHelper.setColor( Vec4( 1, 0, 0, 1 ) )
     self.redHelper.setPos( -6.5, -3.75, 0 )
     self.redHelper.setScale(.25)
-    self.redPointLight = self.redHelper.attachNewNode( PointLight( "redPointLight" ) )
+    self.redPointLight = self.redHelper.attachNewNode( PointLight(
+"redPointLight" ) )
     self.redPointLight.node().setColor( Vec4( .35, 0, 0, 1 ) )
     self.redPointLight.node().setAttenuation( Vec3( .1, 0.04, 0.0 ) ) 
 
     #The green point light and helper
-    self.greenHelper = loader.loadModel('models/sphere')
+    self.greenHelper = loader.loadModel('models/samples/disco_lights/sphere')
     self.greenHelper.setColor( Vec4( 0, 1, 0, 1 ) )
     self.greenHelper.setPos( 0, 7.5, 0 )
     self.greenHelper.setScale(.25)
-    self.greenPointLight = self.greenHelper.attachNewNode( PointLight( "greenPointLight" ) )
+    self.greenPointLight = self.greenHelper.attachNewNode( PointLight(
+"greenPointLight" ) )
     self.greenPointLight.node().setAttenuation( Vec3( .1, .04, .0 ) ) 
     self.greenPointLight.node().setColor( Vec4( 0, .35, 0, 1 ) )
 
     #The blue point light and helper
-    self.blueHelper = loader.loadModel('models/sphere')
+    self.blueHelper = loader.loadModel('models/samples/disco_lights/sphere')
     self.blueHelper.setColor( Vec4( 0, 0, 1, 1 ) )
     self.blueHelper.setPos( 6.5, -3.75, 0 )
     self.blueHelper.setScale(.25)

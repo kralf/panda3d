@@ -1,12 +1,12 @@
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 import sys,os
 loadPrcFileData("", "prefer-parasite-buffer #f")
 
-import direct.directbase.DirectStart
-from direct.interval.IntervalGlobal import *
-from direct.gui.DirectGui import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.actor import Actor
+import panda3d.direct.directbase.DirectStart
+from panda3d.direct.interval.IntervalGlobal import *
+from panda3d.direct.gui.DirectGui import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.actor import Actor
 from random import *
 
 font = loader.loadFont("cmss12")
@@ -75,7 +75,7 @@ class World(DirectObject):
 
         # Load the scene.
     
-        floorTex=loader.loadTexture('maps/envir-ground.jpg')
+        floorTex=loader.loadTexture('maps/envir_ground.jpg')
         cm=CardMaker('')
         cm.setFrame(-2,2,-2,2)
         floor = render.attachNewNode(PandaNode("floor"))
@@ -88,7 +88,7 @@ class World(DirectObject):
         floor.flattenStrong()
     
         self.pandaAxis=render.attachNewNode('panda axis')
-        self.pandaModel=Actor.Actor('panda-model',{'walk':'panda-walk4'})
+        self.pandaModel=Actor.Actor('panda_model',{'walk':'panda_walk4'})
         self.pandaModel.reparentTo(self.pandaAxis)
         self.pandaModel.setPos(9,0,0)
         self.pandaModel.setShaderInput("scale",0.01,0.01,0.01,1.0)
@@ -144,7 +144,7 @@ class World(DirectObject):
     
         # Put a shader on the Light camera.
         lci = NodePath(PandaNode("Light Camera Initializer"))
-        lci.setShader(Shader.load('caster.sha'))
+        lci.setShader(Shader.load('samples/shadows/shadow_caster.sha'))
         self.LCam.node().setInitialState(lci.getState())
     
         # Put a shader on the Main camera.
@@ -154,9 +154,10 @@ class World(DirectObject):
 
         mci = NodePath(PandaNode("Main Camera Initializer"))
         if (base.win.getGsg().getSupportsShadowFilter()):
-            mci.setShader(Shader.load('shadow.sha'))
+            mci.setShader(Shader.load('samples/shadows/shadow_shader.sha'))
         else:
-            mci.setShader(Shader.load('shadow-nosupport.sha'))
+          mci.setShader(Shader.load(\
+            'samples/shadows/shadow_nosupport.sha'))
         base.cam.node().setInitialState(mci.getState())
     
         self.incrementCameraPosition(0)

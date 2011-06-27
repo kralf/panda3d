@@ -1,7 +1,7 @@
 <CoordinateSystem> { Y-Up }
 
 <Comment> {
-  "qtess -v -t 6000 -ap -ad -iq panda.qtess panda-nurb-mod.egg"
+  "qtess -v -t 6000 -ap -ad -iq panda.qtess panda_nurb-mod.egg"
 }
 <Comment> {
   "egg-replace -n panda_soft-nurb-mod.egg panda_wire-nurb-mod.egg"

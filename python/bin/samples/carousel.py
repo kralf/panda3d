@@ -15,13 +15,13 @@
 # will turn on and off by switching their texture with intervals in Sequence
 # and Parallel
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import Lerp
-from pandac.PandaModules import AmbientLight, DirectionalLight, LightAttrib
-from pandac.PandaModules import NodePath
-from pandac.PandaModules import Vec3, Vec4
-from direct.interval.IntervalGlobal import *   #Needed to use Intervals
-from direct.gui.DirectGui import *
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import Lerp
+from panda3d.pandac.Modules import AmbientLight, DirectionalLight, LightAttrib
+from panda3d.pandac.Modules import NodePath
+from panda3d.pandac.Modules import Vec3, Vec4
+from panda3d.direct.interval.IntervalGlobal import *   #Needed to use Intervals
+from panda3d.direct.gui.DirectGui import *
 
 #Importing math constants and functions
 from math import pi, sin
@@ -47,26 +47,28 @@ class World:
 
   def loadModels(self):
     #Load the carousel base
-    self.carousel = loader.loadModel("models/carousel_base")
+    self.carousel = loader.loadModel("models/samples/carousel/carousel_base")
     self.carousel.reparentTo(render)   #Attach it to render
 
     #Load the modeled lights that are on the outer rim of the carousel
     #(not Panda lights)
     #There are 2 groups of lights. At any given time, one group will have the
     #"on" texture and the other will have the "off" texture.
-    self.lights1 = loader.loadModel("models/carousel_lights")
+    self.lights1 = loader.loadModel("models/samples/carousel/carousel_lights")
     self.lights1.reparentTo(self.carousel)
     
     #Load the 2nd set of lights
-    self.lights2 = loader.loadModel("models/carousel_lights")
+    self.lights2 = loader.loadModel("models/samples/carousel/carousel_lights")
     #We need to rotate the 2nd so it doesn't overlap with the 1st set.
     self.lights2.setH(36)
     self.lights2.reparentTo(self.carousel)
 
     #Load the textures for the lights. One texture is for the "on" state,
     #the other is for the "off" state.
-    self.lightOffTex = loader.loadTexture("models/carousel_lights_off.jpg")
-    self.lightOnTex = loader.loadTexture("models/carousel_lights_on.jpg")
+    self.lightOffTex = loader.loadTexture( \
+      "models/samples/carousel/carousel_lights_off.jpg")
+    self.lightOnTex = loader.loadTexture( \
+      "models/samples/carousel/carousel_lights_on.jpg")
 
     #Create an list (self.pandas) with filled with 4 dummy nodes attached to
     #the carousel.
@@ -74,7 +76,7 @@ class World:
     #manual for more information on how they work
     self.pandas = [self.carousel.attachNewNode("panda"+str(i))
                    for i in range(4)]
-    self.models = [loader.loadModel("models/carousel_panda")
+    self.models = [loader.loadModel("models/samples/carousel/carousel_panda")
                    for i in range(4)]
     self.moves = [0 for i in range(4)]
 
@@ -92,7 +94,7 @@ class World:
       self.models[i].setY(.85)       
 
     #Load the environment (Sky sphere and ground plane)
-    self.env = loader.loadModel("models/env")
+    self.env = loader.loadModel("models/samples/carousel/env")
     self.env.reparentTo(render)
     self.env.setScale(7)
 

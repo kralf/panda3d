@@ -7,17 +7,17 @@
 # multiple buffers in Panda.
 
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import PandaNode,LightNode,TextNode
-from pandac.PandaModules import Filename
-from pandac.PandaModules import NodePath
-from pandac.PandaModules import Shader
-from pandac.PandaModules import Point3,Vec4
-from direct.task.Task import Task
-from direct.actor.Actor import Actor
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.showbase.BufferViewer import BufferViewer
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import PandaNode,LightNode,TextNode
+from panda3d.pandac.Modules import Filename
+from panda3d.pandac.Modules import NodePath
+from panda3d.pandac.Modules import Shader
+from panda3d.pandac.Modules import Point3,Vec4
+from panda3d.direct.task.Task import Task
+from panda3d.direct.actor.Actor import Actor
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.BufferViewer import BufferViewer
 import sys,os
 
 # Figure out what directory this program is in.
@@ -60,7 +60,7 @@ class ToonMaker(DirectObject):
         # a single nonattenuating point light.
 
         tempnode = NodePath(PandaNode("temp node"))
-        tempnode.setShader(Shader.load(MYDIR+"/lightingGen.sha"))
+        tempnode.setShader(Shader.load("samples/cartoon/cartoon_lighting.sha"))
         base.cam.node().setInitialState(tempnode.getState())
         
         # This is the object that represents the single "light", as far
@@ -85,7 +85,7 @@ class ToonMaker(DirectObject):
         normalsCamera=base.makeCamera(normalsBuffer, lens=base.cam.node().getLens())
         normalsCamera.node().setScene(render)
         tempnode = NodePath(PandaNode("temp node"))
-        tempnode.setShader(Shader.load(MYDIR+"/normalGen.sha"))
+        tempnode.setShader(Shader.load("samples/cartoon/cartoon_normal.sha"))
         normalsCamera.node().setInitialState(tempnode.getState())
 
         #what we actually do to put edges on screen is apply them as a texture to 
@@ -103,7 +103,7 @@ class ToonMaker(DirectObject):
                 
         self.separation = 0.001
         self.cutoff = 0.3
-        inkGen=Shader.load(MYDIR+"/inkGen.sha")
+        inkGen=Shader.load("samples/cartoon/cartoon_ink.sha")
         drawnScene.setShader(inkGen)
         drawnScene.setShaderInput("separation", Vec4(self.separation,0,self.separation,0));
         drawnScene.setShaderInput("cutoff", Vec4(self.cutoff,self.cutoff,self.cutoff,self.cutoff));
@@ -118,9 +118,9 @@ class ToonMaker(DirectObject):
         # Load a dragon model and animate it.
 
         self.character=Actor()
-        self.character.loadModel('models/nik-dragon')
+        self.character.loadModel('models/samples/cartoon/nik_dragon')
         self.character.reparentTo(render)
-        self.character.loadAnims({'win': 'models/nik-dragon'})
+        self.character.loadAnims({'win': 'models/samples/cartoon/nik_dragon'})
         self.character.loop('win')
         self.character.hprInterval(15, Point3(360, 0,0)).loop()
 

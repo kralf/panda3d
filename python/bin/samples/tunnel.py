@@ -10,14 +10,14 @@
 # The tunnel and texture was originally created by Vamsi Bandaru and Victoria
 # Webb for the Entertainment Technology Center class Building Virtual Worlds
 
-import direct.directbase.DirectStart 
-from pandac.PandaModules import Fog
-from pandac.PandaModules import TextNode
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.interval.MetaInterval import Sequence
-from direct.interval.LerpInterval import LerpFunc
-from direct.interval.FunctionInterval import Func
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import Fog
+from panda3d.pandac.Modules import TextNode
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.interval.MetaInterval import Sequence
+from panda3d.direct.interval.LerpInterval import LerpFunc
+from panda3d.direct.interval.FunctionInterval import Func
 import sys
 
 #Global variables for the tunnel dimensions and speed of travel
@@ -132,7 +132,7 @@ class World(DirectObject):
     
     for x in range(4):
       #Load a copy of the tunnel
-      self.tunnel[x] = loader.loadModel('models/tunnel')
+      self.tunnel[x] = loader.loadModel('models/samples/tunnel/tunnel')
       #The front segment needs to be attached to render
       if x == 0: self.tunnel[x].reparentTo(render)
       #The rest of the segments parent to the previous one, so that by moving

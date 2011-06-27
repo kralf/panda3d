@@ -4,16 +4,16 @@
 # This tutorial shows how to play animations on models aka "actors".
 # It is based on the popular game of "Rock 'em Sock 'em Robots".
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import AmbientLight,DirectionalLight
-from pandac.PandaModules import LightAttrib
-from pandac.PandaModules import TextNode
-from pandac.PandaModules import Vec3,Vec4
-from direct.showbase.DirectObject import DirectObject
-from direct.gui.OnscreenText import OnscreenText
-from direct.interval.MetaInterval import Sequence
-from direct.interval.FunctionInterval import Func,Wait
-from direct.actor import Actor
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.pandac.Modules import LightAttrib
+from panda3d.pandac.Modules import TextNode
+from panda3d.pandac.Modules import Vec3,Vec4
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.interval.MetaInterval import Sequence
+from panda3d.direct.interval.FunctionInterval import Func,Wait
+from panda3d.direct.actor import Actor
 from random import random
 import sys
 
@@ -46,21 +46,22 @@ class World(DirectObject):
     self.setupLights()
 
     #Load the ring
-    self.ring = loader.loadModel('models/ring')
+    self.ring = loader.loadModel('models/samples/boxing_robots/ring')
     self.ring.reparentTo(render)
 
     #Models that use skeletal animation are known as Actors instead of models
     #Instead of just one file, the have one file for the main model, and an
     #additional file for each playable animation.
     #They are loaded using Actor.Actor instead of loader.LoadModel.
-    #The constructor takes the location of the main object as with a normal model
-    #and a dictionary (A fancy python structure that is like a lookup table)
-    #that contains names for animations, and paths to the appropriate files
-    self.robot1 = Actor.Actor('models/robot',
-      {'leftPunch' : 'models/robot_left_punch', 
-       'rightPunch' : 'models/robot_right_punch', 
-       'headUp' : 'models/robot_head_up', 
-       'headDown' : 'models/robot_head_down'})
+    #The constructor takes the location of the main object as with a normal
+    #model and a dictionary (A fancy python structure that is like a lookup
+    #table) that contains names for animations, and paths to the appropriate
+    #files
+    self.robot1 = Actor.Actor('models/samples/boxing_robots/robot',
+      {'leftPunch' : 'models/samples/boxing_robots/robot_left_punch',
+       'rightPunch' : 'models/samples/boxing_robots/robot_right_punch',
+       'headUp' : 'models/samples/boxing_robots/robot_head_up',
+       'headDown' : 'models/samples/boxing_robots/robot_head_down'})
 
     #Actors need to be positioned and parented like normal objects
     self.robot1.setPosHprScale(-1,-2.5,4,45,0,0,1.25,1.25,1.25)
@@ -68,11 +69,11 @@ class World(DirectObject):
 
     #We'll repeat the process for the second robot. The only thing that changes
     #here is the robot's color and position
-    self.robot2 = Actor.Actor('models/robot',
-      {'leftPunch' : 'models/robot_left_punch',
-       'rightPunch' : 'models/robot_right_punch',
-       'headUp' : 'models/robot_head_up',
-       'headDown' : 'models/robot_head_down'})
+    self.robot2 = Actor.Actor('models/samples/boxing_robots/robot',
+      {'leftPunch' : 'models/samples/boxing_robots/robot_left_punch',
+       'rightPunch' : 'models/samples/boxing_robots/robot_right_punch',
+       'headUp' : 'models/samples/boxing_robots/robot_head_up',
+       'headDown' : 'models/samples/boxing_robots/robot_head_down'})
 
     #Set the properties of this robot
     self.robot2.setPosHprScale(1,1.5,4,225,0,0,1.25,1.25,1.25)

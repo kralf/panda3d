@@ -1,1 +1,1 @@
-remake_add_files(*.py *.sha INSTALL samples)
+remake_add_files(*.py INSTALL samples)

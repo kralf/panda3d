@@ -1,17 +1,17 @@
-import direct.directbase.DirectStart
-from pandac.PandaModules import PandaNode,LightNode,TextNode
-from pandac.PandaModules import Filename, NodePath
-from pandac.PandaModules import PointLight, AmbientLight
-from pandac.PandaModules import LightRampAttrib, AuxBitplaneAttrib
-from pandac.PandaModules import CardMaker
-from pandac.PandaModules import Shader, Texture
-from pandac.PandaModules import Point3,Vec4,Vec3
-from direct.task.Task import Task
-from direct.actor.Actor import Actor
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.showbase.BufferViewer import BufferViewer
-from direct.filter.CommonFilters import CommonFilters
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import PandaNode,LightNode,TextNode
+from panda3d.pandac.Modules import Filename, NodePath
+from panda3d.pandac.Modules import PointLight, AmbientLight
+from panda3d.pandac.Modules import LightRampAttrib, AuxBitplaneAttrib
+from panda3d.pandac.Modules import CardMaker
+from panda3d.pandac.Modules import Shader, Texture
+from panda3d.pandac.Modules import Point3,Vec4,Vec3
+from panda3d.direct.task.Task import Task
+from panda3d.direct.actor.Actor import Actor
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.showbase.BufferViewer import BufferViewer
+from panda3d.direct.filter.CommonFilters import CommonFilters
 import sys,os
 
 # Figure out what directory this program is in.
@@ -74,9 +74,9 @@ class ToonMaker(DirectObject):
         # Load a dragon model and animate it.
         
         self.character = Actor()
-        self.character.loadModel('models/nik-dragon')
+        self.character.loadModel('models/samples/cartoon/nik_dragon')
         self.character.reparentTo(render)
-        self.character.loadAnims({'win': 'models/nik-dragon'})
+        self.character.loadAnims({'win': 'models/samples/cartoon/nik_dragon'})
         self.character.loop('win')
         self.character.hprInterval(15, Point3(360, 0,0)).loop()
         

@@ -13,14 +13,14 @@
 # The duck animation was created by Shane Liesegang and William Houng
 # for the Entertainment Technology Center class Building Virtual Worlds
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import Texture
-from pandac.PandaModules import BillboardEffect
-from pandac.PandaModules import Camera
-from pandac.PandaModules import TextNode
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.task.Task import Task
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import Texture
+from panda3d.pandac.Modules import BillboardEffect
+from panda3d.pandac.Modules import Camera
+from panda3d.pandac.Modules import TextNode
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.task.Task import Task
 import sys
 
 font = loader.loadFont("cmss12")
@@ -54,7 +54,7 @@ class World(DirectObject):
 
     #Initialization specific to this world
     #Load a polygon plane (4 sided square) to put an animated duck sprite on
-    self.duckPlane = loader.loadModel('models/plane')
+    self.duckPlane = loader.loadModel('models/samples/texture_swapping/plane')
     self.duckPlane.setPos(-2, 8, 0)         #set its position
     self.duckPlane.reparentTo(render)       #reparent to render
 
@@ -65,7 +65,8 @@ class World(DirectObject):
     #Now we call our special 'loadTextureMovie' function that returns a list
     #containing all of the textures for the duck sprite.
     #Check the function definition later in this file for its parameters
-    self.duckTexs = self.loadTextureMovie(24, 'duck/duck_fly_left',
+    self.duckTexs = self.loadTextureMovie(24,
+      'models/samples/texture_swapping/duck/duck_fly_left',
                                           'png', padding = 2)
 
     #Next we add a task to our task list that will animate the texture on the
@@ -87,13 +88,14 @@ class World(DirectObject):
     #Now, instead of a duck, we will put an animated explosion onto a polygon
     #This is the same as loading the duck animation, with the expection that
     #we will "billboard" the explosion so that it always faces the camera
-    self.expPlane = loader.loadModel('models/plane')  #load the object
+    self.expPlane = loader.loadModel('models/samples/texture_swapping/plane')
+                                                          #load the object
     self.expPlane.setPos(2, 8, 0)                         #set the position
     self.expPlane.reparentTo(render)                      #reparent to render
     self.expPlane.setTransparency(1)                      #enable transparency
     #load the texture movie
-    self.expTexs = self.loadTextureMovie(51, 'explosion/explosion',
-                                         'png', padding = 4)
+    self.expTexs = self.loadTextureMovie(51,
+      'models/samples/texture_swapping/explosion/explosion', 'png', padding = 4)
 
     #create the animation task
     self.expTask = taskMgr.add(self.textureMovie, "explosionTask")
@@ -107,9 +109,11 @@ class World(DirectObject):
     
     #The code below generates the plane you see with the numbers and arrows.
     #This is just to give a sense of orientation as the camera is moved around.
-    self.orientPlane = loader.loadModel('models/plane') #Load the object
+    self.orientPlane = loader.loadModel('models/samples/texture_swapping/plane')
+    #Load the object
     #load the texture
-    self.orientTex = loader.loadTexture("models/textures/orientation.png")
+    self.orientTex = \
+      loader.loadTexture("models/samples/texture_swapping/orientation.png")
     self.orientPlane.setTexture(self.orientTex, 1)        #Set the texture
     self.orientPlane.reparentTo(render)                   #Parent to render
     #Set the position, orientation, and scale

@@ -4,16 +4,16 @@
 # of copy-to-texture: motion trails.
 #
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import GraphicsOutput
-from pandac.PandaModules import Filename,Texture
-from pandac.PandaModules import CardMaker,Vec4
-from pandac.PandaModules import NodePath,TextNode
-from pandac.PandaModules import AmbientLight,DirectionalLight
-from direct.showbase.DirectObject import DirectObject
-from direct.gui.OnscreenText import OnscreenText
-from direct.task.Task import Task
-from direct.actor.Actor import Actor
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import GraphicsOutput
+from panda3d.pandac.Modules import Filename,Texture
+from panda3d.pandac.Modules import CardMaker,Vec4
+from panda3d.pandac.Modules import NodePath,TextNode
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.task.Task import Task
+from panda3d.direct.actor.Actor import Actor
 from random import uniform
 import sys,os
 
@@ -179,9 +179,9 @@ class MotionTrails(DirectObject):
 t=MotionTrails()
 
 character=Actor()
-character.loadModel('models/dancer')
+character.loadModel('models/samples/motion_trails/dancer')
 character.reparentTo(render)
-character.loadAnims({'win':'models/dancer'})
+character.loadAnims({'win':'models/samples/motion_trails/dancer'})
 character.loop('win')
 # character.hprInterval(15, Point3(360, 0,0)).loop()
 

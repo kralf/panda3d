@@ -4,20 +4,21 @@
 # This tutorial shows how to take an existing particle effect taken from a
 # .ptf file and run it in a general Panda project. 
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import BaseParticleEmitter,BaseParticleRenderer
-from pandac.PandaModules import PointParticleFactory,SpriteParticleRenderer
-from pandac.PandaModules import LinearNoiseForce,DiscEmitter
-from pandac.PandaModules import LightAttrib,TextNode
-from pandac.PandaModules import AmbientLight,DirectionalLight
-from pandac.PandaModules import Point3,Vec3,Vec4
-from pandac.PandaModules import Filename
-from direct.particles.Particles import Particles
-from direct.particles.ParticleEffect import ParticleEffect
-from direct.particles.ForceGroup import ForceGroup
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-import sys
+from panda3d.config import *
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import BaseParticleEmitter,BaseParticleRenderer
+from panda3d.pandac.Modules import PointParticleFactory,SpriteParticleRenderer
+from panda3d.pandac.Modules import LinearNoiseForce,DiscEmitter
+from panda3d.pandac.Modules import LightAttrib,TextNode
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.pandac.Modules import Point3,Vec3,Vec4
+from panda3d.pandac.Modules import Filename
+from panda3d.direct.particles.Particles import Particles
+from panda3d.direct.particles.ParticleEffect import ParticleEffect
+from panda3d.direct.particles.ForceGroup import ForceGroup
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+import sys,os
 
 HELPTEXT = """
 1: Load Steam
@@ -44,12 +45,24 @@ class World(DirectObject):
 
         #More standard initialization
         self.accept('escape', sys.exit)
-        self.accept('1', self.loadParticleConfig , ['steam.ptf'])
-        self.accept('2', self.loadParticleConfig , ['dust.ptf'])
-        self.accept('3', self.loadParticleConfig , ['fountain.ptf'])
-        self.accept('4', self.loadParticleConfig , ['smoke.ptf'])
-        self.accept('5', self.loadParticleConfig , ['smokering.ptf'])
-        self.accept('6', self.loadParticleConfig , ['fireish.ptf'])
+        self.accept('1', self.loadParticleConfig , \
+          [os.path.join(PANDA_FILE_PATH, \
+          'models/samples/particles/steam.ptf')])
+        self.accept('2', self.loadParticleConfig , \
+          [os.path.join(PANDA_FILE_PATH, \
+          'models/samples/particles/dust.ptf')])
+        self.accept('3', self.loadParticleConfig , \
+          [os.path.join(PANDA_FILE_PATH, \
+          'models/samples/particles/fountain.ptf')])
+        self.accept('4', self.loadParticleConfig , \
+          [os.path.join(PANDA_FILE_PATH, \
+          'models/samples/particles/smoke.ptf')])
+        self.accept('5', self.loadParticleConfig , \
+          [os.path.join(PANDA_FILE_PATH, \
+          'models/samples/particles/smokering.ptf')])
+        self.accept('6', self.loadParticleConfig , \
+          [os.path.join(PANDA_FILE_PATH, \
+          'models/samples/particles/fireish.ptf')])
         
         self.accept('escape', sys.exit)
         base.disableMouse()
@@ -63,7 +76,8 @@ class World(DirectObject):
         self.t.reparentTo(render)
         self.setupLights()
         self.p = ParticleEffect()
-        self.loadParticleConfig('steam.ptf')
+        self.loadParticleConfig(os.path.join(PANDA_FILE_PATH,
+          'models/samples/particles/steam.ptf'))
 
     def loadParticleConfig(self,file):
         #Start of the code from steam.ptf

@@ -1,12 +1,12 @@
-import direct.directbase.DirectStart
-from pandac.PandaModules import Filename,Texture
-from pandac.PandaModules import AmbientLight,DirectionalLight
-from pandac.PandaModules import NodePath,TextNode
-from pandac.PandaModules import Point3,Vec3,Vec4
-from direct.task.Task import Task
-from direct.actor.Actor import Actor
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import Filename,Texture
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.pandac.Modules import NodePath,TextNode
+from panda3d.pandac.Modules import Point3,Vec3,Vec4
+from panda3d.direct.task.Task import Task
+from panda3d.direct.actor.Actor import Actor
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
 import sys, os, random
 
 # Figure out what directory contains this program
@@ -94,7 +94,7 @@ class World(DirectObject):
 
     def makeTvMan(self,x,y,z,tex,playrate):
         man = Actor()
-        man.loadModel('models/mechman_idle')
+        man.loadModel('models/samples/teapot_on_tv/mechman_idle')
         man.setPos(x,y,z)
         man.reparentTo(render)
         fp = man.find("**/faceplate")

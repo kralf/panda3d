@@ -4,16 +4,16 @@
 # This tutorial shows how to load, play, and manipulate sounds
 # and sound intervals in a panda project.
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import NodePath,TextNode
-from pandac.PandaModules import Vec3,Vec4
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.interval.SoundInterval import SoundInterval
-from direct.gui.DirectSlider import DirectSlider
-from direct.gui.DirectButton import DirectButton
-from direct.interval.MetaInterval import Sequence,Parallel
-from direct.interval.LerpInterval import LerpFunc
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import NodePath,TextNode
+from panda3d.pandac.Modules import Vec3,Vec4
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.interval.SoundInterval import SoundInterval
+from panda3d.direct.gui.DirectSlider import DirectSlider
+from panda3d.direct.gui.DirectButton import DirectButton
+from panda3d.direct.interval.MetaInterval import Sequence,Parallel
+from panda3d.direct.interval.LerpInterval import LerpFunc
 import sys
 
 font = loader.loadFont("cmss12")
@@ -36,7 +36,7 @@ class World(DirectObject):
 
     #Loading sounds is done in a similar way to loading other things
     #Loading the main music box song
-    self.musicBoxSound = base.loadMusic('music/musicbox.mp3')
+    self.musicBoxSound = base.loadMusic('models/samples/music_box/musicbox.mp3')
     self.musicBoxSound.setVolume(.5)   #Volume is a percentage from 0 to 1
     self.musicBoxSound.setLoopCount(0) #0 means loop forever, 1 (default) means
                                        #play once. 2 or higher means play that
@@ -50,7 +50,7 @@ class World(DirectObject):
     #Loading the open/close effect
     #loadSFX and loadMusic are identical. They are often used for organization
     #(loadMusic is used for background music, loadSfx is used for other effects)
-    self.lidSfx = base.loadSfx('music/openclose.mp3')
+    self.lidSfx = base.loadSfx('models/samples/music_box/openclose.mp3')
     #The open/close file has both effects in it. Fortunatly we can use intervals
     #to easily define parts of a sound file to play
     self.lidOpenSfx = SoundInterval(self.lidSfx, duration = 2, startTime = 0)
@@ -75,7 +75,7 @@ class World(DirectObject):
 
     #Here we load and set up the music box. It was modeled in a complex way, so
     #setting it up will be complicated
-    self.musicBox=loader.loadModel('models/MusicBox')
+    self.musicBox=loader.loadModel('models/samples/music_box/musicbox')
     self.musicBox.setPos(0, 60, -10)
     self.musicBox.reparentTo(render)
     #Just like the scene graph contains hierarchies of nodes, so can

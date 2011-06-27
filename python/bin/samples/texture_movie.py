@@ -10,12 +10,12 @@
 # The elevator, shaft, and shadow movie were created by T.J. Jackson
 # for the Entertainment Technology Center class Building Virtual Worlds
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import Texture
-from direct.interval.LerpInterval import LerpFunc
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.task.Task import Task
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import Texture
+from panda3d.direct.interval.LerpInterval import LerpFunc
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.task.Task import Task
 import sys
 
 #Our specialized function to load texture movies and output them as lists
@@ -32,15 +32,17 @@ class World(DirectObject):
       style=1, fg=(1,1,1,1), pos=(0.6,-0.95), scale = .07, font=loader.loadFont("cmss12"))
     
     #Load the elevator and attach it to render
-    self.elevator = loader.loadModel('models/elevator')
+    self.elevator = loader.loadModel('models/samples/texture_swapping/elevator')
     self.elevator.reparentTo(render)        
     
     #Load the plane that will be animated and attach it to the elevator iteslf
-    self.shadowPlane = loader.loadModel('models/shadowPlane')
+    self.shadowPlane = loader.loadModel( \
+      'models/samples/texture_swapping/shadow_plane')
     self.shadowPlane.reparentTo(self.elevator)
     self.shadowPlane.setPos(0,0,.01)
     #Load the textures that will be applied to the polygon
-    self.shadowTexs = loadTextureMovie(60, 'shadow/barShadows.', 'jpg')
+    self.shadowTexs = loadTextureMovie(60, \
+      'models/samples/texture_swapping/shadow/bar_shadows.', 'jpg')
 
     #Add the task that will animate the plane
     taskMgr.add(self.elevatorShadows, 'elevatorTask')
@@ -48,7 +50,7 @@ class World(DirectObject):
     #Builds the shaft, which is a 30ft repeatable segment
     self.shaft = []
     for i in range(-1,2):
-      sh = loader.loadModel('models/shaft')
+      sh = loader.loadModel('models/samples/texture_swapping/shaft')
       sh.reparentTo(render)
       sh.setPos(-6.977, 0, 30*i)
       self.shaft.append(sh)

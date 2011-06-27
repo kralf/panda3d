@@ -8,12 +8,12 @@ import sys
 try: import _tkinter
 except: sys.exit("Please install python module 'Tkinter'")
 
-import direct.directbase.DirectStart
+import panda3d.direct.directbase.DirectStart
 
 #Makes sure that Panda is set to open external windows
 base.startTk()
 
-from direct.tkpanels.ParticlePanel import ParticlePanel
+from panda3d.direct.tkpanels.ParticlePanel import ParticlePanel
 
 pp = ParticlePanel()                        #Create the panel
 base.disableMouse()                         #Disable camera control to place it
@@ -21,4 +21,3 @@ camera.setY(-10)                            #Place the camera
 base.setBackgroundColor(0,0,0)              #Most particle systems show up
                                             #better on black backgrounds
 run()                                       
-

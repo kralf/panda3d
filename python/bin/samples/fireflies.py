@@ -3,20 +3,21 @@
 #
 # See the associated HTML file for an explanation.
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import FrameBufferProperties, WindowProperties
-from pandac.PandaModules import GraphicsPipe,GraphicsOutput
-from pandac.PandaModules import Filename,Texture,Shader
-from pandac.PandaModules import RenderState, CardMaker
-from pandac.PandaModules import PandaNode,TextNode,NodePath
-from pandac.PandaModules import RenderAttrib,AlphaTestAttrib,ColorBlendAttrib
-from pandac.PandaModules import CullFaceAttrib,DepthTestAttrib,DepthWriteAttrib
-from pandac.PandaModules import Point3,Vec3,Vec4,BitMask32
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.interval.MetaInterval import Sequence
-from direct.task.Task import Task
-from direct.actor.Actor import Actor
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import FrameBufferProperties, WindowProperties
+from panda3d.pandac.Modules import GraphicsPipe,GraphicsOutput
+from panda3d.pandac.Modules import Filename,Texture,Shader
+from panda3d.pandac.Modules import RenderState, CardMaker
+from panda3d.pandac.Modules import PandaNode,TextNode,NodePath
+from panda3d.pandac.Modules import RenderAttrib,AlphaTestAttrib,ColorBlendAttrib
+from panda3d.pandac.Modules import CullFaceAttrib,DepthTestAttrib
+from panda3d.pandac.Modules import DepthWriteAttrib
+from panda3d.pandac.Modules import Point3,Vec3,Vec4,BitMask32
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.interval.MetaInterval import Sequence
+from panda3d.direct.task.Task import Task
+from panda3d.direct.actor.Actor import Actor
 import sys,os,random
 
 # Figure out what directory this program is in.
@@ -151,14 +152,15 @@ class FireflyDemo(DirectObject):
         
         tempnode = NodePath(PandaNode("temp node"))
         tempnode.setAttrib(AlphaTestAttrib.make(RenderAttrib.MGreaterEqual, 0.5))
-        tempnode.setShader(Shader.load(MYDIR+"/model.sha"))
+        tempnode.setShader(Shader.load("samples/fireflies/fireflies_model.sha"))
         tempnode.setAttrib(DepthTestAttrib.make(RenderAttrib.MLessEqual))
         self.modelcam.node().setInitialState(tempnode.getState())
         
         # Configure the render state of the light camera.
 
         tempnode = NodePath(PandaNode("temp node"))
-        tempnode.setShader(Shader.load(MYDIR+"/light.sha"))
+        tempnode.setShader(Shader.load( \
+          "samples/fireflies/fireflies_lighting.sha"))
         tempnode.setShaderInput("texnormal",self.texNormal)
         tempnode.setShaderInput("texalbedo",self.texAlbedo)
         tempnode.setShaderInput("texdepth",self.texDepth)
@@ -188,7 +190,7 @@ class FireflyDemo(DirectObject):
         # don't have textures.  This confuses the shader I wrote. 
         # This little hack guarantees that everything has a texture.
         
-        white = loader.loadTexture("models/white.jpg")
+        white = loader.loadTexture("models/samples/fireflies/white.jpg")
         render.setTexture(white,0)
 
         # Create two subroots, to help speed cull traversal.
@@ -205,16 +207,27 @@ class FireflyDemo(DirectObject):
 
         self.forest=NodePath(PandaNode("Forest Root"))
         self.forest.reparentTo(render)
-        loader.loadModel("models/background").reparentTo(self.forest)
-        loader.loadModel("models/foliage01").reparentTo(self.forest)
-        loader.loadModel("models/foliage02").reparentTo(self.forest)
-        loader.loadModel("models/foliage03").reparentTo(self.forest)
-        loader.loadModel("models/foliage04").reparentTo(self.forest)
-        loader.loadModel("models/foliage05").reparentTo(self.forest)
-        loader.loadModel("models/foliage06").reparentTo(self.forest)
-        loader.loadModel("models/foliage07").reparentTo(self.forest)
-        loader.loadModel("models/foliage08").reparentTo(self.forest)
-        loader.loadModel("models/foliage09").reparentTo(self.forest)
+
+        loader.loadModel( \
+          "models/samples/fireflies/background").reparentTo(self.forest)
+        loader.loadModel( \
+          "models/samples/fireflies/foliage01").reparentTo(self.forest)
+        loader.loadModel( \
+          "models/samples/fireflies/foliage02").reparentTo(self.forest)
+        loader.loadModel( \
+          "models/samples/fireflies/foliage03").reparentTo(self.forest)
+        loader.loadModel( \
+          "models/samples/fireflies/foliage04").reparentTo(self.forest)
+        loader.loadModel( \
+          "models/samples/fireflies/foliage05").reparentTo(self.forest)
+        loader.loadModel( \
+          "models/samples/fireflies/foliage06").reparentTo(self.forest)
+        loader.loadModel( \
+          "models/samples/fireflies/foliage07").reparentTo(self.forest)
+        loader.loadModel( \
+          "models/samples/fireflies/foliage08").reparentTo(self.forest)
+        loader.loadModel( \
+          "models/samples/fireflies/foliage09").reparentTo(self.forest)
         self.forest.hide(BitMask32(self.lightMask | self.plainMask))
 
         # Cause the final results to be rendered into the main window on a card.

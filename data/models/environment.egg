@@ -4,7 +4,7 @@
   "MaxEggPlugin nul.max -o 'C:\Documents and Settings\rch.ANDREW\Desktop\PANDAdemo\Environment.egg'"
 }
 <Texture> Tex983 {
-  "maps/envir-cylinder.png"
+  "maps/envir_cylinder.png"
   <Scalar> format { rgba }
   <Scalar> wrapu { repeat }
   <Scalar> wrapv { repeat }
@@ -12,7 +12,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex975 {
-  "maps/envir-mountain2.png"
+  "maps/envir_mountain2.png"
   <Scalar> format { rgba }
   <Scalar> wrapu { clamp }
   <Scalar> wrapv { clamp }
@@ -20,7 +20,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex969 {
-  "maps/envir-mountain1.png"
+  "maps/envir_mountain1.png"
   <Scalar> format { rgba }
   <Scalar> wrapu { clamp }
   <Scalar> wrapv { clamp }
@@ -28,7 +28,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex63 {
-  "maps/envir-rock1.jpg"
+  "maps/envir_rock1.jpg"
   <Scalar> format { rgb }
   <Scalar> wrapu { repeat }
   <Scalar> wrapv { repeat }
@@ -36,7 +36,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex61 {
-  "maps/envir-tree2.png"
+  "maps/envir_tree2.png"
   <Scalar> format { rgba }
   <Scalar> wrapu { clamp }
   <Scalar> wrapv { clamp }
@@ -44,7 +44,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex57 {
-  "maps/envir-ground.jpg"
+  "maps/envir_ground.jpg"
   <Scalar> format { rgb }
   <Scalar> wrapu { repeat }
   <Scalar> wrapv { repeat }
@@ -52,7 +52,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex55 {
-  "maps/envir-tree1.png"
+  "maps/envir_tree1.png"
   <Scalar> format { rgba }
   <Scalar> wrapu { clamp }
   <Scalar> wrapv { clamp }
@@ -60,7 +60,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex185 {
-  "maps/envir-groundcover1.png"
+  "maps/envir_groundcover1.png"
   <Scalar> format { rgba }
   <Scalar> wrapu { clamp }
   <Scalar> wrapv { clamp }
@@ -68,7 +68,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex179 {
-  "maps/envir-reeds.png"
+  "maps/envir_reeds.png"
   <Scalar> format { rgba }
   <Scalar> wrapu { clamp }
   <Scalar> wrapv { clamp }
@@ -76,7 +76,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex175 {
-  "maps/envir-bamboo.png"
+  "maps/envir_bamboo.png"
   <Scalar> format { rgba }
   <Scalar> wrapu { clamp }
   <Scalar> wrapv { clamp }
@@ -84,7 +84,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex103 {
-  "maps/envir-rock2.jpg"
+  "maps/envir_rock2.jpg"
   <Scalar> format { rgb }
   <Scalar> wrapu { repeat }
   <Scalar> wrapv { repeat }
@@ -92,7 +92,7 @@
   <Scalar> magfilter { linear }
 }
 <Texture> Tex1 {
-  "maps/envir-treetrunk.jpg"
+  "maps/envir_treetrunk.jpg"
   <Scalar> format { rgb }
   <Scalar> wrapu { repeat }
   <Scalar> wrapv { repeat }

@@ -1,12 +1,12 @@
-from pandac.PandaModules import *
+from panda3d.pandac.Modules import *
 # Tell Panda3D to use OpenAL, not FMOD
 loadPrcFileData("", "audio-library-name p3openal_audio")
-from direct.showbase.DirectObject import DirectObject
-from direct.gui.OnscreenText import OnscreenText
-import direct.directbase.DirectStart
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.gui.OnscreenText import OnscreenText
+import panda3d.direct.directbase.DirectStart
 
 # The name of the media file.
-MEDIAFILE="PandaSneezes.avi"
+MEDIAFILE="models/samples/media_player/panda_sneezes.avi"
 
 font = loader.loadFont("cmss12")
 # Function to put instructions on the screen.

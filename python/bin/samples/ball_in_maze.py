@@ -7,19 +7,19 @@
 # on the collisions. All of this is put together to simulate a labyrinth-style
 # game
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import CollisionTraverser,CollisionNode
-from pandac.PandaModules import CollisionHandlerQueue,CollisionRay
-from pandac.PandaModules import Material,LRotationf,NodePath
-from pandac.PandaModules import AmbientLight,DirectionalLight
-from pandac.PandaModules import LightAttrib,TextNode
-from pandac.PandaModules import Vec3,Vec4,BitMask32
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.interval.MetaInterval import Sequence,Parallel
-from direct.interval.LerpInterval import LerpFunc
-from direct.interval.FunctionInterval import Func,Wait
-from direct.task.Task import Task
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import CollisionTraverser,CollisionNode
+from panda3d.pandac.Modules import CollisionHandlerQueue,CollisionRay
+from panda3d.pandac.Modules import Material,LRotationf,NodePath
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.pandac.Modules import LightAttrib,TextNode
+from panda3d.pandac.Modules import Vec3,Vec4,BitMask32
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.interval.MetaInterval import Sequence,Parallel
+from panda3d.direct.interval.LerpInterval import LerpFunc
+from panda3d.direct.interval.FunctionInterval import Func,Wait
+from panda3d.direct.task.Task import Task
 import sys
 
 #Some constants for the program
@@ -46,7 +46,7 @@ class World(DirectObject):
     camera.setPosHpr(0, 0, 25, 0, -90, 0)  #Place the camera
 
     #Load the maze and place it in the scene
-    self.maze = loader.loadModel("models/maze")
+    self.maze = loader.loadModel("models/samples/ball_in_maze/maze")
     self.maze.reparentTo(render)
 
     #Most times, you want collisions to be tested against invisible geometry
@@ -110,7 +110,7 @@ class World(DirectObject):
     #It is on a root dummy node so that we can rotate the ball itself without
     #rotating the ray that will be attached to it
     self.ballRoot = render.attachNewNode("ballRoot")
-    self.ball = loader.loadModel("models/ball")
+    self.ball = loader.loadModel("models/samples/ball_in_maze/ball")
     self.ball.reparentTo(self.ballRoot)
 
     #Find the collison sphere for the ball which was created in the egg file

@@ -1,10 +1,10 @@
 <CoordinateSystem> { Z-Up }
 
 <Comment> {
-  "MaxEggPlugin nul.max -o 'C:\Panda\panda-model.egg' -a model"
+  "MaxEggPlugin nul.max -o 'C:\Panda\panda_model.egg' -a model"
 }
 <Texture> Tex1 {
-  "maps/panda-model.jpg"
+  "maps/panda_model.jpg"
   <Scalar> format { rgb }
   <Scalar> wrapu { repeat }
   <Scalar> wrapv { repeat }

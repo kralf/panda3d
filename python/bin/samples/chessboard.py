@@ -7,15 +7,15 @@
 # and points straight into the scene, and see what it collides with. We pick
 # the object with the closest collision
 
-import direct.directbase.DirectStart
-from pandac.PandaModules import CollisionTraverser,CollisionNode
-from pandac.PandaModules import CollisionHandlerQueue,CollisionRay
-from pandac.PandaModules import AmbientLight,DirectionalLight,LightAttrib
-from pandac.PandaModules import TextNode
-from pandac.PandaModules import Point3,Vec3,Vec4,BitMask32
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.task.Task import Task
+import panda3d.direct.directbase.DirectStart
+from panda3d.pandac.Modules import CollisionTraverser,CollisionNode
+from panda3d.pandac.Modules import CollisionHandlerQueue,CollisionRay
+from panda3d.pandac.Modules import AmbientLight,DirectionalLight,LightAttrib
+from panda3d.pandac.Modules import TextNode
+from panda3d.pandac.Modules import Point3,Vec3,Vec4,BitMask32
+from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.direct.showbase.DirectObject import DirectObject
+from panda3d.direct.task.Task import Task
 import sys
 
 #First we define some contants for the colors
@@ -97,7 +97,7 @@ class World(DirectObject):
     self.pieces = [None for i in range(64)]
     for i in range(64):
       #Load, parent, color, and position the model (a single square polygon)
-      self.squares[i] = loader.loadModel("models/square")
+      self.squares[i] = loader.loadModel("models/samples/chessboard/square")
       self.squares[i].reparentTo(self.squareRoot)
       self.squares[i].setPos(SquarePos(i))
       self.squares[i].setColor(SquareColor(i))
@@ -175,7 +175,8 @@ class World(DirectObject):
         #camera, relative instead to render
         nearPoint = render.getRelativePoint(camera, self.pickerRay.getOrigin())
         #Same thing with the direction of the ray
-        nearVec = render.getRelativeVector(camera, self.pickerRay.getDirection())
+        nearVec = render.getRelativeVector(camera,
+self.pickerRay.getDirection())
         self.pieces[self.dragging].obj.setPos(
           PointAtZ(.5, nearPoint, nearVec))
 
@@ -243,17 +244,17 @@ class Piece:
 #would be to make an isValidMove(toSquare) method for each piece type
 #and then check if the destination square is acceptible during ReleasePiece
 class Pawn(Piece):
-  model = "models/pawn"
+  model = "models/samples/chessboard/pawn"
 class King(Piece):
-  model = "models/king"
+  model = "models/samples/chessboard/king"
 class Queen(Piece):
-  model = "models/queen"
+  model = "models/samples/chessboard/queen"
 class Bishop(Piece):
-  model = "models/bishop"
+  model = "models/samples/chessboard/bishop"
 class Knight(Piece):
-  model = "models/knight"
+  model = "models/samples/chessboard/knight"
 class Rook(Piece):
-  model = "models/rook"
+  model = "models/samples/chessboard/rook"
 
 #Do the main initialization and start 3D rendering
 w = World()

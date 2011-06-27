@@ -61,8 +61,10 @@ def Dtool_PreloadDLL(module):
     # Search for the appropriate directory.
     target = None
     filename = "lib" + PANDA_LIBRARY_PREFIX + module + dll_suffix + dll_ext
-    if (os.path.exists(filename)):
-      target = filename
+    lib = os.path.join(PANDA_LIBRARY_PATH, filename)
+    
+    if (os.path.exists(lib)):
+      target = PANDA_LIBRARY_PATH
     else:
       for dir in sys.path + [sys.prefix]:
           lib = os.path.join(dir, filename)

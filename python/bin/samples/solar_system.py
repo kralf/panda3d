@@ -7,12 +7,12 @@
 # to count the number of orbits the Earth makes around the sun. This
 # tutorial uses the same base code from the solar system tutorial.
 
-import direct.directbase.DirectStart
-from direct.showbase import DirectObject
-from pandac.PandaModules import TextNode, Vec3, Vec4
-from direct.interval.IntervalGlobal import *
-from direct.gui.DirectGui import *
-from direct.showbase.DirectObject import DirectObject
+import panda3d.direct.directbase.DirectStart
+from panda3d.direct.showbase import DirectObject
+from panda3d.pandac.Modules import TextNode, Vec3, Vec4
+from panda3d.direct.interval.IntervalGlobal import *
+from panda3d.direct.gui.DirectGui import *
+from panda3d.direct.showbase.DirectObject import DirectObject
 import sys
 
 #We start this tutorial with the standard class. However, the class is a
@@ -230,42 +230,48 @@ class World(DirectObject):
       self.orbit_root_earth.attachNewNode('orbit_root_moon'))
 
 
-    self.sky = loader.loadModel("models/solar_sky_sphere")
+    self.sky = loader.loadModel("models/samples/solar_system/solar_sky_sphere")
 
-    self.sky_tex = loader.loadTexture("models/stars_1k_tex.jpg")
+    self.sky_tex = loader.loadTexture( \
+      "models/samples/solar_system/stars_1k_tex.jpg")
     self.sky.setTexture(self.sky_tex, 1)
     self.sky.reparentTo(render)
     self.sky.setScale(40)
 
-    self.sun = loader.loadModel("models/planet_sphere")
-    self.sun_tex = loader.loadTexture("models/sun_1k_tex.jpg")
+    self.sun = loader.loadModel("models/samples/solar_system/planet_sphere")
+    self.sun_tex = loader.loadTexture( \
+      "models/samples/solar_system/sun_1k_tex.jpg")
     self.sun.setTexture(self.sun_tex, 1)
     self.sun.reparentTo(render)
     self.sun.setScale(2 * self.sizescale)
 
-    self.mercury = loader.loadModel("models/planet_sphere")
-    self.mercury_tex = loader.loadTexture("models/mercury_1k_tex.jpg")
+    self.mercury = loader.loadModel("models/samples/solar_system/planet_sphere")
+    self.mercury_tex = loader.loadTexture( \
+      "models/samples/solar_system/mercury_1k_tex.jpg")
     self.mercury.setTexture(self.mercury_tex, 1)
     self.mercury.reparentTo(self.orbit_root_mercury)
     self.mercury.setPos( 0.38 * self.orbitscale, 0, 0)
     self.mercury.setScale(0.385 * self.sizescale)
 
-    self.venus = loader.loadModel("models/planet_sphere")
-    self.venus_tex = loader.loadTexture("models/venus_1k_tex.jpg")
+    self.venus = loader.loadModel("models/samples/solar_system/planet_sphere")
+    self.venus_tex = loader.loadTexture( \
+      "models/samples/solar_system/venus_1k_tex.jpg")
     self.venus.setTexture(self.venus_tex, 1)
     self.venus.reparentTo(self.orbit_root_venus)
     self.venus.setPos( 0.72 * self.orbitscale, 0, 0)
     self.venus.setScale(0.923 * self.sizescale)
 
-    self.mars = loader.loadModel("models/planet_sphere")
-    self.mars_tex = loader.loadTexture("models/mars_1k_tex.jpg")
+    self.mars = loader.loadModel("models/samples/solar_system/planet_sphere")
+    self.mars_tex = loader.loadTexture( \
+      "models/samples/solar_system/mars_1k_tex.jpg")
     self.mars.setTexture(self.mars_tex, 1)
     self.mars.reparentTo(self.orbit_root_mars)
     self.mars.setPos( 1.52 * self.orbitscale, 0, 0)
     self.mars.setScale(0.515 * self.sizescale)
 
-    self.earth = loader.loadModel("models/planet_sphere")
-    self.earth_tex = loader.loadTexture("models/earth_1k_tex.jpg")
+    self.earth = loader.loadModel("models/samples/solar_system/planet_sphere")
+    self.earth_tex = loader.loadTexture( \
+      "models/samples/solar_system/earth_1k_tex.jpg")
     self.earth.setTexture(self.earth_tex, 1)
     self.earth.reparentTo(self.orbit_root_earth)
     self.earth.setScale(self.sizescale)
@@ -273,8 +279,9 @@ class World(DirectObject):
 
     self.orbit_root_moon.setPos( self.orbitscale, 0, 0)
 
-    self.moon = loader.loadModel("models/planet_sphere")
-    self.moon_tex = loader.loadTexture("models/moon_1k_tex.jpg")
+    self.moon = loader.loadModel("models/samples/solar_system/planet_sphere")
+    self.moon_tex = loader.loadTexture( \
+      "models/samples/solar_system/moon_1k_tex.jpg")
     self.moon.setTexture(self.moon_tex, 1)
     self.moon.reparentTo(self.orbit_root_moon)
     self.moon.setScale(0.1 * self.sizescale)
