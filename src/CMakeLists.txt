@@ -6,6 +6,7 @@ remake_find_package(PNG)
 remake_find_package(TIFF)
 remake_find_library(ode ode.h)
 remake_find_package(gl CONFIG)
+remake_find_package(OpenAL)
 remake_find_package(PythonLibs)
 
 remake_include(

@@ -97,7 +97,7 @@
 #define HAVE_TIFF 1
 #undef HAVE_VRPN
 #undef HAVE_FMODEX
-#undef HAVE_OPENAL
+#define HAVE_OPENAL 1
 #undef HAVE_NVIDIACG
 #define HAVE_FREETYPE 1
 #undef HAVE_FFTW
