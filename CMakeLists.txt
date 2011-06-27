@@ -71,6 +71,7 @@ remake_pack_deb(
   ARCH all
   COMPONENT models
   DESCRIPTION "models"
+  panda3d
 )
 remake_pack_deb(
   COMPONENT samples

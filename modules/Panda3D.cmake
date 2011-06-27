@@ -36,12 +36,12 @@ define_property(DIRECTORY PROPERTY PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES
   FULL_DOCS "This property specifies the list of directories given so"
     "far to the panda3d_interrogate_include() macro.")
 
-### \brief Add Panda3D Interrogate sources for a target.
+### \brief Generate Panda3D Interrogate sources from a target.
 #   This macro specifies code generation rules for the Panda3D Interrogate
 #   generator. It attempts to call remake_generate_custom() with the
 #   appropriate arguments.
-#   \required[value] target The name of the build target to add the
-#     interrogated source code for.
+#   \required[value] target The name of the build target to generate the
+#     interrogated source code from.
 #   \required[list] glob A list of glob expressions that are resolved
 #     in order to find the input source files for Interrogate, defaulting
 #     to *.h and *.cxx.
@@ -66,6 +66,15 @@ macro(panda3d_interrogate panda3d_target)
   else(CMAKE_SIZEOF_VOID_P EQUAL 8)
     remake_list_push(panda3d_defs -D__i386__)
   endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+  if(CMAKE_BUILD_TYPE)
+    string(TOUPPER "CMAKE_CXX_FLAGS_${CMAKE_BUILD_TYPE}" panda3d_build_flags)
+    string(REPLACE " -" ";-" panda3d_flags "${${panda3d_build_flags}}")
+    foreach(panda3d_flag ${panda3d_flags})
+      if(panda3d_flag MATCHES ^-D)
+        remake_list_push(panda3d_defs ${panda3d_flag})
+      endif(panda3d_flag MATCHES ^-D)
+    endforeach(panda3d_flag)
+  endif(CMAKE_BUILD_TYPE)
 
   remake_set(panda3d_include_flags)
   remake_set(panda3d_interrogate_include_flags)
