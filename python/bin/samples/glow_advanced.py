@@ -10,6 +10,7 @@ from panda3d.pandac.Modules import TextNode,Point3,Vec4
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.actor.Actor import Actor
+from panda3d.config import *
 import sys,os
 
 # Figure out what directory this program is in.
@@ -68,7 +69,8 @@ class GlowDemo(DirectObject):
         self.inst4 = addInstructions(0.80,"V: View the render-to-texture results")
 
         #create the shader that will determime what parts of the scene will glow
-        glowShader=Shader.load("samples/glow/glow_shader.sha")
+        glowShader=Shader.load(os.path.join(PANDA_SHADER_PATH, \
+          "samples/glow/glow_shader.sha"))
 
         # load our model
         self.tron=Actor()
@@ -108,9 +110,9 @@ class GlowDemo(DirectObject):
 
         # set up the pipeline: from glow scene to blur x to blur y to main window.
         blurXBuffer=makeFilterBuffer(glowBuffer,  "Blur X", -2, \
-          "samples/glow/glow_xblur.sha")
+          os.path.join(PANDA_SHADER_PATH, "samples/glow/glow_xblur.sha"))
         blurYBuffer=makeFilterBuffer(blurXBuffer, "Blur Y", -1, \
-          "samples/glow/glow_yblur.sha")
+          os.path.join(PANDA_SHADER_PATH, "samples/glow/glow_yblur.sha"))
         self.finalcard = blurYBuffer.getTextureCard()
         self.finalcard.reparentTo(render2d)
         self.finalcard.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd))

@@ -7,6 +7,7 @@ from panda3d.pandac.Modules import WindowProperties, GraphicsOutput
 from panda3d.pandac.Modules import Texture, GraphicsPipe
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.gui.OnscreenText import OnscreenText
+from panda3d.config import *
 from sys import exit
 
 font = loader.loadFont("cmss12")
@@ -65,8 +66,8 @@ class DistortionDemo(DirectObject):
         
         # Create the shader that will determime what parts of the scene will
         # distortion
-        distortionShader = loader.loadShader( \
-          "samples/distortion/distortion.sha")
+        distortionShader = loader.loadShader(os.path.join(PANDA_SHADER_PATH, \
+          "samples/distortion/distortion.sha"))
         self.distortionObject.setShader(distortionShader)
         self.distortionObject.hide(BitMask32.bit(4))
         

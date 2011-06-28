@@ -6,8 +6,17 @@ remake_find_package(PNG)
 remake_find_package(TIFF)
 remake_find_library(ode ode.h)
 remake_find_package(gl CONFIG)
+remake_find_library(Cg Cg/cg.h PACKAGE Cg OPTIONAL)
+remake_find_library(CgGL Cg/cgGL.h PACKAGE CgGL OPTIONAL)
 remake_find_package(OpenAL)
 remake_find_package(PythonLibs)
+
+if(CG_FOUND)
+  remake_set(HAVE_CG ON)
+endif(CG_FOUND)
+if(CGGL_FOUND)
+  remake_set(HAVE_CGGL ON)
+endif(CGGL_FOUND)
 
 remake_include(
   ${FREETYPE2_INCLUDE_DIRS}

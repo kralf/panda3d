@@ -18,6 +18,7 @@ from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.interval.MetaInterval import Sequence
 from panda3d.direct.task.Task import Task
 from panda3d.direct.actor.Actor import Actor
+from panda3d.config import *
 import sys,os,random
 
 # Figure out what directory this program is in.
@@ -152,15 +153,16 @@ class FireflyDemo(DirectObject):
         
         tempnode = NodePath(PandaNode("temp node"))
         tempnode.setAttrib(AlphaTestAttrib.make(RenderAttrib.MGreaterEqual, 0.5))
-        tempnode.setShader(Shader.load("samples/fireflies/fireflies_model.sha"))
+        tempnode.setShader(Shader.load(os.path.join(PANDA_SHADER_PATH, \
+          "samples/fireflies/fireflies_model.sha")))
         tempnode.setAttrib(DepthTestAttrib.make(RenderAttrib.MLessEqual))
         self.modelcam.node().setInitialState(tempnode.getState())
         
         # Configure the render state of the light camera.
 
         tempnode = NodePath(PandaNode("temp node"))
-        tempnode.setShader(Shader.load( \
-          "samples/fireflies/fireflies_lighting.sha"))
+        tempnode.setShader(Shader.load(os.path.join(PANDA_SHADER_PATH, \
+          "samples/fireflies/fireflies_lighting.sha")))
         tempnode.setShaderInput("texnormal",self.texNormal)
         tempnode.setShaderInput("texalbedo",self.texAlbedo)
         tempnode.setShaderInput("texdepth",self.texDepth)
@@ -261,7 +263,7 @@ class FireflyDemo(DirectObject):
         self.scaleseqs = []
         self.glowspheres = []
         self.fireflysize = 1.0
-        self.spheremodel = loader.loadModel("misc/sphere")
+        self.spheremodel = loader.loadModel("models/misc/sphere.flt")
         self.setFireflySize(25.0)
         while (len(self.fireflies)<5): self.addFirefly()
         self.updateReadout()

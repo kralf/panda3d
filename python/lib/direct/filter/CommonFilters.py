@@ -21,6 +21,7 @@ from panda3d.pandac.Modules import NodePath, PandaNode
 from panda3d.pandac.Modules import Filename
 from panda3d.pandac.Modules import AuxBitplaneAttrib
 from panda3d.pandac.Modules import RenderState, Texture, Shader
+from panda3d.config import *
 import sys,os
 
 CARTOON_BODY="""
@@ -54,7 +55,7 @@ class CommonFilters:
         self.task = taskMgr.add(self.update, "common-filters-update")
 
     def loadShader(self, name):
-        fn = os.path.join(FILE_DESTINATION, "shaders", name)
+        fn = os.path.join(PANDA_SHADER_PATH, name)
         fn = Filename.fromOsSpecific(fn)
         fn.makeTrueCase()
         return Shader.load(fn)
@@ -111,25 +112,25 @@ class CommonFilters:
                 bloom3=self.textures["bloom3"]
                 if (bloomconf.size == "large"):
                     scale=8
-                    downsampler="filter-down4.sha"
+                    downsampler="filter_down4.sha"
                 elif (bloomconf.size == "medium"):
                     scale=4
-                    downsampler="filter-copy.sha"
+                    downsampler="filter_copy.sha"
                 else:
                     scale=2
-                    downsampler="filter-copy.sha"
+                    downsampler="filter_copy.sha"
                 self.bloom.append(self.manager.renderQuadInto(colortex=bloom0, div=2,     align=scale))
                 self.bloom.append(self.manager.renderQuadInto(colortex=bloom1, div=scale, align=scale))
                 self.bloom.append(self.manager.renderQuadInto(colortex=bloom2, div=scale, align=scale))
                 self.bloom.append(self.manager.renderQuadInto(colortex=bloom3, div=scale, align=scale))
                 self.bloom[0].setShaderInput("src", self.textures["color"])
-                self.bloom[0].setShader(self.loadShader("filter-bloomi.sha"))
+                self.bloom[0].setShader(self.loadShader("filter_bloomi.sha"))
                 self.bloom[1].setShaderInput("src", bloom0)
                 self.bloom[1].setShader(self.loadShader(downsampler))
                 self.bloom[2].setShaderInput("src", bloom1)
-                self.bloom[2].setShader(self.loadShader("filter-bloomx.sha"))
+                self.bloom[2].setShader(self.loadShader("filter_bloomx.sha"))
                 self.bloom[3].setShaderInput("src", bloom2)
-                self.bloom[3].setShader(self.loadShader("filter-bloomy.sha"))
+                self.bloom[3].setShader(self.loadShader("filter_bloomy.sha"))
 
             text = "//Cg\n"
             text += "void vshader(float4 vtx_position : POSITION,\n"

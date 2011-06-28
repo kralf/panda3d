@@ -18,6 +18,7 @@ from panda3d.direct.actor.Actor import Actor
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.showbase.BufferViewer import BufferViewer
+from panda3d.config import *
 import sys,os
 
 # Figure out what directory this program is in.
@@ -60,7 +61,8 @@ class ToonMaker(DirectObject):
         # a single nonattenuating point light.
 
         tempnode = NodePath(PandaNode("temp node"))
-        tempnode.setShader(Shader.load("samples/cartoon/cartoon_lighting.sha"))
+        tempnode.setShader(Shader.load(os.path.join(PANDA_SHADER_PATH, \
+          "samples/cartoon/cartoon_lighting.sha")))
         base.cam.node().setInitialState(tempnode.getState())
         
         # This is the object that represents the single "light", as far
@@ -85,7 +87,8 @@ class ToonMaker(DirectObject):
         normalsCamera=base.makeCamera(normalsBuffer, lens=base.cam.node().getLens())
         normalsCamera.node().setScene(render)
         tempnode = NodePath(PandaNode("temp node"))
-        tempnode.setShader(Shader.load("samples/cartoon/cartoon_normal.sha"))
+        tempnode.setShader(Shader.load(os.path.join(PANDA_SHADER_PATH, \
+          "samples/cartoon/cartoon_normal.sha")))
         normalsCamera.node().setInitialState(tempnode.getState())
 
         #what we actually do to put edges on screen is apply them as a texture to 
@@ -103,7 +106,8 @@ class ToonMaker(DirectObject):
                 
         self.separation = 0.001
         self.cutoff = 0.3
-        inkGen=Shader.load("samples/cartoon/cartoon_ink.sha")
+        inkGen=Shader.load(os.path.join(PANDA_SHADER_PATH, \
+          "samples/cartoon/cartoon_ink.sha"))
         drawnScene.setShader(inkGen)
         drawnScene.setShaderInput("separation", Vec4(self.separation,0,self.separation,0));
         drawnScene.setShaderInput("cutoff", Vec4(self.cutoff,self.cutoff,self.cutoff,self.cutoff));

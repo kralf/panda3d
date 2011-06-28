@@ -62,7 +62,7 @@ class GlowDemo(DirectObject):
         # load our model
 
         self.tron=Actor()
-        self.tron.loadModel("samples/glow/models/tron")
+        self.tron.loadModel("samples/glow/tron")
         self.tron.loadAnims({"running":"samples/glow/models/tron_anim"})
         self.tron.reparentTo(render)
         self.interval = self.tron.hprInterval(60,Point3(360,0,0))

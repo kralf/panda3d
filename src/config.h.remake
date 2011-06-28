@@ -103,8 +103,8 @@
 #undef HAVE_FFTW
 #define HAVE_OPENSSL 1
 #undef HAVE_NET
-#undef HAVE_CG
-#undef HAVE_CGGL
+#cmakedefine HAVE_CG
+#cmakedefine HAVE_CGGL
 #undef HAVE_CGDX9
 #undef HAVE_FFMPEG
 #undef HAVE_ARTOOLKIT

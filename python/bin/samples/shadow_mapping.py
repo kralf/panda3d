@@ -7,6 +7,7 @@ from panda3d.direct.interval.IntervalGlobal import *
 from panda3d.direct.gui.DirectGui import OnscreenText
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.actor import Actor
+from panda3d.config import *
 from random import *
 
 font = loader.loadFont("cmss12")
@@ -144,7 +145,8 @@ class World(DirectObject):
     
         # Put a shader on the Light camera.
         lci = NodePath(PandaNode("Light Camera Initializer"))
-        lci.setShader(Shader.load('samples/shadows/shadow_caster.sha'))
+        lci.setShader(Shader.load(os.path.join(PANDA_SHADER_PATH, \
+          'samples/shadows/shadow_caster.sha')))
         self.LCam.node().setInitialState(lci.getState())
     
         # Put a shader on the Main camera.
@@ -154,10 +156,11 @@ class World(DirectObject):
 
         mci = NodePath(PandaNode("Main Camera Initializer"))
         if (base.win.getGsg().getSupportsShadowFilter()):
-            mci.setShader(Shader.load('samples/shadows/shadow_shader.sha'))
+            mci.setShader(Shader.load(os.path.join(PANDA_SHADER_PATH, \
+              'samples/shadows/shadow_shader.sha')))
         else:
-          mci.setShader(Shader.load(\
-            'samples/shadows/shadow_nosupport.sha'))
+          mci.setShader(Shader.load(os.path.join(PANDA_SHADER_PATH, \
+            'samples/shadows/shadow_nosupport.sha')))
         base.cam.node().setInitialState(mci.getState())
     
         self.incrementCameraPosition(0)
