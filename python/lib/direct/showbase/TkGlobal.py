@@ -5,7 +5,6 @@ __all__ = ['taskMgr']
 from Tkinter import *
 from panda3d.direct.task.TaskManagerGlobal import *
 from panda3d.direct.task.Task import Task
-import panda3d.direct.Pmw
 import Pmw
 import sys
 

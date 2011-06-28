@@ -21,6 +21,7 @@ remake_add_directories(data)
 remake_pack_deb(
   COMPONENT dtool
   DESCRIPTION "distribution tool"
+  libpython2.6
 )
 remake_pack_deb(
   panda3d-dtool
