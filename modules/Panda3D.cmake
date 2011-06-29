@@ -44,7 +44,7 @@ define_property(DIRECTORY PROPERTY PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES
 #     interrogated source code from.
 #   \required[list] glob A list of glob expressions that are resolved
 #     in order to find the input source files for Interrogate, defaulting
-#     to *.h and *.cxx.
+#     to *.h.
 #   \optional[value] COMMAND:command The generator command that will be
 #     passed to remake_generate_custom() to generate the Interrogate
 #     sources, defaulting to interrogate.
@@ -55,13 +55,13 @@ define_property(DIRECTORY PROPERTY PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES
 #     sources.
 #   \optional[option] PROMISCUOUS This option causes interrogate to run
 #     in promiscuous mode, i.e. it will also export those symbols which
-#     have not been explicitly marked to be published .
+#     have not been explicitly marked to be published.
 macro(panda3d_interrogate panda3d_target)
   remake_arguments(PREFIX panda3d_ VAR COMMAND VAR MODULE LIST EXCLUDE
     OPTION PROMISCUOUS ARGN globs ${ARGN})
   remake_set(panda3d_module SELF DEFAULT ${panda3d_target})
   remake_set(panda3d_command SELF DEFAULT interrogate)
-  remake_set(panda3d_globs SELF DEFAULT *.h *.cxx)
+  remake_set(panda3d_globs SELF DEFAULT *.h)
 
   string(TOUPPER ${panda3d_module} panda3d_building)
   remake_set(panda3d_args -fnames -string -refcount -assert -python-native
