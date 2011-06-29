@@ -45,14 +45,19 @@ define_property(DIRECTORY PROPERTY PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES
 #   \required[list] glob A list of glob expressions that are resolved
 #     in order to find the input source files for Interrogate, defaulting
 #     to *.h and *.cxx.
+#   \optional[value] COMMAND:command The generator command that will be
+#     passed to remake_generate_custom() to generate the Interrogate
+#     sources, defaulting to interrogate.
 #   \optional[value] MODULE:module The name of the Panda3D module that
 #     will be be passed to Interrogate, defaults to the target name.
 #   \optional[list] EXCLUDE:glob An optional list of glob expressions
 #     resolving to those files that shall be excluded from the Interrogate
 #     sources.
 macro(panda3d_interrogate panda3d_target)
-  remake_arguments(PREFIX panda3d_ VAR MODULE LIST EXCLUDE ARGN globs ${ARGN})
+  remake_arguments(PREFIX panda3d_ VAR COMMAND VAR MODULE LIST EXCLUDE
+    ARGN globs ${ARGN})
   remake_set(panda3d_module SELF DEFAULT ${panda3d_target})
+  remake_set(panda3d_command SELF DEFAULT interrogate)
   remake_set(panda3d_globs SELF DEFAULT *.h *.cxx)
 
   string(TOUPPER ${panda3d_module} panda3d_building)
@@ -101,6 +106,9 @@ macro(panda3d_interrogate panda3d_target)
   if(NOT EXISTS ${panda3d_dir})
     remake_file_mkdir(${panda3d_dir})
   endif(NOT EXISTS ${panda3d_dir})
+  remake_file(panda3d_file ${panda3d_dir}/command)
+  remake_file_create(${panda3d_file})
+  remake_file_write(${panda3d_file} ${panda3d_command})
   remake_file(panda3d_file ${panda3d_dir}/arguments)
   remake_file_create(${panda3d_file})
   remake_file_write(${panda3d_file} ${panda3d_args} ${panda3d_defs}
@@ -116,10 +124,14 @@ endmacro(panda3d_interrogate)
 #   appropriate arguments.
 #   \required[value] target The name of the build target to add the
 #     interrogated module source code for.
+#   \optional[value] COMMAND:command The generator command that will be
+#     passed to remake_generate_custom() to generate the Interrogate module
+#     sources, defaulting to interrogate_module.
 #   \optional[value] MODULE:module The name of the Panda3D module that
 #     will be be passed to Interrogate, defaults to the target name.
 macro(panda3d_interrogate_module panda3d_target)
-  remake_arguments(PREFIX panda3d_ VAR MODULE ${ARGN})
+  remake_arguments(PREFIX panda3d_ VAR COMMAND VAR MODULE ${ARGN})
+  remake_set(panda3d_command SELF DEFAULT interrogate_module)
   remake_set(panda3d_module SELF DEFAULT ${panda3d_target})
 
   remake_file(panda3d_dir ${PANDA3D_MODULE_DIR}/${panda3d_module})
@@ -139,6 +151,7 @@ macro(panda3d_interrogate_module panda3d_target)
   remake_unset(panda3d_inputs panda3d_sources)
   foreach(panda3d_dir ${panda3d_dirs})
     get_filename_component(panda3d_igate_target ${panda3d_dir} NAME)
+    remake_file_read(panda3d_cmd ${panda3d_dir}/command)
     remake_file_read(panda3d_args ${panda3d_dir}/arguments)
     remake_file_read(panda3d_input ${panda3d_dir}/input)
     remake_set(panda3d_source
@@ -147,7 +160,7 @@ macro(panda3d_interrogate_module panda3d_target)
       ${CMAKE_CURRENT_BINARY_DIR}/${panda3d_igate_target}.in)
 
     remake_generate_custom(Interrogate
-      interrogate ${panda3d_args} -oc %SOURCES% -od %OTHERS% %INPUT%
+      ${panda3d_cmd} ${panda3d_args} -oc %SOURCES% -od %OTHERS% %INPUT%
       INPUT ${panda3d_input}
       SOURCES ${panda3d_source}
       OTHERS ${panda3d_other})
@@ -159,7 +172,7 @@ macro(panda3d_interrogate_module panda3d_target)
   remake_set(panda3d_args -q -python-native -module ${panda3d_module}
     -library ${panda3d_target})
   remake_generate_custom("Interrogate module"
-    interrogate_module ${panda3d_args} -oc %SOURCES% %INPUT%
+    ${panda3d_command} ${panda3d_args} -oc %SOURCES% %INPUT%
     TARGET ${panda3d_target}
     INPUT ${panda3d_inputs} GENERATED
     SOURCES ${panda3d_target}_module.cxx)
@@ -174,12 +187,14 @@ endmacro(panda3d_interrogate_module)
 #   \optional[value] NAME:name The optional name of the Python package to
 #     be defined, defaults to the package name conversion of
 #     ${REMAKE_COMPONENT}-${REMAKE_PYTHON_COMPONENT_SUFFIX}.
-#   \required[value] command The generator command that will be passed to
-#     remake_generate_custom() to generate the Python module sources.
-#   \optional[list] PATH An optional list of path names that will be
+#   \optional[value] COMMAND:command The generator command that will be
+#     passed to remake_generate_custom() to generate the Python module
+#     sources, defaulting to gen_pycode.
+#   \optional[list] PATH:dir An optional list of path names that will be
 #     prepended to the PYTHONPATH environment variable.
-macro(panda3d_python_package panda3d_command)
-  remake_arguments(PREFIX panda3d_ VAR NAME LIST PATH ${ARGN})
+macro(panda3d_python_package)
+  remake_arguments(PREFIX panda3d_ VAR COMMAND VAR NAME LIST PATH ${ARGN})
+  remake_set(panda3d_command SELF DEFAULT gen_pycode)
   remake_component_name(panda3d_default_component ${REMAKE_COMPONENT}
     ${REMAKE_PYTHON_COMPONENT_SUFFIX})
   remake_python_package_name(panda3d_default_name ${panda3d_default_component})

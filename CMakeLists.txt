@@ -15,8 +15,12 @@ remake_project(
   NOTES ReleaseNotes
 )
 
-remake_python()
+# remake_python()
 remake_add_directories(data)
+remake_add_directories(
+  modules
+  COMPONENT dev
+)
 
 remake_pack_deb(
   COMPONENT dtool

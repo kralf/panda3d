@@ -4,7 +4,7 @@ remake_include(
   ../panda/*
 )
 panda3d_interrogate_include(
-  ../dtool/cppparse/include
+  ../dtool/cppparse/parser-inc
 )
 
 remake_define(WITHIN_PANDA ON)
