@@ -81,7 +81,7 @@ int main(int argc, char **argv)
   
   // Calculate MODCMD
   
-  sprintf(modcmd,"python -c \"import direct.ffi.GenPyCode\" %s",args);
+  sprintf(modcmd,"python -c \"import panda3d.direct.ffi.DoGenPyCode\" %s",args);
 
   // Run it.
 
