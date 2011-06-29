@@ -44,7 +44,7 @@ define_property(DIRECTORY PROPERTY PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES
 #     interrogated source code from.
 #   \required[list] glob A list of glob expressions that are resolved
 #     in order to find the input source files for Interrogate, defaulting
-#     to *.h.
+#     to *.h and *.cxx.
 #   \optional[value] COMMAND:command The generator command that will be
 #     passed to remake_generate_custom() to generate the Interrogate
 #     sources, defaulting to interrogate.
@@ -61,7 +61,7 @@ macro(panda3d_interrogate panda3d_target)
     OPTION PROMISCUOUS ARGN globs ${ARGN})
   remake_set(panda3d_module SELF DEFAULT ${panda3d_target})
   remake_set(panda3d_command SELF DEFAULT interrogate)
-  remake_set(panda3d_globs SELF DEFAULT *.h)
+  remake_set(panda3d_globs SELF DEFAULT *.h *.cxx)
 
   string(TOUPPER ${panda3d_module} panda3d_building)
   remake_set(panda3d_args -fnames -string -refcount -assert -python-native
