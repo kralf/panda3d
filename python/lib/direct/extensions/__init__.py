@@ -1,1 +1,1 @@
-from Modules import *
+from panda3d.pandac import *

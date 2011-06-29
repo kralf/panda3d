@@ -1,7 +1,7 @@
 from panda3d.direct.showbase.DirectObject import DirectObject
 
 if __debug__:
-    from panda3d.pandac.Modules import PStatCollector
+    from panda3d.pandac import PStatCollector
 
 class Job(DirectObject):
     # Base class for cpu-intensive or non-time-critical operations that

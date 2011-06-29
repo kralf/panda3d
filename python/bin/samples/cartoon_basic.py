@@ -1,11 +1,11 @@
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import PandaNode,LightNode,TextNode
-from panda3d.pandac.Modules import Filename, NodePath
-from panda3d.pandac.Modules import PointLight, AmbientLight
-from panda3d.pandac.Modules import LightRampAttrib, AuxBitplaneAttrib
-from panda3d.pandac.Modules import CardMaker
-from panda3d.pandac.Modules import Shader, Texture
-from panda3d.pandac.Modules import Point3,Vec4,Vec3
+from panda3d.pandac import PandaNode,LightNode,TextNode
+from panda3d.pandac import Filename, NodePath
+from panda3d.pandac import PointLight, AmbientLight
+from panda3d.pandac import LightRampAttrib, AuxBitplaneAttrib
+from panda3d.pandac import CardMaker
+from panda3d.pandac import Shader, Texture
+from panda3d.pandac import Point3,Vec4,Vec3
 from panda3d.direct.task.Task import Task
 from panda3d.direct.actor.Actor import Actor
 from panda3d.direct.gui.OnscreenText import OnscreenText

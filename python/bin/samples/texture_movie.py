@@ -11,7 +11,7 @@
 # for the Entertainment Technology Center class Building Virtual Worlds
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import Texture
+from panda3d.pandac import Texture
 from panda3d.direct.interval.LerpInterval import LerpFunc
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.showbase.DirectObject import DirectObject

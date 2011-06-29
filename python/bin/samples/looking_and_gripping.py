@@ -11,9 +11,9 @@
 # hand even if the hand is moving through an animation.
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import AmbientLight,DirectionalLight
-from panda3d.pandac.Modules import TextNode,NodePath,LightAttrib
-from panda3d.pandac.Modules import Vec3,Vec4
+from panda3d.pandac import AmbientLight,DirectionalLight
+from panda3d.pandac import TextNode,NodePath,LightAttrib
+from panda3d.pandac import Vec3,Vec4
 from panda3d.direct.actor.Actor import Actor
 from panda3d.direct.task.Task import Task
 from panda3d.direct.gui.OnscreenText import OnscreenText

@@ -18,7 +18,7 @@ from panda3d.direct.showbase import DirectObject
 from panda3d.direct.controls.ControlManager import CollisionHandlerRayStart
 from panda3d.direct.showbase.InputStateGlobal import inputState
 from panda3d.direct.task.Task import Task
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import math
 
 
@@ -73,7 +73,7 @@ class GravityWalker(DirectObject.DirectObject):
         assert self.notify.debugStateCall(self)
         if not self.wantDebugIndicator:
             return
-        from panda3d.pandac.Modules import *
+        from panda3d.pandac import *
         from panda3d.direct.interval.IntervalGlobal import *
         from toontown.coghq import MovingPlatform
 

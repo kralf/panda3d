@@ -14,10 +14,10 @@
 # for the Entertainment Technology Center class Building Virtual Worlds
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import Texture
-from panda3d.pandac.Modules import BillboardEffect
-from panda3d.pandac.Modules import Camera
-from panda3d.pandac.Modules import TextNode
+from panda3d.pandac import Texture
+from panda3d.pandac import BillboardEffect
+from panda3d.pandac import Camera
+from panda3d.pandac import TextNode
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.task.Task import Task

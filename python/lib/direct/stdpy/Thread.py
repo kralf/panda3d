@@ -14,7 +14,7 @@ __all__ = [
     ]
 
 # Import Modules as pm, so we don't have any namespace collisions.
-from panda3d.pandac import Modules as pm
+import panda3d.pandac as pm
 
 class error(StandardError):
     pass

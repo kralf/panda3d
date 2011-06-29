@@ -2,7 +2,7 @@
 
 __all__ = ['DirectScrolledFrame']
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import DirectGuiGlobals as DGG
 from DirectFrame import *
 from DirectScrollBar import *

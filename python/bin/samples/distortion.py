@@ -1,10 +1,10 @@
 #Author: Tree Form starplant@gmail.com
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import FrameBufferProperties, TextNode, Vec4
-from panda3d.pandac.Modules import BitMask32, Point3
-from panda3d.pandac.Modules import WindowProperties, GraphicsOutput
-from panda3d.pandac.Modules import Texture, GraphicsPipe
+from panda3d.pandac import FrameBufferProperties, TextNode, Vec4
+from panda3d.pandac import BitMask32, Point3
+from panda3d.pandac import WindowProperties, GraphicsOutput
+from panda3d.pandac import Texture, GraphicsPipe
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.config import *

@@ -8,11 +8,11 @@
 # light, and no shadows.
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import WindowProperties
-from panda3d.pandac.Modules import Filename,Shader
-from panda3d.pandac.Modules import AmbientLight,PointLight
-from panda3d.pandac.Modules import TextNode
-from panda3d.pandac.Modules import Point3,Vec3,Vec4
+from panda3d.pandac import WindowProperties
+from panda3d.pandac import Filename,Shader
+from panda3d.pandac import AmbientLight,PointLight
+from panda3d.pandac import TextNode
+from panda3d.pandac import Point3,Vec3,Vec4
 from panda3d.direct.task.Task import Task
 from panda3d.direct.actor.Actor import Actor
 from panda3d.direct.gui.OnscreenText import OnscreenText

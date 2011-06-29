@@ -1,5 +1,5 @@
 import direct
-from panda3d.pandac.Modules import HttpRequest
+from panda3d.pandac import HttpRequest
 from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 from panda3d.direct.task.TaskManagerGlobal import taskMgr
 from panda3d.direct.task import Task

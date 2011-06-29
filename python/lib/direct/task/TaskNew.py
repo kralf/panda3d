@@ -15,7 +15,7 @@ import time
 import random
 import string
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 
 def print_exc_plus():
     """

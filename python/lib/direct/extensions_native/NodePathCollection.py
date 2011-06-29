@@ -15,7 +15,7 @@ del asList
 #####################################################################3333      
 
 def getTightBounds(self):
-    from panda3d.pandac.Modules import Point3
+    from panda3d.pandac import Point3
     
     if self.getNumPaths() == 0:
         return (Point3.Point3(0), Point3.Point3(0))

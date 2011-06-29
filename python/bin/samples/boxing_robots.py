@@ -5,10 +5,10 @@
 # It is based on the popular game of "Rock 'em Sock 'em Robots".
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import AmbientLight,DirectionalLight
-from panda3d.pandac.Modules import LightAttrib
-from panda3d.pandac.Modules import TextNode
-from panda3d.pandac.Modules import Vec3,Vec4
+from panda3d.pandac import AmbientLight,DirectionalLight
+from panda3d.pandac import LightAttrib
+from panda3d.pandac import TextNode
+from panda3d.pandac import Vec3,Vec4
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.interval.MetaInterval import Sequence

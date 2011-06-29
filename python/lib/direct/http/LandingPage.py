@@ -1,8 +1,8 @@
 import os
 from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
-from panda3d.pandac.Modules import VirtualFileSystem
-from panda3d.pandac.Modules import Filename
-from panda3d.pandac.Modules import DSearchPath
+from panda3d.pandac import VirtualFileSystem
+from panda3d.pandac import Filename
+from panda3d.pandac import DSearchPath
 import LandingPageHTML
 
 class LandingPage:

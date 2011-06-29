@@ -5,11 +5,11 @@
 #
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import GraphicsOutput
-from panda3d.pandac.Modules import Filename,Texture
-from panda3d.pandac.Modules import CardMaker,Vec4
-from panda3d.pandac.Modules import NodePath,TextNode
-from panda3d.pandac.Modules import AmbientLight,DirectionalLight
+from panda3d.pandac import GraphicsOutput
+from panda3d.pandac import Filename,Texture
+from panda3d.pandac import CardMaker,Vec4
+from panda3d.pandac import NodePath,TextNode
+from panda3d.pandac import AmbientLight,DirectionalLight
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.task.Task import Task

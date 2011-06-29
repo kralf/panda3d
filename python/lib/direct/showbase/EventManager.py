@@ -6,10 +6,10 @@ __all__ = ['EventManager']
 from MessengerGlobal import *
 from panda3d.direct.directnotify.DirectNotifyGlobal import *
 
-# This module may not import panda3d.pandac.Modules, since it is imported
+# This module may not import panda3d.pandac, since it is imported
 # by the Toontown Launcher before the complete Modules have been
 # downloaded.
-#from panda3d.pandac.Modules import *
+#from panda3d.pandac import *
 
 class EventManager:
 
@@ -43,7 +43,7 @@ class EventManager:
         """
         if self._wantPstats is None:
             self._wantPstats = config.GetBool('pstats-eventmanager', 0)
-            from panda3d.pandac.Modules import PStatCollector
+            from panda3d.pandac import PStatCollector
             EventManager.PStatCollector = PStatCollector
         # use different methods for handling events with and without pstats tracking
         # for efficiency
@@ -84,7 +84,7 @@ class EventManager:
             ptr = eventParameter.getPtr()
 
             if EventManager.EventStorePandaNode is None:
-                from panda3d.pandac.Modules import EventStorePandaNode
+                from panda3d.pandac import EventStorePandaNode
                 EventManager.EventStorePandaNode = EventStorePandaNode
             if isinstance(ptr, EventManager.EventStorePandaNode):
                 # Actually, it's a kludgey wrapper around a PandaNode
@@ -191,7 +191,7 @@ class EventManager:
 
     def restart(self):
         if None in (EventManager.EventQueue, EventManager.EventHandler):
-            from panda3d.pandac.Modules import EventQueue, EventHandler
+            from panda3d.pandac import EventQueue, EventHandler
             EventManager.EventQueue = EventQueue
             EventManager.EventHandler = EventHandler
         

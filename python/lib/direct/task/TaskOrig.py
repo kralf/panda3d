@@ -4,7 +4,7 @@ __all__ = ['Task', 'TaskSortList', 'TaskManager',
            'exit', 'cont', 'done', 'again',
            'sequence', 'loop', 'pause']
 
-# This module may not import panda3d.pandac.Modules, since it is imported
+# This module may not import panda3d.pandac, since it is imported
 # by the Toontown Launcher before the complete Modules have been
 # downloaded.  Instead, it imports only panda_express_modules, the
 # subset of Modules that we know is available immediately.
@@ -36,7 +36,7 @@ import types
 
 if __debug__:
     # For pstats
-    from panda3d.pandac.Modules import PStatCollector
+    from panda3d.pandac import PStatCollector
 
 def print_exc_plus():
     """

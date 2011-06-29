@@ -9,7 +9,7 @@
 
 import panda3d.direct.directbase.DirectStart
 from panda3d.direct.showbase import DirectObject
-from panda3d.pandac.Modules import TextNode, Vec3, Vec4
+from panda3d.pandac import TextNode, Vec3, Vec4
 from panda3d.direct.interval.IntervalGlobal import *
 from panda3d.direct.gui.DirectGui import *
 from panda3d.direct.showbase.DirectObject import DirectObject

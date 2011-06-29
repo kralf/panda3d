@@ -1,6 +1,6 @@
 __all__ = ['DirectEntryScroll']
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import DirectGuiGlobals as DGG
 from DirectScrolledFrame import *
 from DirectFrame import *

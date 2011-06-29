@@ -1,5 +1,5 @@
 from panda3d.direct.stdpy.File import open
-from panda3d.pandac.Modules import Filename, VirtualFileSystem, VirtualFileMountSystem
+from panda3d.pandac import Filename, VirtualFileSystem, VirtualFileMountSystem
 import sys
 import new
 import os

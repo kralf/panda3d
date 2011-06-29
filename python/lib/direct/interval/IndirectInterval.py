@@ -2,7 +2,7 @@
 
 __all__ = ['IndirectInterval']
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.directnotify.DirectNotifyGlobal import *
 import Interval
 from panda3d.direct.showbase import LerpBlendHelpers

@@ -15,7 +15,7 @@ animations based on walker events.
 """
 
 from panda3d.direct.showbase.ShowBaseGlobal import *
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.directnotify import DirectNotifyGlobal
 import NonPhysicsWalker
 

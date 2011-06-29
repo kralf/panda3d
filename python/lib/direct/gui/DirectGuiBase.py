@@ -3,7 +3,7 @@
 __all__ = ['DirectGuiBase', 'DirectGuiWidget']
 
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import DirectGuiGlobals as DGG
 from OnscreenText import *
 from OnscreenGeom import *
@@ -13,7 +13,7 @@ from panda3d.direct.showbase import DirectObject
 from panda3d.direct.task import Task
 from panda3d.direct.showbase import ShowBase
 from panda3d.direct.showbase.PythonUtil import recordCreationStackStr
-from panda3d.pandac.Modules import PStatCollector
+from panda3d.pandac import PStatCollector
 import string, types
 
 guiObjectCollector = PStatCollector("Client::GuiObjects")

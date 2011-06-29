@@ -2,11 +2,11 @@
 #Date: 7/25/2005
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import Filename,Buffer,Shader
-from panda3d.pandac.Modules import PandaNode,NodePath
-from panda3d.pandac.Modules import ColorBlendAttrib
-from panda3d.pandac.Modules import AmbientLight,DirectionalLight
-from panda3d.pandac.Modules import TextNode,Point3,Vec4
+from panda3d.pandac import Filename,Buffer,Shader
+from panda3d.pandac import PandaNode,NodePath
+from panda3d.pandac import ColorBlendAttrib
+from panda3d.pandac import AmbientLight,DirectionalLight
+from panda3d.pandac import TextNode,Point3,Vec4
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.actor.Actor import Actor

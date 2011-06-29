@@ -10,15 +10,15 @@ from panda3d.direct.directbase import DirectStart
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.gui.DirectGui import *
 from panda3d.direct.interval.IntervalGlobal import *
-from panda3d.pandac.Modules import lookAt
-from panda3d.pandac.Modules import GeomVertexFormat, GeomVertexData
-from panda3d.pandac.Modules import Geom, GeomTriangles, GeomVertexWriter
-from panda3d.pandac.Modules import Texture, GeomNode
-from panda3d.pandac.Modules import PerspectiveLens
-from panda3d.pandac.Modules import CardMaker
-from panda3d.pandac.Modules import Light, Spotlight
-from panda3d.pandac.Modules import TextNode
-from panda3d.pandac.Modules import Vec3, Vec4, Point3
+from panda3d.pandac import lookAt
+from panda3d.pandac import GeomVertexFormat, GeomVertexData
+from panda3d.pandac import Geom, GeomTriangles, GeomVertexWriter
+from panda3d.pandac import Texture, GeomNode
+from panda3d.pandac import PerspectiveLens
+from panda3d.pandac import CardMaker
+from panda3d.pandac import Light, Spotlight
+from panda3d.pandac import TextNode
+from panda3d.pandac import Vec3, Vec4, Point3
 import sys, os
 
 base.disableMouse()

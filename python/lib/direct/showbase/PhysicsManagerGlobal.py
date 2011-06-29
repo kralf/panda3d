@@ -2,6 +2,6 @@
 
 __all__ = ['physicsMgr']
 
-from panda3d.pandac.Modules import PhysicsManager
+from panda3d.pandac import PhysicsManager
 
 physicsMgr = PhysicsManager()

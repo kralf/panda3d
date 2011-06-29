@@ -2,7 +2,7 @@
 
 __all__ = ['getBlend']
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 
 """global lerp blend types for lerp function"""
     

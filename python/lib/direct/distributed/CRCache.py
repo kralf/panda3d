@@ -122,7 +122,7 @@ class CRCache:
     def checkCache(self):
         # For debugging; this verifies that the cache is sensible and
         # returns true if so.
-        from panda3d.pandac.Modules import NodePath
+        from panda3d.pandac import NodePath
         for obj in self.dict.values():
             if isinstance(obj, NodePath):
                 assert not obj.isEmpty() and obj.getTopNode() != render.node()

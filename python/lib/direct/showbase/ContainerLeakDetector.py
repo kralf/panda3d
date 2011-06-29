@@ -1,4 +1,4 @@
-from panda3d.pandac.Modules import PStatCollector
+from panda3d.pandac import PStatCollector
 from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 from panda3d.direct.showbase.PythonUtil import Queue, invertDictLossless, makeFlywheelGen
 from panda3d.direct.showbase.PythonUtil import itype, serialNum, safeRepr, fastRepr

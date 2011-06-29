@@ -7,12 +7,12 @@
 #
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import PerspectiveLens
-from panda3d.pandac.Modules import NodePath
-from panda3d.pandac.Modules import AmbientLight,DirectionalLight
-from panda3d.pandac.Modules import PointLight,Spotlight
-from panda3d.pandac.Modules import TextNode
-from panda3d.pandac.Modules import Vec3,Vec4
+from panda3d.pandac import PerspectiveLens
+from panda3d.pandac import NodePath
+from panda3d.pandac import AmbientLight,DirectionalLight
+from panda3d.pandac import PointLight,Spotlight
+from panda3d.pandac import TextNode
+from panda3d.pandac import Vec3,Vec4
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.showbase.DirectObject import DirectObject
 import math, sys, colorsys

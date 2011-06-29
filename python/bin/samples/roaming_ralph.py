@@ -9,11 +9,11 @@
 # as implementing a fully rotatable camera.
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import CollisionTraverser,CollisionNode
-from panda3d.pandac.Modules import CollisionHandlerQueue,CollisionRay
-from panda3d.pandac.Modules import Filename
-from panda3d.pandac.Modules import PandaNode,NodePath,Camera,TextNode
-from panda3d.pandac.Modules import Vec3,Vec4,BitMask32
+from panda3d.pandac import CollisionTraverser,CollisionNode
+from panda3d.pandac import CollisionHandlerQueue,CollisionRay
+from panda3d.pandac import Filename
+from panda3d.pandac import PandaNode,NodePath,Camera,TextNode
+from panda3d.pandac import Vec3,Vec4,BitMask32
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.actor.Actor import Actor
 from panda3d.direct.task.Task import Task

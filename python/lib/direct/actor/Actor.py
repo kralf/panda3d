@@ -2,9 +2,9 @@
 
 __all__ = ['Actor']
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.showbase.DirectObject import DirectObject
-from panda3d.pandac.Modules import LODNode
+from panda3d.pandac import LODNode
 import types, copy
 
 class Actor(DirectObject, NodePath):

@@ -2,7 +2,7 @@
 
 __all__ = ['doTest']
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.directbase.DirectStart import *
 from IntervalGlobal import *
 

@@ -2,7 +2,7 @@
 
 __all__ = ['FunctionInterval', 'EventInterval', 'AcceptInterval', 'IgnoreInterval', 'ParentInterval', 'WrtParentInterval', 'PosInterval', 'HprInterval', 'ScaleInterval', 'PosHprInterval', 'HprScaleInterval', 'PosHprScaleInterval', 'Func', 'Wait']
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.showbase.MessengerGlobal import *
 from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 import Interval

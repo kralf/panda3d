@@ -3,7 +3,7 @@
 __all__ = ['ClassicStyle', 'NewStyle', 'ToonEyes']
 
 import FSM
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.task import Task
 import string
 

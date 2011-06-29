@@ -8,11 +8,11 @@
 
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import PandaNode,LightNode,TextNode
-from panda3d.pandac.Modules import Filename
-from panda3d.pandac.Modules import NodePath
-from panda3d.pandac.Modules import Shader
-from panda3d.pandac.Modules import Point3,Vec4
+from panda3d.pandac import PandaNode,LightNode,TextNode
+from panda3d.pandac import Filename
+from panda3d.pandac import NodePath
+from panda3d.pandac import Shader
+from panda3d.pandac import Point3,Vec4
 from panda3d.direct.task.Task import Task
 from panda3d.direct.actor.Actor import Actor
 from panda3d.direct.gui.OnscreenText import OnscreenText

@@ -4,7 +4,7 @@ __all__ = ['DirectOptionMenu']
 
 import types
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import DirectGuiGlobals as DGG
 from DirectButton import *
 from DirectLabel import *

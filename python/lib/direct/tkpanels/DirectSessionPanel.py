@@ -6,7 +6,7 @@ __all__ = ['DirectSessionPanel']
 from panda3d.direct.showbase.TkGlobal import *
 from panda3d.direct.tkwidgets.AppShell import *
 from Tkinter import *
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import Pmw, string
 from panda3d.direct.tkwidgets import Dial
 from panda3d.direct.tkwidgets import Floater

@@ -2,8 +2,7 @@
 
 __all__ = ['IntervalManager', 'ivalMgr']
 
-from panda3d.pandac.Modules import *
-from panda3d.pandac import Modules
+from panda3d.pandac import *
 from panda3d.direct.directnotify.DirectNotifyGlobal import *
 from panda3d.direct.showbase import EventManager
 import Interval

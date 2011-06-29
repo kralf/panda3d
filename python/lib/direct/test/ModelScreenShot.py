@@ -1,9 +1,9 @@
 import direct
-from panda3d.pandac.Modules import loadPrcFileData
+from panda3d.pandac import loadPrcFileData
 
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.directbase.DirectStart import *
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import panda3d.direct.gui.DirectGuiGlobals as DGG
 from panda3d.direct.gui.DirectGui import *
 from panda3d.direct.task import Task

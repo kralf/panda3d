@@ -6,13 +6,13 @@
 
 from panda3d.config import *
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import BaseParticleEmitter,BaseParticleRenderer
-from panda3d.pandac.Modules import PointParticleFactory,SpriteParticleRenderer
-from panda3d.pandac.Modules import LinearNoiseForce,DiscEmitter
-from panda3d.pandac.Modules import LightAttrib,TextNode
-from panda3d.pandac.Modules import AmbientLight,DirectionalLight
-from panda3d.pandac.Modules import Point3,Vec3,Vec4
-from panda3d.pandac.Modules import Filename
+from panda3d.pandac import BaseParticleEmitter,BaseParticleRenderer
+from panda3d.pandac import PointParticleFactory,SpriteParticleRenderer
+from panda3d.pandac import LinearNoiseForce,DiscEmitter
+from panda3d.pandac import LightAttrib,TextNode
+from panda3d.pandac import AmbientLight,DirectionalLight
+from panda3d.pandac import Point3,Vec3,Vec4
+from panda3d.pandac import Filename
 from panda3d.direct.particles.Particles import Particles
 from panda3d.direct.particles.ParticleEffect import ParticleEffect
 from panda3d.direct.particles.ForceGroup import ForceGroup

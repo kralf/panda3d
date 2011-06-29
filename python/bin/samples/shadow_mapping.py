@@ -1,4 +1,4 @@
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import sys,os
 loadPrcFileData("", "prefer-parasite-buffer #f")
 

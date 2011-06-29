@@ -248,10 +248,6 @@ def generateNativeWrappers():
     initFilename = os.path.join(outputCodeDir, '__init__.py')
     init = open(initFilename, 'w')
 
-    # Generate modules.py
-    pandaModulesFilename = os.path.join(outputCodeDir, 'Modules.py')
-    pandaModules = open(pandaModulesFilename, 'w')
-
     # Generate a series of "panda_express.py" etc. files, one for
     # each named module.
     for moduleName in FFIConstants.CodeModuleNameList:
@@ -260,7 +256,7 @@ def generateNativeWrappers():
         Dtool_PreloadDLL(moduleName)
         exec('import %s as module' % moduleName)
 
-        pandaModules.write('from %s_module import *\n' % (moduleName))
+        init.write('from %s_module import *\n' % (moduleName))
 
         moduleModulesFilename = os.path.join(outputCodeDir, '%s_module.py' % \
           (moduleName))
@@ -313,7 +309,7 @@ def run():
 
     if doHTML:
         from panda3d.direct.directscripts import GenDocs
-        from panda3d.pandac.Modules import PandaSystem
+        from panda3d.pandac import PandaSystem
         versionString = '%s %s' % (
             PandaSystem.getDistributor(), PandaSystem.getVersionString())
 

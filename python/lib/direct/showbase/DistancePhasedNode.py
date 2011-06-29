@@ -1,6 +1,6 @@
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.directnotify import DirectNotifyGlobal
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from PhasedObject import PhasedObject
 
 class DistancePhasedNode(PhasedObject, DirectObject, NodePath):

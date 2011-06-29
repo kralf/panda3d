@@ -413,7 +413,7 @@ class InspectorWindow:
             return
         part = self.topInspector().partNumber(partNumber)
         print part
-        from panda3d.pandac.Modules import NodePath
+        from panda3d.pandac import NodePath
         from panda3d.direct.fsm import ClassicFSM
         popupMenu = None
         if isinstance(part, NodePath):

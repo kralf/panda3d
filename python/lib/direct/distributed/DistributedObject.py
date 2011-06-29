@@ -1,6 +1,6 @@
 """DistributedObject module: contains the DistributedObject class"""
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 from panda3d.direct.distributed.DistributedObjectBase import DistributedObjectBase
 from panda3d.direct.showbase.PythonUtil import StackTrace

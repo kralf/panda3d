@@ -1,5 +1,5 @@
 import sys, string, math, types
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import panda3d.direct.gui.DirectGuiGlobals as DGG
 from panda3d.direct.gui.DirectGui import *
 

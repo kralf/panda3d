@@ -1,4 +1,4 @@
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 # Tell Panda3D to use OpenAL, not FMOD
 loadPrcFileData("", "audio-library-name p3openal_audio")
 from panda3d.direct.showbase.DirectObject import DirectObject

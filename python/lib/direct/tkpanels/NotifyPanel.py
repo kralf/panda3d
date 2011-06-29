@@ -17,8 +17,8 @@ class NotifyPanel:
         from panda3d.direct.showbase.TkGlobal import Label, Radiobutton
         from panda3d.direct.showbase.TkGlobal import HORIZONTAL, X, W, NW, BOTH, LEFT, RIGHT, IntVar
         # To get severity levels
-        from panda3d.pandac.Modules import NSFatal, NSError, NSWarning, NSInfo
-        from panda3d.pandac.Modules import NSDebug, NSSpam
+        from panda3d.pandac import NSFatal, NSError, NSWarning, NSInfo
+        from panda3d.pandac import NSDebug, NSSpam
 
         if tl == None:
             tl = Toplevel()
@@ -126,7 +126,7 @@ class NotifyPanel:
         return categories
 
     def getPandaCategories(self):
-        from panda3d.pandac.Modules import Notify
+        from panda3d.pandac import Notify
         topCategory = Notify.ptr().getTopCategory()
         return self._getPandaCategories(topCategory)
 

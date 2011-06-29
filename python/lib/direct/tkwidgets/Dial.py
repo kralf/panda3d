@@ -10,7 +10,7 @@ from Tkinter import *
 from Valuator import Valuator, VALUATOR_MINI, VALUATOR_FULL
 from panda3d.direct.task import Task
 import math, string, operator, Pmw
-from panda3d.pandac.Modules import ClockObject
+from panda3d.pandac import ClockObject
 
 TWO_PI = 2.0 * math.pi
 ONEPOINTFIVE_PI = 1.5 * math.pi

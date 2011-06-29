@@ -15,7 +15,7 @@ although it does send messeges that allow a listener to play sounds or
 animations based on control events.
 """
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 from panda3d.direct.showbase.InputStateGlobal import inputState
 from panda3d.direct.task.Task import Task

@@ -1,5 +1,5 @@
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.interval.IntervalGlobal import *
 
 from panda3d.direct.distributed.DistributedNode import DistributedNode

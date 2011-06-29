@@ -4,15 +4,15 @@
 # See the associated HTML file for an explanation.
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import FrameBufferProperties, WindowProperties
-from panda3d.pandac.Modules import GraphicsPipe,GraphicsOutput
-from panda3d.pandac.Modules import Filename,Texture,Shader
-from panda3d.pandac.Modules import RenderState, CardMaker
-from panda3d.pandac.Modules import PandaNode,TextNode,NodePath
-from panda3d.pandac.Modules import RenderAttrib,AlphaTestAttrib,ColorBlendAttrib
-from panda3d.pandac.Modules import CullFaceAttrib,DepthTestAttrib
-from panda3d.pandac.Modules import DepthWriteAttrib
-from panda3d.pandac.Modules import Point3,Vec3,Vec4,BitMask32
+from panda3d.pandac import FrameBufferProperties, WindowProperties
+from panda3d.pandac import GraphicsPipe,GraphicsOutput
+from panda3d.pandac import Filename,Texture,Shader
+from panda3d.pandac import RenderState, CardMaker
+from panda3d.pandac import PandaNode,TextNode,NodePath
+from panda3d.pandac import RenderAttrib,AlphaTestAttrib,ColorBlendAttrib
+from panda3d.pandac import CullFaceAttrib,DepthTestAttrib
+from panda3d.pandac import DepthWriteAttrib
+from panda3d.pandac import Point3,Vec3,Vec4,BitMask32
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.interval.MetaInterval import Sequence

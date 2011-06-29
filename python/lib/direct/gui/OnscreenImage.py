@@ -2,7 +2,7 @@
 
 __all__ = ['OnscreenImage']
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 import DirectGuiGlobals as DGG
 from panda3d.direct.showbase.DirectObject import DirectObject
 import string,types

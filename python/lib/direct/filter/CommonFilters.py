@@ -16,11 +16,11 @@ clunky approach.  - Josh
 """
 
 from FilterManager import FilterManager
-from panda3d.pandac.Modules import Point3, Vec3, Vec4, Point2
-from panda3d.pandac.Modules import NodePath, PandaNode
-from panda3d.pandac.Modules import Filename
-from panda3d.pandac.Modules import AuxBitplaneAttrib
-from panda3d.pandac.Modules import RenderState, Texture, Shader
+from panda3d.pandac import Point3, Vec3, Vec4, Point2
+from panda3d.pandac import NodePath, PandaNode
+from panda3d.pandac import Filename
+from panda3d.pandac import AuxBitplaneAttrib
+from panda3d.pandac import RenderState, Texture, Shader
 from panda3d.config import *
 import sys,os
 

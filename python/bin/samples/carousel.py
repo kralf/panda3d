@@ -16,10 +16,10 @@
 # and Parallel
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import Lerp
-from panda3d.pandac.Modules import AmbientLight, DirectionalLight, LightAttrib
-from panda3d.pandac.Modules import NodePath
-from panda3d.pandac.Modules import Vec3, Vec4
+from panda3d.pandac import Lerp
+from panda3d.pandac import AmbientLight, DirectionalLight, LightAttrib
+from panda3d.pandac import NodePath
+from panda3d.pandac import Vec3, Vec4
 from panda3d.direct.interval.IntervalGlobal import *   #Needed to use Intervals
 from panda3d.direct.gui.DirectGui import *
 

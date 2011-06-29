@@ -4,7 +4,7 @@ from panda3d.direct.directnotify.DirectNotifyGlobal import directNotify
 from panda3d.direct.distributed.DistributedObjectBase import DistributedObjectBase
 from panda3d.direct.showbase import PythonUtil
 from otp.ai.AIZoneData import AIZoneData
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 #from PyDatagram import PyDatagram
 #from PyDatagramIterator import PyDatagramIterator
 

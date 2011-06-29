@@ -232,7 +232,7 @@ def printPosHprScale(self, other = None, sd = 2):
             ')\n')
 
 def printTransform(self, other = None, sd = 2, fRecursive = 0):
-    from panda3d.pandac.Modules import Vec3
+    from panda3d.pandac import Vec3
     fmtStr = '%%0.%df' % sd
     name = self.getName()
     if other == None:

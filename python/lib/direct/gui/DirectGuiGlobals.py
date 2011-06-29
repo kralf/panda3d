@@ -7,7 +7,7 @@ __all__ = []
 Global definitions used by Direct Gui Classes and handy constants
 that can be used during widget construction
 """
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 
 defaultFont = None
 defaultFontFunc = TextNode.getDefaultFont

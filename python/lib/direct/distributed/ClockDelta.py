@@ -1,7 +1,7 @@
 # ClockDelta provides the ability to use clock synchronization for
 # distributed objects
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.directnotify import DirectNotifyGlobal
 from panda3d.direct.showbase import DirectObject
 import math

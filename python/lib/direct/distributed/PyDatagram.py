@@ -3,7 +3,7 @@
 # class variable FuncDict and so we can import DCSubatomicType at the top
 # of the file rather than every time we call the putArg function.
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 # Import the type numbers
 
 #from otp.ai.AIMsgTypes import *

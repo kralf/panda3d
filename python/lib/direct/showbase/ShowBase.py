@@ -7,7 +7,7 @@ __all__ = ['ShowBase', 'WindowControls']
 # Annoying and very noisy, but sometimes useful
 #import VerboseImport
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 
 # This needs to be available early for DirectGUI imports
 import __builtin__

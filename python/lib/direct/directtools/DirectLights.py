@@ -1,5 +1,5 @@
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from string import lower
 
 class DirectLight(NodePath):

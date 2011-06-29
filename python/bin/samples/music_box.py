@@ -5,8 +5,8 @@
 # and sound intervals in a panda project.
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import NodePath,TextNode
-from panda3d.pandac.Modules import Vec3,Vec4
+from panda3d.pandac import NodePath,TextNode
+from panda3d.pandac import Vec3,Vec4
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.interval.SoundInterval import SoundInterval

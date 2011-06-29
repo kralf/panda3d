@@ -8,16 +8,16 @@
 #
 
 from panda3d.direct.directbase import DirectStart
-from panda3d.pandac.Modules import Filename,InternalName
-from panda3d.pandac.Modules import GeomVertexArrayFormat, GeomVertexFormat
-from panda3d.pandac.Modules import Geom, GeomNode, GeomTrifans, GeomTristrips
-from panda3d.pandac.Modules import GeomVertexReader, GeomVertexWriter
-from panda3d.pandac.Modules import GeomVertexRewriter, GeomVertexData
-from panda3d.pandac.Modules import PerspectiveLens, TextNode
-from panda3d.pandac.Modules import TransformState,CullFaceAttrib
-from panda3d.pandac.Modules import Light,AmbientLight,Spotlight
-from panda3d.pandac.Modules import NodePath
-from panda3d.pandac.Modules import Vec3,Vec4,Mat4
+from panda3d.pandac import Filename,InternalName
+from panda3d.pandac import GeomVertexArrayFormat, GeomVertexFormat
+from panda3d.pandac import Geom, GeomNode, GeomTrifans, GeomTristrips
+from panda3d.pandac import GeomVertexReader, GeomVertexWriter
+from panda3d.pandac import GeomVertexRewriter, GeomVertexData
+from panda3d.pandac import PerspectiveLens, TextNode
+from panda3d.pandac import TransformState,CullFaceAttrib
+from panda3d.pandac import Light,AmbientLight,Spotlight
+from panda3d.pandac import NodePath
+from panda3d.pandac import Vec3,Vec4,Mat4
 from panda3d.direct.task.Task import Task
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.showbase.DirectObject import DirectObject

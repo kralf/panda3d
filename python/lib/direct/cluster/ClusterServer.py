@@ -1,4 +1,4 @@
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from ClusterMsgs import *
 from panda3d.direct.distributed.MsgTypes import *
 from panda3d.direct.directnotify import DirectNotifyGlobal

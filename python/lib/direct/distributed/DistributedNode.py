@@ -1,6 +1,6 @@
 """DistributedNode module: contains the DistributedNode class"""
 
-from panda3d.pandac.Modules import NodePath
+from panda3d.pandac import NodePath
 from panda3d.direct.showbase.ShowBaseGlobal import *
 from panda3d.direct.task import Task
 import GridParent

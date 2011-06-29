@@ -14,16 +14,16 @@ Still need to implement:
 
 """
 
-from panda3d.pandac.Modules import Point3, Vec3, Vec4
-from panda3d.pandac.Modules import NodePath, PandaNode
-from panda3d.pandac.Modules import RenderState, Texture, Shader
-from panda3d.pandac.Modules import CardMaker
-from panda3d.pandac.Modules import TextureStage
-from panda3d.pandac.Modules import GraphicsPipe, GraphicsOutput
-from panda3d.pandac.Modules import WindowProperties, FrameBufferProperties
-from panda3d.pandac.Modules import Camera, DisplayRegion
-from panda3d.pandac.Modules import OrthographicLens
-from panda3d.pandac.Modules import AuxBitplaneAttrib
+from panda3d.pandac import Point3, Vec3, Vec4
+from panda3d.pandac import NodePath, PandaNode
+from panda3d.pandac import RenderState, Texture, Shader
+from panda3d.pandac import CardMaker
+from panda3d.pandac import TextureStage
+from panda3d.pandac import GraphicsPipe, GraphicsOutput
+from panda3d.pandac import WindowProperties, FrameBufferProperties
+from panda3d.pandac import Camera, DisplayRegion
+from panda3d.pandac import OrthographicLens
+from panda3d.pandac import AuxBitplaneAttrib
 from panda3d.direct.directnotify.DirectNotifyGlobal import *
 from panda3d.direct.showbase.DirectObject import DirectObject
 

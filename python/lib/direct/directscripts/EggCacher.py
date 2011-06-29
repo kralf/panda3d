@@ -9,7 +9,7 @@
 ##############################################################################
 
 import os,sys,gc
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 
 class EggCacher:
     def __init__(self, args):

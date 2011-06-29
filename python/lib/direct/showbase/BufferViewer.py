@@ -2,7 +2,7 @@
 
 __all__ = ['BufferViewer']
 
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 from panda3d.direct.task import Task
 from panda3d.direct.directnotify.DirectNotifyGlobal import *
 from panda3d.direct.showbase.DirectObject import DirectObject

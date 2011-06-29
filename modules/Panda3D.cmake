@@ -208,8 +208,7 @@ macro(panda3d_python_package)
   remake_set(panda3d_name SELF DEFAULT ${panda3d_default_name})
   remake_set(panda3d_paths ${panda3d_path})
 
-  remake_set(panda3d_others ${CMAKE_CURRENT_BINARY_DIR}/__init__.py
-    ${CMAKE_CURRENT_BINARY_DIR}/Modules.py)
+  remake_set(panda3d_others ${CMAKE_CURRENT_BINARY_DIR}/__init__.py)
   remake_python_package(NAME ${panda3d_name}
     DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     ${panda3d_others} GENERATED)

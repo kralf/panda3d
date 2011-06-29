@@ -1,5 +1,5 @@
 from panda3d.direct.gui.DirectGui import *
-from panda3d.pandac.Modules import *
+from panda3d.pandac import *
 
 
 class DirectCheckBox(DirectButton):

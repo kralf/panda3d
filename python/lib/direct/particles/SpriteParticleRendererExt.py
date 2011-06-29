@@ -1,4 +1,4 @@
-from panda3d.pandac.Modules import SpriteParticleRenderer
+from panda3d.pandac import SpriteParticleRenderer
 
 
 class SpriteParticleRendererExt(SpriteParticleRenderer):

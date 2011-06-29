@@ -5,7 +5,7 @@ __all__ = []
 
 if __name__ == "__main__":
     from panda3d.direct.directbase import DirectStart
-    from panda3d.pandac.Modules import *
+    from panda3d.pandac import *
     from IntervalGlobal import *
     from panda3d.direct.actor.Actor import *
 

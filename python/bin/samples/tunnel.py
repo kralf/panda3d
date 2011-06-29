@@ -11,8 +11,8 @@
 # Webb for the Entertainment Technology Center class Building Virtual Worlds
 
 import panda3d.direct.directbase.DirectStart
-from panda3d.pandac.Modules import Fog
-from panda3d.pandac.Modules import TextNode
+from panda3d.pandac import Fog
+from panda3d.pandac import TextNode
 from panda3d.direct.gui.OnscreenText import OnscreenText
 from panda3d.direct.showbase.DirectObject import DirectObject
 from panda3d.direct.interval.MetaInterval import Sequence

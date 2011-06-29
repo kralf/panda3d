@@ -42,7 +42,7 @@ def constructImportFile(codeDir, CModuleName):
     """
     Open a file that will hold the global values and functions code
     """
-    file = open(os.path.join(codeDir, CModuleName + 'Modules' + '.py'), 'w')
+    file = open(os.path.join(codeDir, CModuleName + '_module' + '.py'), 'w')
     return file
 
 def outputGlobalFileImports(file, methodList, CModuleName):
@@ -735,7 +735,7 @@ class FFIInterrogateDatabase:
         # For convenience, output a file that imports all the c module files
         file = open(os.path.join(codeDir, FFIConstants.importModuleName + '.py'), 'w')
         for CModuleName in FFIConstants.CodeModuleNameList:
-            file.write('from ' + CModuleName + 'Modules import *\n')
+            file.write('from ' + CModuleName + '_module import *\n')
         file.close()
 
         # Generate an empty __init__.py to make the directory a Python
