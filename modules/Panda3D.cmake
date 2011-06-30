@@ -53,19 +53,23 @@ define_property(DIRECTORY PROPERTY PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES
 #   \optional[list] EXCLUDE:glob An optional list of glob expressions
 #     resolving to those files that shall be excluded from the Interrogate
 #     sources.
+#   \optional[value] SOURCES:dir The optional path pointing to the
+#     directory containing the Interrogate sources, defaulting to
+#     ${CMAKE_CURRENT_SOURCE_DIR}.
 #   \optional[option] PROMISCUOUS This option causes interrogate to run
 #     in promiscuous mode, i.e. it will also export those symbols which
 #     have not been explicitly marked to be published.
 macro(panda3d_interrogate panda3d_target)
-  remake_arguments(PREFIX panda3d_ VAR COMMAND VAR MODULE LIST EXCLUDE
-    OPTION PROMISCUOUS ARGN globs ${ARGN})
+  remake_arguments(PREFIX panda3d_ VAR COMMAND VAR MODULE VAR SOURCES
+    LIST EXCLUDE OPTION PROMISCUOUS ARGN globs ${ARGN})
   remake_set(panda3d_module SELF DEFAULT ${panda3d_target})
   remake_set(panda3d_command SELF DEFAULT interrogate)
+  remake_set(panda3d_sources SELF DEFAULT ${CMAKE_CURRENT_SOURCE_DIR})
   remake_set(panda3d_globs SELF DEFAULT *.h *.cxx)
 
   string(TOUPPER ${panda3d_module} panda3d_building)
   remake_set(panda3d_args -fnames -string -refcount -assert -python-native
-    -srcdir ${CMAKE_CURRENT_SOURCE_DIR} -module ${panda3d_module} -library
+    -srcdir ${panda3d_sources} -module ${panda3d_module} -library
     ${panda3d_target})
   if(panda3d_promiscuous)
     remake_list_push(panda3d_args -promiscuous)
