@@ -1,0 +1,1074 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Chicken Exporter</title>
+
+
+  <link rel="stylesheet" href="style.css" type="text/css">
+
+</head>
+
+
+<body>
+
+<img style="width: 357px; height: 107px;" alt="Chicken Logo" src="newchicken.png"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=184266&amp;type=2" alt="SourceForge.net Logo" border="0" height="37" width="125"></a>
+<br>
+
+<br>
+http://blender.org/
+This is the documentation for Chicken R91. The latest version of the
+script can be found at <a href="http://sourceforge.net/projects/chicken-export/">http://sourceforge.net/projects/chicken-export/</a><br>
+
+<br>
+
+<a href="#intro">1.Introduction</a><br>
+
+<a href="#basic">2.Basic Features and Usage</a><br>
+
+<a href="#advanced">3.Advanced Features - Blender settings
+that affect your output</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-1">3.1 Exporting double-sided faces</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-2">3.2 Exporting groups within geometry</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-3">3.3 Exporting multiple Actions at once</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-4">3.4 Exporting a texture with an alpha channel</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-5">3.5 Exporting vertex colors for a model that also has UV coordinates</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-6">3.6 Exporting ObjectType flags or Tags for your objects</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-7">3.7 Exporting in Background Mode (for batch processing)</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-8">3.8 Using Motion Extraction</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-9">3.9 Curve Support</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-10">3.10 Texture Options</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-11">3.11 Normal map support</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-12">3.12 Empty Objects</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-13">3.13 Instancing</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-14">3.14 Octree Support</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-15">3.15 Modifiers</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-16">3.16 Compression</a><br>
+
+&nbsp;&nbsp;&nbsp; <a href="#3-17">3.17 Shape Keys</a><br>
+
+
+<a href="#tuts">4.Tutorials</a><br>
+
+<a href="#notes">5.Further Notes</a><br>
+
+<a href="#caveats">6.Caveats</a><br>
+
+<a href="#history">7.Version History</a><br>
+
+<br>
+
+<a name="intro"></a><span style="font-weight: bold;">1. Introduction</span><br>
+
+&nbsp;&nbsp;&nbsp; Chicken is a script for Blender that
+allows you to export pretty much any kind of mesh-based scene to
+Panda3D's Egg format. It supports static models whether in a hierarchy
+or not,&nbsp;with various characteristics such as: vertex colors,
+UV coordinates, vertex or face normals (smooth or solid shading),
+materials, textures, including multitexturing.
+It also supports armature animated meshes.
+The only limitation is that you're only allowed to export one armature
+at a time. You can export any number of animations with their own
+framerate, frame range and name; you can even define an animation to
+export in reverse by making the start &gt; end. &nbsp;It also
+allows you to automatically invoke tools such as <span style="font-style: italic;">egg-optchar</span> to
+optimize your character and animations, <span style="font-style: italic;">egg2bam</span> to produce
+binary representations, and <span style="font-style: italic;">pview</span>
+to preview the in-engine result of your models and animations.
+Many further features are avaliable.<br>
+
+&nbsp;&nbsp;&nbsp; In the following sections I'll address
+all these features and more.<br>
+
+<br>
+
+<span style="font-weight: bold;"><a name="basic"></a>2.Basic
+Features and Usage<br>
+
+</span>&nbsp;&nbsp;&nbsp; Using Chicken to export
+basic scenes is very simple. Here is an overview of&nbsp; the UI: (An old version, but its mostly the same as the current version.)<br>
+
+<div style="text-align: center;"><img alt="" src="ch1.png"><br>
+
+</div>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; As you can see, the first thing below
+the title tells you what kind of objects Chicken has detected among
+your selection. Note that Chicken doesn't provide a selection UI
+because in my opinion Blender can do that so much better. For this
+reason I recommend having a side panel &nbsp;in Outliner mode for
+the Current Scene. This last detail is important because <span style="font-weight: bold;">Chicken will only export selected
+objects in the Current Scene</span>.<br>
+
+&nbsp;&nbsp;&nbsp; Remember to press the Update Selection
+button if you wish the exporter to consider changes you've made to it
+via the Outliner or other means.<br>
+
+<div style="text-align: center;"><img style="width: 556px; height: 64px;" alt="" src="ch2.png"><br>
+
+</div>
+
+&nbsp;&nbsp;&nbsp; In the screenshot, the exporter is in
+Character Export Mode, which is the most complex and displays most
+possible options. The possible modes and the conditions that define
+them are as follows:<br>
+
+<ul>
+
+  <li>Character Export Mode: all selected mesh objects have an
+Armature modifier, and all of them use the same Armature object. <span style="font-weight: bold;">IMPORTANT: Do not use parenting
+to armature for animation. It might work, but I won't support it.</span></li>
+
+  <li>Static Scene Export Mode: none of the selected mesh objects
+have an Armature, but they may have a hierarchy which will be
+considered upon export. Keep in mind that "orphans" i.e. child objects
+whose parent is not in the selection will be exported as top-level
+objects.</li>
+
+  <li>Character Export Mode (with static props): this is the
+combination of both modes. The result is a character that also contains
+static objects in its exported file.</li>
+
+  <li>Other: The status bar will display the error, such as the
+fact that the selection uses multiple armatures, or that no mesh
+objects are selected.</li>
+
+</ul>
+
+&nbsp;&nbsp;&nbsp; Right below the Status/Update Selection
+bar is an input box where you can type in the path to the file you wish
+to export or use the Select button for a File Selector window. Don't
+worry about the extension; Chicken will take care of that for you. By
+default the Export File will be the same path as your .blend file but
+with the .egg extension.<br>
+
+&nbsp;&nbsp;&nbsp; If you are in one of the Character
+Export modes you'll see the animation section below that. In this
+section you can add strips that define an fps value, start/end frames,
+and a name using the Add Animation button which will be at the bottom
+of the animation list. You can also delete any strip using the Delete
+button at its right side.<br>
+
+<br>
+
+<div style="text-align: center;"><img style="width: 542px; height: 82px;" alt="" src="ch3.png"><br>
+
+<br>
+
+</div>
+
+&nbsp;&nbsp;&nbsp; By default, when you select a character
+you'll get one strip named 'anim' with the fps value set in your render
+panel, and the starting and end frames you've set in your sequence
+editor.
+When you export the animation the object exported will be updated with a hidden tag in blender that contains the animation details - when you next load the exporter the animation details will be restored.
+Just remember that this only happens on export so you must save the .blend file after exporting any edited animation if you want the data to persist for when you next open the file.<br>
+
+&nbsp;&nbsp;&nbsp; Default behaviour is single file mode, and all animations are stored in the mesh file with the name given in the interface.
+Using a single file rather than panda's more typical multi-file usage is identical, except you don't have to also provide the animation files when loading the mesh, and the animation name is set at export time rather than run time.
+However, by disabling the single file option you can get multi-file mode.
+Each one animation will then get its own file named according to the following convention: <span style="font-style: italic;">[name]-[animname].egg</span>, where <span style="font-style: italic;">[name]</span> is your export file without the extension and <span style="font-style: italic;">[animname]</span> is what you specified in the strip.
+Note that the animations are produced by evaluating the armature's pose for each frame in the range, so the result depends on whether you have an Action linked to your Armature and/or whether NLA(Non Linear Animation) is the active animation
+system.
+Armature constraints will not be exported but will be evaluated and their effect included in the animation.<br>
+
+&nbsp;&nbsp;&nbsp; The Motion Extraction button will only
+appear if your Armature contains a bone named <span style="font-style: italic;">SyntheticRootBone</span>.
+This feature will be explained in detail in Advanced Features but, in a
+nutshell, it enables you to make, for instance, walk-cycles where the
+feet don't slip as the character walks. See the test model and the
+included script, which you can obtain from <a href="http://downloads.sourceforge.net/chicken-export/test-modelR42.zip.zip">http://downloads.sourceforge.net/chicken-export/test-modelR42.zip.zip</a><br>
+
+&nbsp;&nbsp;&nbsp; If single file mode is disabled and you toggle Animation Only on, the
+.egg file containing the mesh and armature will not be exported. This
+can speed things up considerably if you've already exported that part.<br>
+
+&nbsp;&nbsp;&nbsp; At the bottom of the window you'll find
+the following:<br>
+
+<div style="text-align: center;"><br>
+
+<img style="width: 553px; height: 69px;" alt="" src="ch4.png"><br>
+
+</div>
+
+<br>
+
+&nbsp;&nbsp;&nbsp; The PandaPath no longer exists (Must update screen shots.), having been moved to the first run setup interface.<br>
+
+&nbsp;&nbsp;&nbsp; The three toggle buttons in the middle
+indicate whether to call the tool they state. There's also an input box
+for additional parameters in the case of egg-optchar. The option to
+invoke this last tool obviously does not appear if you are not
+exporting a character.<br>
+
+<br>
+
+<span style="font-weight: bold;"><a name="advanced"></a>3.Advanced
+Features - Blender settings that affect your output<br>
+
+&nbsp;&nbsp;&nbsp; </span>In this section I'll
+address some not-so-common things you might want to do, and how to
+accomplish them with Blender settings that Chicken will take into
+account.<span style="font-weight: bold;"><br>
+
+</span>
+<ul>
+
+  <li><a name="3-1">Exporting double-sided faces:</a>
+    <ul>
+
+      <li>When you want a face to be exported as double-sided,
+what you need to do is flag that face or set of faces with the
+Twoside&nbsp;TexFace attribute. How do you do that? Simple: first
+go into UV Face Select mode (the F key will get you there fast from
+Object mode). By doing this you've generated texture coordinates for
+your object which you might not need, but it will give you greater
+control over each face's attributes.&nbsp;<br>
+
+        <div style="text-align: center;"><img style="width: 202px; height: 188px;" alt="" src="ch5.png"><br>
+
+        </div>
+
+While in this mode, in the Editing panel, you'll see a tab called
+Texture Face. In this tab you will see several toggle buttons; one of
+them is labeled Twoside. This is the tricky part: even if you've
+selected all the faces you want to make double-sided, when you activate
+the toggle only the <span style="font-style: italic;">active</span>
+face (the one with the green, red and yellow borders) will become
+double-sided. So, how do you make all selected faces double-sided? You
+can use the Copy Draw Mode button in the same panel. Beware though,
+that all active flags will be copied over, not just Twoside.<br>
+
+A rule of thumb can be drawn from the mesh's appearance in UV Face
+Select mode: <span style="font-style: italic;">if it
+looks double-sided in said mode, it will export double-sided</span>.
+Remember that double-sided is a rendering attribute - it does not affect collision detection where you will need to get your faces the right way around.<br>
+
+        <br>
+
+      </li>
+
+    </ul>
+
+  </li>
+
+  <li><a name="3-2"></a>Exporting groups
+within geometry:
+    <ul>
+
+      <li>There are two sorts of groups Chicken will export. The
+first type maps directly to a mesh object, which is to say that for
+every mesh object you've selected, whether it is a static or animated
+mesh, Chicken exports a group containing its vertices and polygons. But
+Chicken offers another type of group that allows you to specify up to
+16 groups within a mesh object without having to split the geometry up.
+It does this by grouping together the polygons that share the same
+material index (16 is the maximum amount of material indices Blender
+allows). All you need to do is&nbsp;create material indices for
+your object using the Link and Materials tab on the Editing panel in
+Object mode. You don't even need to link those to actual materials, but
+you do need to assign polygons to them if you want them to be of any
+use; you can do that from Edit Mode using the assign button.<br>
+
+        <div style="text-align: center;"><img style="width: 186px; height: 129px;" alt="" src="ch6.png">
+&nbsp;<img style="width: 181px; height: 136px;" alt="" src="ch7.png"><br>
+
+        <br>
+
+        </div>
+
+In the Material panel you can see a tab labeled Links and Pipeline,
+where you can link and unlink materials to your Material indices.
+Notice that the material is linked to the Mesh and not the Object. This
+is the default behaviour in Blender, and Chicken will only take Mesh
+materials into consideration.<br>
+
+The exported material-index groups will be named like this : <span style="font-style: italic;"> [object name]_[index]_[material name]</span>
+where <span style="font-style: italic;">[objname]</span>
+is the name of the object in question, and <span style="font-style: italic;">[index]</span> is... well,
+the index, which will always be 2 digits, starting from zero. 
+<span style="font-style: italic;">[material_name]</span> is exactly as you would guess.
+This means that if you have an object named, say, <span style="font-style: italic;">Cube</span>, then the
+group that contains all polygons with material index <span style="font-style: italic;">3</span> with name <span style="font-style: italic;">turnip</span> will be named <span style="font-style: italic;">Cube_03_turnip</span>.
+Keep this in mind when naming your objects - two objects with the same name is bad.<br>
+
+In the case of characters, you can flag these groups, or any other
+group for that matter, with egg-optchar so you can have NodePath access
+to that group within Panda. Check out <a href="http://www.panda3d.org/wiki/index.php/Manipulating_a_Piece_of_a_Model">this
+page</a> from the manual for more details. <span style="font-weight: bold;">Hint:</span> you only need
+to specify the parameters, not the filenames since those will be filled
+in by Chicken.<br>
+
+        <br>
+
+      </li>
+
+    </ul>
+
+  </li>
+
+  <li><a name="3-3"></a>Exporting multiple
+Actions at once:
+    <ul>
+
+      <li>There are multiple approaches to animation in Blender,
+and no real way to tell through the Python API whether a user is using
+any specific one, short of asking them (which can cause quite a bit of
+frustration if the user thinks he is using one but is actually using
+another). So, in the interest of generality I chose to define
+animations only by their fps and range of frames. This allows you to
+use Actions or NLA, but it does present the problem that you can't
+export multiple actions at once; at least not directly, that is. One
+way you can export any number of Actions at once is to make an Action
+Strip for each one in the NLA editor, place one after the other,
+activate NLA for animation, and tell Chicken the frame ranges that map
+to each action.<br>
+
+        <div style="text-align: center;"><img style="width: 320px; height: 179px;" alt="" src="ch9.png"><br>
+
+        </div>
+
+        <br>
+
+In the screenshot you see a typical shot of the NLA editor. Highlighted
+in green is the mythical "button that doesn't look like a button" that
+allows you to toggle between Action mode and NLA mode. NLA mode is
+selected in the image; when Action mode is selected beside the Armature
+name you'll see the Action icon that some people dub the "shark victim"
+:)<br>
+
+So all you have to do is create an action strip for every action you
+want to export with SHIFT+A, and place them in sequence so they don't
+overlap in the frames. For reference, in the image they are not
+organized in that way; it is just a regular use of the NLA system.<br>
+
+        <br>
+
+I'm open to suggestions on better ways to do this.<br>
+
+        <br>
+
+      </li>
+
+    </ul>
+
+  </li>
+
+  <li><a name="3-4"></a>Exporting a texture
+with an alpha channel:
+    <ul>
+
+      <li>Currently, the only way that Chicken will respect an
+alpha channel on a texture is if it is specified as having one as a
+Texture in a Material. You can specify whether a texture has an alpha
+channel by activating the Alpha toggle in the Map To tab in the
+Material panel as shown in the picture.<br>
+
+        <br>
+
+        <div style="text-align: center;"><img style="width: 195px; height: 44px;" alt="" src="ch8.png"><br>
+
+        <br>
+
+        </div>
+
+At present this means that only two texture configurations are
+exported for a diffuse map: <br>
+
+1) one texture that contains color and optionally alpha information and
+is flagged as having one or both<br>
+
+2) one texture that contains only color information, and another that
+is a grayscale image representing the alpha channel; the former being
+flagged as Col, and the latter as Alpha.<br>
+
+Mind the fact that if the Alpha toggle appears with yellow text, you
+are mapping inversely to alpha, and the exported result will be the
+opposite of what you'd expect.<br>
+
+You should also check that Map Input is set to UV, or the result will
+also look nothing like what you see in Blender.<br>
+
+      </li>
+
+    </ul>
+
+  </li>
+
+  <li><a name="3-5"></a>Exporting vertex
+colors for a model that also has UV coordinates:
+    <ul>
+
+      <li>Chicken's default behaviour is to disregard vertex
+colors for any model that has UV coordinates. If you wish to override
+this behaviour you can do the following: Assign the object a material
+if it doesn't already have one. Then, set the VCol Light attribute on
+the material as shown in the picture. If you don't want a Panda
+Material to be exported with your .egg file as a consequence of this,
+you can also set the Shadeless attribute.<br>
+
+        <br>
+
+        <div style="text-align: center;"><img style="width: 225px; height: 78px;" alt="" src="ch10.png"><br>
+
+        </div>
+
+      </li>
+
+    </ul>
+
+  </li>
+
+  <li><a name="3-6"></a>Exporting ObjectType
+flags or Tags for your objects:
+    <ul>
+
+      <li>To append an object type or a tag to your object,
+simply go into the logic panel and use the Add Property button. A
+string property with the name ObjectType will be exported as the object
+type (which is shorthand notation for any egg syntax; the defaults are
+defined in your Confauto.prc file but you can define new ones if you
+like).
+A typical usage of this might be an ObjectType of <span style="font-style: italic;">barrier</span> to export collision geometry.
+Alternativly a string property with the name Collide will be exported as a collide tag in the egg file, so an alternative to setting the ObjectType to <span style="font-style: italic;">barrier</span> is to have a Collide tag with <span style="font-style: italic;">Polyset</span>. <span style="font-style: italic;">Keep</span>, <span style="font-style: italic;">Descend</span> etc. can of course be used.
+Any other property will be exported as a normal Panda tag.<br>
+
+        <br>
+
+        <div style="text-align: center;"><img style="width: 289px; height: 155px;" alt="" src="ch11.png"><br>
+
+        </div>
+
+      </li>
+
+    </ul>
+
+  </li>
+
+  <li><a name="3-7"></a>Exporting in
+Background Mode (for batch processing):
+    <ul>
+
+To export in background mode you need to put something like the
+following in a .bat file:<br>
+
+        <div style="margin-left: 40px;">@echo off<br>
+
+set chicken_sel=Object1,Object2<br>
+
+set chicken_anims=anim1,30,1,85;anim2,40,1,90<br>
+
+"c:\Program Files\Blender Foundation\Blender\blender.exe" -b
+myblendfile.blend -P "c:\Program Files\Blender
+Foundation\Blender\.blender\scripts\chicken_export1.0.py"<br>
+
+pause<br>
+
+        </div>
+        This can be easilly addapted to Linux by using 'export' instead of 'set'.<br/>
+
+        Currently the most practical way to pass parameters to a Blender script running in background mode is through environment variables. Considered environment variables include (Though arn't limited to):
+        <ul>
+          <li>chicken_sel: This defines your selection as a list of object names separated by commas. If this variable is not specified, the objects which were saved as selected will be used as the selection.</li>
+
+          <li>chicken_anims: This defines the animations you want to export as a list of four values (name, fps, start_frame, end_frame) separated by commas. Multiple animations can be specified by separating them with semicolons.</li>
+
+          <li>chicken_mextract: True or False - to enable/disable motion extraction.</li>
+          
+          <li>chicken_animonly: True or False - to enable/disable outputting animations only - makes sense only if in multiple file mode, i.e. chicken_singlefile=False.</li>
+          
+          <li>chicken_singlefile: True or False - to enable/disable single file output.</li>
+          
+          <li>chicken_dotangents: True or False - to enable/disable generating tangents/binormals in blender rather than using the egg tools.</li>
+          
+          <li>chicken_octree: True or False - to enable/disable running the octree tool.</li>
+          
+          <li>chicken_octreecollision: True or False - False to tune octree constructions for graphical presentation, True to build the octree in a way suitable for collision detection.</li>
+          
+          <li>chicken_forceRelTex: True or False - to enable/disable automatic conversion of texture paths to relative file names.</li>
+
+          <li>chicken_pview: True or False - to run pview or not - exposed for completness, your not actually meant to set it to True.</li>
+          
+          <li>chicken_bam: True or False - toggles conversion of egg file to bam.</li>
+          
+          <li>chicken_optchar: True or False - toggles the character optimisation tool.</li>
+          
+          <li>chicken_optparms: Parameters for if optchar is true.</li>
+        </ul>
+
+      </li>
+
+      <li>Remember to unset any unwanted variables if you're
+making multiple calls to the script in background mode. In Windows you
+can do this: 'set variable='<br>
+
+      </li>
+
+    </ul>
+
+  </li>
+
+  <li><a name="3-8"></a>Using Motion Extraction:
+    <ul>
+
+      <li>Motion Extraction is a special feature that allows you
+to export animations where the character has displacement as if the
+character stayed in the same place, but it stores the displacements for
+every frame in the animation channel of a special bone and you can use
+this information in Panda3D to move your character appropriately. It's
+perfect for things like walk-cycles so the character's feet don't slip,
+and many other cases where you'd like to keep your characters position
+clearly known without distorting the animation.<br>
+
+To enable Motion Extraction all you need to do is add a bone called
+SyntheticRootBone (which I'll call SRB from now on) to the Armature
+used by your character. The SRB's orientation and position are
+considered so if you don't want your character rotated you should make
+the bone point in the +Y direction.<br>
+
+If the SRB doesn't move the net effect will be the same as exporting
+without Motion Extraction so what you want to do is to place a
+Constraint on the SRB so it follows your character in some way. The
+most common behaviour of the SRB is as a 'Ground Shadow' that is, it
+follows the character in the XY plane. To do that just place a Copy
+Location constraint on the SRB as shown in the image.<br>
+
+        <br>
+
+        <div style="text-align: center;"><img style="width: 228px; height: 187px;" alt="" src="ch12.png"><br>
+
+        </div>
+
+        <br>
+
+As you can see in the image the bone has a constraint that makes it
+follow the bone named 'bacino', which is the root bone in my test
+model's armature. In case you don't know how to add a constraint to a
+bone, you can only do so in the armature's Pose Mode by selecting the
+bone you want constrained and using the Add Constraint button; then you
+type the armature's name in the Target box, and finally the bone
+target's name.<br>
+
+Now all you need to do, if you haven't already, is animate your
+character. If your animation is meant to be a loop keep in mind one
+thing: The movement delta for the first <span style="font-weight: bold; text-decoration: underline;">exported</span>
+frame will be calculated relative to the origin so make sure to do one
+of the following:
+        <ul>
+
+          <li>Make the first exported frame be displaced relative
+to the origin as much as if the last frame in your animation were
+placed at the origin.&nbsp;</li>
+
+          <li>Export a reference animation that contains only the
+frame previous to your animation's starting frame in addition to your
+animation. If you do this you need the last frame's pose copied in the
+appropriate place to the frame just previous to your start frame. </li>
+
+        </ul>
+
+      </li>
+
+      <li>There is a test model that is a good example
+of how to use this feature and it also includes a script that shows how
+you can use the SRB's information to move your character. (<a href="http://downloads.sourceforge.net/chicken-export/test-modelR42.zip.zip">http://downloads.sourceforge.net/chicken-export/test-modelR42.zip.zip</a>)</li>
+
+    </ul>
+
+  </li>
+
+
+  <li><a name="3-9"></a> 3.9 Curve Support:
+    <ul>
+      <li>Blender NURBS curves can be exported as motion paths for use in Panda.</li>
+      <li>The main restrictions are that they must have an order of 4 (the default) and may not form a loop, so they have a start and an end.</li>
+    </ul>
+  </li>
+
+
+  <li><a name="3-10"></a> 3.10 Texture Options:
+    <ul>
+      <li>To be explicit there are some basic texture restrictions: procedural textures will not work (they must be image files) and textures must be projected using uv's. However, you can always bake procedural textures or non-uv textures onto a uv texture, so neither restriction is a problem in practise. Packed textures will not work either.</li>
+      <li>An easy mistake is to not load the texture with a relative file path in Blender - this will result in the .egg file containing the full path name to the texture and then failing to load properly when moved to another computer and installed elsewhere.</li>
+      <li>The MipMap and Interpol options in the Blender texture interface are both supported, typically you will just leave them on however. (But for normal maps its best to switch them off, as that creates a more aesthetically pleasing effect.)</li>
+      <li>If you have a uv-map with blenders default name, UVTex, it will be exported without a name, making it Panda's default texture stage. This only matters if you are mesing with the texturing in code or writing shaders.</li>
+      <li>The extend/clamp/repeat texture options will be copied correctly. The mirror texture option will be copied, but works differently between Blender/Panda, so your mileage may vary.</li>
+      <li>Any of the following tags can be applied to an object (Via the logic tab.) and will be copied into the group as scalars - please see the egg syntax documentation for further details.
+      The recognised scalars are: blend, blendop-a, blendop-b, blendr, blendg, blendb, blenda.</li>
+      <li>The Stencil, Neg and NegAlpha modes are supported, but be careful - it might not work correctly for some mapping types.</li>
+      <li>Texture offsets and scales are supported in the Map Input tab. The Xrepeat and Yrepeat options in the Map Image tab are ignored.</li>
+    </ul>
+  </li>
+
+
+  <li><a name="3-11"></a> 3.11 Normal map support:
+    <ul>
+      <li>Normal maps are supported - a standard work flow is to build a high detail mesh however you like, you may then use retopo to create a low resolution version for use in-game. Texture are then baked from the high resolution mesh to the low resolution mesh using blenders bake tools. These textures will include a diffuse map, i.e. colour, but can also include a normal map - this transfers the surface orientation detail over and makes the low resolution mesh look as detailed as the high resolution mesh. Nearly all modern games use this technique.</li>
+      <li>Normal maps must be created in tangent space - select the 'Tangent' option when baking normals using blenders baking interface.</li>
+      <li>They must then be assigned to the object in question as a uv mapped texture - they must have the 'Nor' option set in the texture 'map to' section. The material must be marked as using Tangent Space Normal maps in the texture setup page. (Normal map selected, drop down box set to tangent.)</li>
+      <li>Normal maps can only work if the mesh is augmented with tangents and bi-normals - the Chicken exporter does this automatically. There are two methods however - the default is to use Blenders calculation method, but it can also use Panda's calculation method. These methods are different, but if the normal map has been generated by Blender you will want to use the Blender option, otherwise the result will be distorted. The button 'Tangents & Bi-normals' should be selected, the default, to use Blenders method, deselected to use Pandas technique.</li>
+      <li>When viewing a mesh with a normal map in pview you must first hit 'l' to enable lighting and then hit 'p' to enable the shader generator, to see the affect.</li>
+    </ul>
+  </li>
+
+
+  <li><a name="3-12"></a> 3.12 Empty Objects:
+    <ul>
+      <li>Empties are exported - they obviously provide no geometry but can be searched for in a mesh geometry by name. They can then have there position and rotation copied to in game objects, such as player start location, enemies and pickups. They are put in the correct positions in the object hierarchy.</li>
+      <li>Like all objects they can be tagged - these tags may then be used by the programmer in any way they see fit, i.e. to specify enemy type for instance.</li>
+      <li>Any mesh or dupligroup empty with a tag named <span style="font-style: italic;">ForceEmpty</span> will be exported as an empty. This allows you to have stand in meshes for objects that will be instanced at runtime rather than stored in the .egg file. For instance the empty for a player start might have a mesh of the player in a default pose - this aids both positioning and visualisation.</li>
+    </ul>
+  </li>
+  
+  
+  <li><a name="3-13"></a> 3.13 Instancing:
+    <ul>
+      <li>Empties that are using the DupliGroup feature are replaced by file references.</li>
+      <li>This means that dupligroups can be used to have one .egg file reference another - this is useful for repeated geometry, splitting geometry development between artists and level designers or simply over multiple .egg files.</li>
+      <li>When you load an egg file in Panda any referenced files are automatically loaded and put in place - no further work is required by the programmer to use this feature.</li>
+      <li>You can use ForceEmpty if you want to use dupligroups without them becoming instances - useful for stand in geometry when using Blender as a level editor.
+      <li>The filename calculation procedure consists of several tests - the first one that returns a usable filename is used:
+      <ul>
+        <li>If the dupligroup empty has a filename tag its contents are used.
+        <li>It checks all objects inside the actual group, if any have a 'filename' property (From the game engine tab) that is used.</li>
+        <li>Second it checks to see if the group is in an external library - if so it uses the filename of the external library without the .blend. Remember to load the external library using relative paths.</li>
+        <li>Finally, if both of the previous fail it simply uses the groups name.</li>
+      </ul>
+      <li>Filenames are automatically converted from being blender style filenames as appropriate. Note that the .egg extension is not required, and preferably avoided in case it is latter converted into a .bam/.egg.pz.
+    </ul>
+  </li>
+
+
+  <li><a name="3-14"></a> 3.14 Octree Support:
+    <ul>
+      <li>When exporting static geometry a <span style="font-style: italic;">Make Octree</span> button become available. If selected the mesh is exported after being re-factored into an octree data structure.</li>
+      <li>This is an optimisation for very large meshes, i.e. level geometry, and should not be used on small meshes/individual objects etc.</li>
+      <li>The point is that it divides the mesh into chunks of geometry that can be quickly culled and removed from further consideration. For rendering this matters only if large amounts of the mesh will not be visible at any given time - if most of the geometry is usually visible then there is no point and it will actually slow things down. For collision geometry it should probably always be applied - the speed-up can easily be an order of magnitude. There is a <span style="font-style: italic;">Collision Octree</span> button to be selected if the geometry is for collision purposes - this changes from a few large nodes to lots of small nodes, which is optimal for collision. It also marks the entire mesh as of ObjectType barrier - just be aware of this if you attempt to visualise - you will have to press shift-c in pview to see it.</li>
+      <li>Note that the point of the octree approach is to create lots of nodes so large chunks can be quickly culled - calling the flatten methods on such meshes is the precise inverse and will return you to where you started.</li>
+    </ul>
+  </li>  
+
+
+  <li><a name="3-15"></a> 3.15 Modifiers:
+    <ul>
+      <li>Should always work for static geometry.</li>
+      <li>It exports the mesh used for <span style="font-style: italic;">rendering</span>, which is not necesarilly the mesh visualised in the editor. This allows you to disable a modifier for rendering in the Blender GUI to disable it for export, yet still visualise the effect of the modifier in the Blender GUI.</li>
+      <li>Modifiers will be applied with animation, however, it is not currently possible to get the vertex weights of the result, so any modifier that adjusts the number of vertices or the vertex weights must not be applied to get sane output. This unfortunatly includes the vast majority of modifiers, including subdivision surfaces.</li>
+      <li>When doing animation any modifiers <span style="font-style: italic;">after</span> the armature modifier will be ignored. This is a fundamental limitation as you can not apply the armature modifier, which you would have to do before applying such modifiers, and Panda has no modifier stack.</li>
+    </ul>
+  </li>
+
+
+  <li><a name="3-16"></a> 3.16 Compression
+    <ul>
+      <li>The pzip button compresses the output .egg file.</li>
+      <li>This is useful when storage is an issue, i.e. when using a versioning system to store media files. (Final distribution should be .bam afterall.)
+      <li>Makes no sense to be used with the .bam option
+      <li>Only works with single file mode; will not compress animation files if seperate. (Will still load in panda however, its just that the animations will not be compressed.)
+    </ul>
+  </li>
+
+  <li><a name="3-17"></a> 3.17 Shape Keys
+    <ul>
+      <li>
+        Shapekey data is stored in the .egg file as vertex displacement data, to be used with the actor controlJoint() method to create a morph target and setX(&lt;float value&gt;) to displace the mesh geometry dynamically. An example, with code, may be found in the chicken test directory. (You may also find this within a <a href="http://www.fabiushouse.com/listing/p3d/shapekey.zip">zip file</a> with the Chicken exporting step already done.)
+      </li>
+      <li>Shape key based animation sequences are ignored - it only allows direct manual control of the shape key weights within Panda.
+    </ul>
+  </li>
+
+</ul>
+
+
+<span style="font-weight: bold;"><a name="tuts"></a>4.Tutorials</span><br>
+
+<ul>
+
+<li>
+  Forum member ThomasEgi has kindly produced a number of video tutorials:
+  <ul>
+    <li> How to animate and export a character: <a href="http://www.youtube.com/watch?v=bz9lfHk2dPg">http://www.youtube.com/watch?v=bz9lfHk2dPg</a>
+    <li> How to bake normal maps with blender and then export them using Chicken: <a href="http://www.youtube.com/watch?v=M7CkxQYRl1w">http://www.youtube.com/watch?v=M7CkxQYRl1w</a>
+    <li> Setup of tags and dummys: <a href="http://www.youtube.com/watch?v=dw5DxESx_1Q">http://www.youtube.com/watch?v=dw5DxESx_1Q</a>
+  </ul>
+</li>
+
+<li>
+Information on converting from MakeHuman, a human figure generation tool, to Blender can be found at <a href="http://blenderunderground.com/forums/viewtopic.php?t=1128">http://blenderunderground.com/forums/viewtopic.php?t=1128</a>. 
+</li>
+
+</ul>
+
+
+<span style="font-weight: bold;"><a name="notes"></a>5.Further Notes</span><br>
+
+<ul> 
+
+<li> There are is a test set of 3D models; whilst primarily for checking that Chicken works they also have a potential educational value to see how things are done. They may be found in the subversion repository on sourceforge - <a href="http://chicken-export.svn.sourceforge.net/viewvc/chicken-export/trunk/tests/">http://chicken-export.svn.sourceforge.net/viewvc/chicken-export/trunk/tests/</a>
+</li>
+
+<li> Chicken is just about usable as a fully featured level editor, with a little bit of creativity on the programmers side. Specific ideas are:
+  <ul>
+    <li>Actual level structure can be constructed in blender. The retopo tools etc. can then be used to construct a collision mesh, and then two egg files generated - one for visible geometry, another for collision geometry. The octree creation option can be used for both, though matters a lot more for a collision mesh.
+    <li>Repeated high resolution static meshes can be dropped into the file using the instancing capability, to add high detail. (This is exactly how the unreal tournament engine works for instance - simple level geometry made to look complex by lots of instanced high res meshes.) Octree can't be applied to this so a third egg file can be exported containing all these objects - just use layers in Blender to organise it all and remember to select everything that needs to be exported.
+    <li>The ability to export empties with any tags you like, and then to find these empties in code is how all game entities can be placed, i.e. player start location, enemies, weapon pickups etc. The ForceEmpty capability allows you to use standin meshes for these objects, to help with visualisation and positioning, that will not be exported with the rest of the level.
+    <li>The current weak point is that there is no light exporting capability. This can be resolved by pairing every light with an empty containing light parameters as tags, and then converting in code. Cameras are also an issue, if they need to be specified in the level, though the curve exporting support can partially help.
+  </ul>
+</li>
+
+</ul>
+
+
+<span style="font-weight: bold;"><a name="caveats"></a>6.Caveats</span><br>
+
+<ul>
+
+  <li>Object level transform issues have mostly been overcome and
+you can use them pretty safely. There is one exception that I've found
+to this rule though, and it is negative scaling or mirroring. So, for
+the moment at least, avoid negative scale on your objects. If you
+really need to mirror an object, do it in Edit Mode.</li>
+
+  <li>When naming your objects keep in mind the Material Index
+Grouping feature.
+  </li>
+
+  <li>When launching <span style="font-weight: bold;">pview
+    </span>only the first animation will be displayed. It seems
+pview can only display one animation at a time; if passed many
+animations as arguments it will only display the last. Displaying the
+first seemed more sensible, so I'm only passing that one as an argument.
+Note that it does not work at all for single file animations.</li>
+
+  <li>When launching <span style="font-weight: bold;">egg2bam</span>
+with Animation Only selected, the model's egg, if it exists, won't be converted to BAM.</li>
+
+  <li> If you don't specify arguments for <span style="font-weight: bold;">egg-optchar</span>,
+'-inplace' will be used. If you do specify other arguments, you have to
+specify '-inplace' if that's what you want.</li>
+
+  <li>When using Armatures note that Envelopes cannot be exported
+due to their dynamic nature. If you want Chicken to export your
+animations just as you see them in Blender you must use only Vertex
+Groups with your Armatures. You can bake Envelopes into vertex groups
+by temporarily reparenting your object to the Armature and responding
+to the relevant dialog with Create From Closest Bones; you can then
+clear the parent using Alt-P</li>
+
+</ul>
+
+<span style="font-weight: bold;"><a name="history"></a>7. Version History</span><br>
+
+<ul>
+  <li>R91:
+    <ul>
+      <li> Fix for shapekey-nurbs curves interaction bug.
+      <li> Changed curve naming scheme to only append number if more than one curve exist in a nurbs object.
+      <li> Calling egg-optchar in single file mode will no longer cause a crash, though it seems to break the animation - appears that egg-optchar doesn't cope with single file animation.
+      <li> Better error messages in some scenarios.
+      <li> Command line exporting has been fixed, again.
+      <li> Stenciling support fixed, or at least hacked to work with Panda 1.7.0.
+      <li> Shapekeys now work properlly.
+    </ul>
+  </li>
+  <li>R85:
+    <ul>
+      <li> Support for shape keys, provided by forum members clcheung and astelix.
+      <li> Support for uv rotation (scroll_r), provided by forum member rdb (Who used to be pro-rsoft).
+      <li> More links added to tutorial section.
+    </ul>
+  </li>
+  <li>R82:
+    <ul>
+      <li> Adds support for UV scrolling through scroll_u and scroll_v properties
+      <li> Fixed an issue with alpha handling
+    </ul>
+  </li>
+  <li>R81:
+    <ul>
+      <li> Support for LOD - example of how to do this is in the 3D model test set, specifically in export-lod.blend
+    </ul>
+  </li>
+  <li>R80:
+    <ul>
+      <li> Fix for crash when vertex lights flag set but no vertex colours exist.
+      <li> Fix for per-face alpha causing crash.
+    </ul>
+  </li>
+  <li>R76:
+    <ul>
+      <li> More installation scenarios covered by installation guide.
+      <li> Animated models now correctly have tangents/binormals, so normal maps will work.
+      <li> Link to ThomasEgi's normal mapping video added to manual.
+      <li> No longer exports disabled textures, provided by pro-rsoft.
+      <li> Adds support for texture scale and offset, provided by pro-rsoft.
+      <li> Supports Neg and NegAlpha options, and some inverse MapTo's, provided by pro-rsoft.
+      <li> Implements "Mix" mode and Stencil texturing correctly, provided by pro-rsoft.
+      <li> Respects ZTransp option and respects the TexFace alpha modes when TexFace is enabled, provided by pro-rsoft.
+    </ul>
+  </li>
+  <li>R74:
+    <ul>
+      <li> Support for pzipping egg files; provided by forum user astelix.
+      <li> Detection of negative scale objects.
+      <li> 'filename' tag for instancing now works on the empty as well as the group member objects.
+    </ul>
+  </li>
+  <li>R71:
+    <ul>
+      <li> Bug fix for if you have multiple material groups and one of the groups is unassigned.
+      <li> Support for group rendering mode scalars - blend,blend-op-a/b blendr/g/b/a. Provided by forum member pro-rsoft.
+      <li> Curve exporting now supports transformations.
+      <li> Bug fix - multiplicative textures now actually multiply.
+      <li> Correction in interpretation of the height texture type to equate to a bump map. (Of no current use as not yet supported by Panda, though support will probably be sooner rather than latter.) (Updated below R69 release note to the now correct description.)
+    </ul>
+  </li>
+  <li>R69:
+    <ul>
+      <li> Background export mode fixed - provided by forum member astelix.
+      <li> Support for modifiers being applied to animations. It is very limited however, as there is no apparent way to get the vertex groups after applying modifiers, which are needed for animation to work correctly.
+      <li> Blenders material option VCol Paint is now respected - if selected no material diffuse is written so vertex colours can be used.
+      <li> Fix to relative paths provided by forum member ynjh_jo.
+      <li> A texture mapping to the spec channel will now be written to the file as a gloss texture; a texture mapping to the emit channel will now be written to the file as a glow texture. If the texture is also assigned to the col channel then glow will become modulate_glow and gloss modulate_gloss. Additionally if a texture is assigned to the Nor channel but doesn't indicate that it is a normal map it will become a height texture, i.e. use parallax mapping.
+      <li> The drop down mixing mode dialog now matters for colour textures - mix mode gets you the normal behaviour, a modulate texture, add mode gets you an addative texture whilst screen mode gets you a decal teture.
+    </ul>
+  </li>
+
+  <li>R66:
+    <ul>
+      <li> Ability to force texture paths to be relative, plus when forcing is disabled a warning is emitted if they are not - provided by forum member Aurilliance.
+      <li> The tag 'Collide' is now turned into a collide tag in the egg file, allowing an alternative to the object type support that already exists - provided by forum member Aurilliance.
+      <li> Support for blenders stencil textures, admitedly rather limited. Works by abusing the alpha channel, due to Panda restrictions, so only the last texture can provide alpha to the final output - this probably makes this unusable where transparency is required. Because each texture uses up a texture stage, of which there are typically only 4, 2 colour layers and a single stencil layer consume 3 stages, making that the typical limit, which is quite restrictive.
+      <li> Bad tangents/bi-normals are detected and resolved by assigning an arbitrary tangent and bi-normal that are perpendicular to the normal. A warning is emitted when this occurs.
+    </ul>
+  </li>
+  
+  <li>R61:
+    <ul>
+      <li> Update to avoid installation problems some people are having - more explicit error message and a warning about the mistake often made.
+      <li> Fix for configuration script incompatabilities, plus update to support more recent options that had not yet been added.
+    </ul>
+  </li>
+
+  <li>R60:
+    <ul>
+      <li> Bug fix for ForceEmpty interaction with instanced geometry.
+      <li> Bug fix for octree creation under Windows - it works!
+      <li> Update to instancing test set to cover force empty, addition of large level for testing octree creation.
+    </ul>
+  </li>
+
+  <li>R59:
+    <ul>
+      <li> Fixes to package creation.
+      <li> Single file animation export is now the default.
+      <li> Objects that would typically be exported that are tagged as 'ForceEmpty' will now be exported as empties.
+      <li> Integration of eggoctree tool running from Chicken.
+      <li> Introduction of chicken_install.txt
+      <li> Update of manual, so it mentions most new features and does not give the wrong impression anywhere. More work still needed.
+    </ul>
+  </li>
+
+  <li>R56:
+    <ul>
+      <li> Improved transfer of Blender texture options, as provied by Emanuele Bertoldi
+      <li> Fix for issue with UVTex replacement feature
+    </ul>
+  </li>
+
+  <li>R52:
+    <ul>
+      <li> Instancing extension as provided by Zuck.
+    </ul>
+  </li>
+
+  <li>R51:
+    <ul>
+      <li> Support for saving of animation rows into object properties, so animation chunks are remembered between runs of the script.
+      <li> Addition of code to use Blenders tangents and bi-normals.
+      <li> Addition of mweb's diff file for single file animation exporting, with bug fixes so multi file continues to work and gui so you have to explicitly select single file mode.
+      <li> Fixed windows problem with build-release.py
+    </ul>
+  </li>
+  
+  <li>R44:
+    <ul>
+      <li> Added basic support for exporting Normal Maps (also displays errors in cases where you're doing something suspect). Automatically calls egg-trans to calculate tangents and binormals for appropriate UV sets
+      <li> Fixed support for modifiers on static objects, modified errors so it only complains about modifiers for animated objects
+      <li> Added support for exporting multiple textures for both face images and materials. Face images are properly mapped to their UV sets. Materials can't do the same because Python scripts can't access that info yet. Materials with textures still override face images.
+
+      <li> Removed any use of the NMesh module 
+    </ul>
+  </li>
+  
+  <li>R42:
+    <ul>
+      <li> Changing to svn revision number as release system, accidentally.
+      <li> Eliminated all real or implied reference to requiring the EggData library as this was not a realistic requirement
+      <li> Fixed some tabbing issues
+      <li> Merged ThomasEgi's fix for external constraint targets
+    </ul>
+  </li>
+  
+  <li>Version 1.0:
+    <ul>
+
+      <li>Finally works properly on Linux thanks to a few fixes
+by Simon Groenewolt and myself.</li>
+
+      <li>Simon also added support for exporting Empty objects so
+you can use them as markers in Panda. I fixed it so the resulting nodes
+can't be accidentally flattened and also added support for tagging them.</li>
+
+      <li>Fixed the inference of the path to Panda binaries on
+Windows for Panda 1.3.x</li>
+
+    </ul>
+
+  </li>
+
+  <li>Version 1.0c:
+    <ul>
+
+      <li>Fixed a bug in the animation export. It wasn't
+exporting the correct ranges and could crash under certain
+circumstances.</li>
+
+      <li>Implemented Motion Extraction</li>
+
+    </ul>
+
+  </li>
+
+  <li>Version 1.0b:
+    <ul>
+
+      <li>Corrected vertex color export issue (they were being
+exported as 0-255 integers instead of 0-1 floating points, which is not
+valid)</li>
+
+      <li>Implemented forced vertex color export for textured
+objects through the VCol Light material attribute.</li>
+
+      <li>Implemented the ability to ignore a material through
+the Shadeless attribute, this way you can use a material only to tell
+Chicken to consider vertex colours, or to use multitexturing without
+having a Panda Material exported.</li>
+
+      <li>Completed basic implementation of Background Export
+mode.</li>
+
+      <li>Implemented Object Type and Tag export.</li>
+
+      <li>Implemented&nbsp;better Panda Path detection for
+Windows. It now sets the Panda Path to the first entry in your path
+that contains 'panda3d' (case-insensitive).</li>
+
+      <li>Grouping by Material Index wasn't working properly when
+some indices didn't have materials assigned to them. Fixed.</li>
+
+      <li>Used to export names with spaces directly, which breaks
+Egg syntax. Now replaces spaces with underscores.</li>
+
+      <li>Fixed other minor issues</li>
+
+    </ul>
+
+  </li>
+
+  <li>Version 1.0a:&nbsp;
+    <ul>
+
+      <li>First release of the completely redesigned and
+rewritten Chicken.</li>
+
+      <li>Similar feature set to Chicken 0.5.3 but much cleaner
+code and a performance improvement of ~120%!</li>
+
+      <li>Improved User Interface adapts to what you want to
+export .</li>
+
+      <li>Supports exporting multiple meshes that use the same
+armature.</li>
+
+      <li>Supports exporting multiple animations at once.</li>
+
+      <li>And more..!</li>
+
+    </ul>
+
+  </li>
+
+  <li>Version 0.5.3:
+    <ul>
+
+      <li>Fixed an obscure bug where textures in materials that
+didn't have images associated to them caused a crash. Thanks to BoZ
+from the Panda forums for finding this.</li>
+
+    </ul>
+
+  </li>
+
+  <li>Version 0.5.2:
+    <ul>
+
+      <li>Removed the condition where materials with textures
+overrode face images to avoid the case where meshes with unused
+textured materials were exported with no texture at all (This has been
+reinstated, properly, in version 1.0a)</li>
+
+    </ul>
+
+  </li>
+
+  <li>Version 0.5.1:
+    <ul>
+
+      <li>Fix for objects that have unused material indices,
+thanks to ThomasEgi from the Panda forums for finding this.</li>
+
+      <li>Tentative fix for tool invocation under Linux...
+although I'm told it didn't work :( &nbsp;</li>
+
+    </ul>
+
+  </li>
+
+  <li>Version 0.5:
+    <ul>
+
+      <li>First public release of Chicken.</li>
+
+      <li>Based on eggX v.6 by Chris Holland</li>
+
+      <li>Several improvements over eggX</li>
+
+    </ul>
+
+  </li>
+
+</ul>
+
+</body>
+</html>

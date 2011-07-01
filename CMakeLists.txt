@@ -83,3 +83,9 @@ remake_pack_deb(
   DESCRIPTION "sample applications"
   panda3d-python panda3d-models
 )
+
+remake_pack_deb(
+  COMPONENT blender
+  DESCRIPTION "blender scripts"
+  panda3d-tools blender
+)

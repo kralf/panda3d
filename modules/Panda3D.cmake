@@ -140,10 +140,15 @@ endmacro(panda3d_interrogate)
 #     sources, defaulting to interrogate_module.
 #   \optional[value] MODULE:module The name of the Panda3D module that
 #     will be be passed to Interrogate, defaults to the target name.
+#   \optional[value] LIBRARY:library The name of the Panda3D library that
+#     will be be passed to Interrogate, defaults to the target name.
+#     Note that Interrogate assumes the library name to be preprended by
+#     Panda3D's project prefix. This prefix must therefore be omitted here.
 macro(panda3d_interrogate_module panda3d_target)
-  remake_arguments(PREFIX panda3d_ VAR COMMAND VAR MODULE ${ARGN})
+  remake_arguments(PREFIX panda3d_ VAR COMMAND VAR MODULE VAR LIBRARY ${ARGN})
   remake_set(panda3d_command SELF DEFAULT interrogate_module)
   remake_set(panda3d_module SELF DEFAULT ${panda3d_target})
+  remake_set(panda3d_library SELF DEFAULT ${panda3d_target})
 
   remake_file(panda3d_dir ${PANDA3D_MODULE_DIR}/${panda3d_module})
   if(NOT EXISTS ${panda3d_dir})
@@ -152,6 +157,9 @@ macro(panda3d_interrogate_module panda3d_target)
   remake_file(panda3d_file ${panda3d_dir}/target)
   remake_file_create(${panda3d_file})
   remake_file_write(${panda3d_file} ${panda3d_target})
+  remake_file(panda3d_file ${panda3d_dir}/library)
+  remake_file_create(${panda3d_file})
+  remake_file_write(${panda3d_file} ${panda3d_library})
   remake_file(panda3d_file ${panda3d_dir}/directory)
   remake_file_create(${panda3d_file})
   remake_file_write(${panda3d_file} ${CMAKE_CURRENT_BINARY_DIR})
@@ -181,12 +189,12 @@ macro(panda3d_interrogate_module panda3d_target)
   endforeach(panda3d_dir)
 
   remake_set(panda3d_args -q -python-native -module ${panda3d_module}
-    -library ${panda3d_target})
+    -library ${panda3d_library})
   remake_generate_custom("Interrogate module"
     ${panda3d_command} ${panda3d_args} -oc %SOURCES% %INPUT%
     TARGET ${panda3d_target}
     INPUT ${panda3d_inputs} GENERATED
-    SOURCES ${panda3d_target}_module.cxx)
+    SOURCES ${panda3d_module}_module.cxx)
   remake_target_add_sources(${panda3d_target} ${panda3d_sources})
   set_source_files_properties(${panda3d_sources} PROPERTIES GENERATED ON)
 endmacro(panda3d_interrogate_module)
@@ -217,23 +225,27 @@ macro(panda3d_python_package)
     DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     ${panda3d_others} GENERATED)
 
-  remake_unset(panda3d_targets)
+  remake_unset(panda3d_libraries panda3d_targets)
   remake_file_glob(panda3d_dirs ${PANDA3D_MODULE_DIR}/* DIRECTORIES)
   foreach(panda3d_dir ${panda3d_dirs})
     remake_file(panda3d_file ${panda3d_dir}/target)
     remake_file_read(panda3d_target ${panda3d_file})
+    remake_file(panda3d_file ${panda3d_dir}/library)
+    remake_file_read(panda3d_library ${panda3d_file})
     remake_file(panda3d_file ${panda3d_dir}/directory)
     remake_file_read(panda3d_module_path ${panda3d_file})
 
     remake_list_push(panda3d_targets ${panda3d_target})
+    remake_list_push(panda3d_libraries ${panda3d_library})
     remake_list_push(panda3d_paths ${panda3d_module_path})
     remake_list_push(panda3d_sources
-      ${CMAKE_CURRENT_BINARY_DIR}/${panda3d_target}_module.py)
+      ${CMAKE_CURRENT_BINARY_DIR}/${panda3d_library}_module.py)
   endforeach(panda3d_dir)
 
   string(REPLACE ";" ":" panda3d_python_path "${panda3d_paths}")
   remake_generate_custom("Python module"
-    PYTHONPATH=${panda3d_python_path} python ${panda3d_command} -q -r %INPUT%
+    PYTHONPATH=${panda3d_python_path} python ${panda3d_command} -q -r
+      ${panda3d_libraries}
     INPUT ${panda3d_targets} GENERATED
     SOURCES ${panda3d_sources}
     OTHERS ${panda3d_others})

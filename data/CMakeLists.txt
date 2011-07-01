@@ -10,3 +10,7 @@ remake_add_directories(
   samples
   COMPONENT samples
 )
+remake_add_directories(
+  blender
+  COMPONENT blender
+)
