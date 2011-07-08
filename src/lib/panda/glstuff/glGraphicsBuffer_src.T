@@ -639,22 +639,34 @@ open_buffer() {
   // tell the truth about what we actually provide by setting
   // the _fb_properties accurately.
 
-  _fb_properties.set_depth_bits(1);
-  _fb_properties.set_color_bits(1);
-  _fb_properties.set_alpha_bits(1);
+  _fb_properties.set_depth_bits(
+    _host->get_fb_properties().get_depth_bits());
+  _fb_properties.set_color_bits(
+    _host->get_fb_properties().get_color_bits());
+  _fb_properties.set_alpha_bits(
+    _host->get_fb_properties().get_alpha_bits());
   if (_gsg->get_supports_depth_stencil()) {
-    _fb_properties.set_stencil_bits(1);
+    _fb_properties.set_stencil_bits(
+      _host->get_fb_properties().get_stencil_bits());
   } else {
     _fb_properties.set_stencil_bits(0);
   }
-  _fb_properties.set_accum_bits(0);
-  _fb_properties.set_multisamples(0);
-  _fb_properties.set_back_buffers(0);
-  _fb_properties.set_indexed_color(0);
-  _fb_properties.set_rgb_color(1);
-  _fb_properties.set_stereo(0);
-  _fb_properties.set_force_hardware(_host->get_fb_properties().get_force_hardware());
-  _fb_properties.set_force_software(_host->get_fb_properties().get_force_software());
+  _fb_properties.set_accum_bits(
+    _host->get_fb_properties().get_accum_bits());
+  _fb_properties.set_multisamples(
+    _host->get_fb_properties().get_multisamples());
+  _fb_properties.set_back_buffers(
+    _host->get_fb_properties().get_back_buffers());
+  _fb_properties.set_indexed_color(
+    _host->get_fb_properties().get_indexed_color());
+  _fb_properties.set_rgb_color(
+    _host->get_fb_properties().get_rgb_color());
+  _fb_properties.set_stereo(
+    _host->get_fb_properties().get_stereo());
+  _fb_properties.set_force_hardware(
+    _host->get_fb_properties().get_force_hardware());
+  _fb_properties.set_force_software(
+    _host->get_fb_properties().get_force_software());
   
   _is_valid = true;
   report_my_gl_errors();

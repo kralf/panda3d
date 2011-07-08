@@ -566,6 +566,7 @@ estimate_texture_memory() const {
     break;
 
   case Texture::F_depth_stencil:
+  case Texture::F_depth_component:
     bpp = 32;
     break;
     
@@ -1279,6 +1280,9 @@ write(ostream &out, int indent_level) const {
     break;
   case F_depth_stencil:
     out << "depth_stencil";
+    break;
+  case F_depth_component:
+    out << "depth_component";
     break;
 
   case F_rgba:
@@ -3728,6 +3732,7 @@ do_set_format(Texture::Format format) {
   switch (_format) {
   case F_color_index:
   case F_depth_stencil:
+  case F_depth_component:
   case F_red:
   case F_green:
   case F_blue:
@@ -4584,7 +4589,7 @@ bool Texture::
 convert_to_pnmimage(PNMImage &pnmimage, int x_size, int y_size,
                     int num_components, int component_width,
                     CPTA_uchar image, size_t page_size, int z) {
-  pnmimage.clear(x_size, y_size, num_components);
+  pnmimage.clear(x_size, y_size, num_components, (2 << 8*component_width-1)-1);
   bool has_alpha = pnmimage.has_alpha();
   bool is_grayscale = pnmimage.is_grayscale();
   
@@ -6184,6 +6189,8 @@ operator << (ostream &out, Texture::Format f) {
   switch (f) {
   case Texture::F_depth_stencil:
     return out << "depth_stencil";
+  case Texture::F_depth_component:
+    return out << "depth_component";
   case Texture::F_color_index:
     return out << "color_index";
   case Texture::F_red:
