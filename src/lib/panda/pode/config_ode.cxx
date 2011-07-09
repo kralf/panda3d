@@ -78,6 +78,8 @@ init_libode() {
     return;
   }
   initialized = true;
+
+  dInitODE();
   
   OdeWorld::init_type();
   OdeMass::init_type();

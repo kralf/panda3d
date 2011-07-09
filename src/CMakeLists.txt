@@ -23,6 +23,7 @@ remake_include(
   ${GL_INCLUDE_DIRS}
   ${PYTHON_INCLUDE_PATH}
 )
+remake_define(dDOUBLE ON)
 
 remake_component(tools)
 if(PANDA3D_TOOLS_COMPONENT_BUILD)
