@@ -20,6 +20,7 @@
 #include "collisionRecorder.h"
 #include "collisionVisualizer.h"
 #include "collisionSphere.h"
+#include "collisionBox.h"
 #include "collisionTube.h"
 #include "collisionPolygon.h"
 #include "collisionPlane.h"
@@ -370,6 +371,7 @@ traverse(const NodePath &root) {
   CollisionTube::flush_level();
   CollisionPolygon::flush_level();
   CollisionPlane::flush_level();
+  CollisionBox::flush_level();
 }
 
 #ifdef DO_COLLISION_RECORDING
@@ -600,7 +602,9 @@ r_traverse_single(CollisionLevelStateSingle &level_state, size_t pass) {
   if (!level_state.any_in_bounds()) {
     return;
   }
-  level_state.apply_transform();
+  if (!level_state.apply_transform()) {
+    return;
+  }
 
   PandaNode *node = level_state.node();
   if (node->is_exact_type(CollisionNode::get_class_type())) {
@@ -817,7 +821,9 @@ r_traverse_double(CollisionLevelStateDouble &level_state, size_t pass) {
   if (!level_state.any_in_bounds()) {
     return;
   }
-  level_state.apply_transform();
+  if (!level_state.apply_transform()) {
+    return;
+  }
 
   PandaNode *node = level_state.node();
   if (node->is_exact_type(CollisionNode::get_class_type())) {
@@ -1034,7 +1040,9 @@ r_traverse_quad(CollisionLevelStateQuad &level_state, size_t pass) {
   if (!level_state.any_in_bounds()) {
     return;
   }
-  level_state.apply_transform();
+  if (!level_state.apply_transform()) {
+    return;
+  }
 
   PandaNode *node = level_state.node();
   if (node->is_exact_type(CollisionNode::get_class_type())) {
