@@ -16,6 +16,7 @@
 #include "collisionDSSolid.h"
 #include "collisionSphere.h"
 #include "collisionLine.h"
+#include "collisionParabola.h"
 #include "collisionRay.h"
 #include "collisionSegment.h"
 #include "collisionHandler.h"

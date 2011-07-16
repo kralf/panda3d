@@ -602,9 +602,7 @@ r_traverse_single(CollisionLevelStateSingle &level_state, size_t pass) {
   if (!level_state.any_in_bounds()) {
     return;
   }
-  if (!level_state.apply_transform()) {
-    return;
-  }
+  level_state.apply_transform();
 
   PandaNode *node = level_state.node();
   if (node->is_exact_type(CollisionNode::get_class_type())) {
@@ -821,9 +819,7 @@ r_traverse_double(CollisionLevelStateDouble &level_state, size_t pass) {
   if (!level_state.any_in_bounds()) {
     return;
   }
-  if (!level_state.apply_transform()) {
-    return;
-  }
+  level_state.apply_transform();
 
   PandaNode *node = level_state.node();
   if (node->is_exact_type(CollisionNode::get_class_type())) {
@@ -1040,9 +1036,7 @@ r_traverse_quad(CollisionLevelStateQuad &level_state, size_t pass) {
   if (!level_state.any_in_bounds()) {
     return;
   }
-  if (!level_state.apply_transform()) {
-    return;
-  }
+  level_state.apply_transform();
 
   PandaNode *node = level_state.node();
   if (node->is_exact_type(CollisionNode::get_class_type())) {
