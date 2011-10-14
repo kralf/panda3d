@@ -37,10 +37,6 @@ extern "C" void (*glXGetProcAddressARB(const GLubyte *procName))( void );
 
 #endif
 
-// This must be included after we have included glgsg.h (which
-// includes gl.h).
-#include <GL/glext.h>
-
 // drose: the version of GL/glx.h that ships with Fedora Core 2 seems
 // to define GLX_VERSION_1_4, but for some reason does not define
 // GLX_SAMPLE_BUFFERS or GLX_SAMPLES.  We work around that here.
@@ -60,6 +56,15 @@ extern "C" void (*glXGetProcAddressARB(const GLubyte *procName))( void );
 #ifndef __EDG__  // Protect the following from the Tau instrumentor.
 typedef __GLXextFuncPtr (* PFNGLXGETPROCADDRESSPROC) (const GLubyte *procName);
 typedef int (* PFNGLXSWAPINTERVALSGIPROC) (int interval);
+
+typedef GLXFBConfig * (* PFNGLXCHOOSEFBCONFIGPROC) (Display *dpy, int screen, const int *attrib_list, int *nelements);
+typedef GLXContext (* PFNGLXCREATENEWCONTEXTPROC) (Display *dpy, GLXFBConfig config, int render_type, GLXContext share_list, Bool direct);
+typedef XVisualInfo * (* PFNGLXGETVISUALFROMFBCONFIGPROC) (Display *dpy, GLXFBConfig config);
+typedef int (* PFNGLXGETFBCONFIGATTRIBPROC) (Display *dpy, GLXFBConfig config, int attribute, int *value);
+typedef GLXPixmap (* PFNGLXCREATEPIXMAPPROC) (Display *dpy, GLXFBConfig config, Pixmap pixmap, const int *attrib_list);
+typedef GLXPbuffer (* PFNGLXCREATEPBUFFERPROC) (Display *dpy, GLXFBConfig config, const int *attrib_list);
+typedef void (* PFNGLXDESTROYPBUFFERPROC) (Display *dpy, GLXPbuffer pbuf);
+
 #endif  // __EDG__
 
 ////////////////////////////////////////////////////////////////////
@@ -69,24 +74,18 @@ typedef int (* PFNGLXSWAPINTERVALSGIPROC) (int interval);
 ////////////////////////////////////////////////////////////////////
 class glxGraphicsStateGuardian : public GLGraphicsStateGuardian {
 public:
-#ifdef HAVE_GLXFBCONFIG
-  typedef GLXFBConfig fbconfig;
-#else
-  typedef int         fbconfig;
-#endif
-
   INLINE const FrameBufferProperties &get_fb_properties() const;
   void get_properties(FrameBufferProperties &properties, XVisualInfo *visual);
   void get_properties_advanced(FrameBufferProperties &properties,
-			       bool &pbuffer_supported, bool &pixmap_supported,
-                               bool &slow, fbconfig config);
+                               bool &context_has_pbuffer, bool &pixmap_supported,
+                               bool &slow, GLXFBConfig config);
   void choose_pixel_format(const FrameBufferProperties &properties, 
-			   Display *_display,
-			   int _screen,
-			   bool need_pbuffer, bool need_pixmap);
+                           Display *_display,
+                           int _screen,
+                           bool need_pbuffer, bool need_pixmap);
   
   glxGraphicsStateGuardian(GraphicsEngine *engine, GraphicsPipe *pipe,
-			   glxGraphicsStateGuardian *share_with);
+                           glxGraphicsStateGuardian *share_with);
 
   virtual ~glxGraphicsStateGuardian();
 
@@ -100,12 +99,29 @@ public:
   int _screen;
   XVisualInfo *_visual;
   XVisualInfo *_visuals;
-  fbconfig _fbconfig;
+
+  GLXFBConfig _fbconfig;
   FrameBufferProperties _fbprops;
+  bool _context_has_pbuffer;  // true if the particular fbconfig supports pbuffers
+  bool _context_has_pixmap;
+  bool _slow;
 
 public:
   bool _supports_swap_control;
   PFNGLXSWAPINTERVALSGIPROC _glXSwapIntervalSGI;
+
+  bool _supports_fbconfig;
+  PFNGLXCHOOSEFBCONFIGPROC _glXChooseFBConfig;
+  PFNGLXCREATENEWCONTEXTPROC _glXCreateNewContext;
+  PFNGLXGETVISUALFROMFBCONFIGPROC _glXGetVisualFromFBConfig;
+  PFNGLXGETFBCONFIGATTRIBPROC _glXGetFBConfigAttrib;
+  PFNGLXCREATEPIXMAPPROC _glXCreatePixmap;
+
+  bool _supports_pbuffer;  // true if the interface is available.
+  bool _uses_sgix_pbuffer;
+  PFNGLXCREATEPBUFFERPROC _glXCreatePbuffer;
+  PFNGLXCREATEGLXPBUFFERSGIXPROC _glXCreateGLXPbufferSGIX;
+  PFNGLXDESTROYPBUFFERPROC _glXDestroyPbuffer;
 
 protected:
   virtual void gl_flush() const;
@@ -113,19 +129,25 @@ protected:
 
   virtual void query_gl_version();
   virtual void get_extra_extensions();
-  virtual void *get_extension_func(const char *prefix, const char *name);
+  virtual void *do_get_extension_func(const char *prefix, const char *name);
 
 private:
   void *get_system_func(const char *name);
   void show_glx_client_string(const string &name, int id);
   void show_glx_server_string(const string &name, int id);
-
+  void choose_temp_visual(const FrameBufferProperties &properties);
+  void init_temp_context();
+  void destroy_temp_xwindow();
 
   int _glx_version_major, _glx_version_minor;
 
   void *_libgl_handle;
   bool _checked_get_proc_address;
   PFNGLXGETPROCADDRESSPROC _glXGetProcAddress;
+
+  GLXContext _temp_context;
+  Window _temp_xwindow;
+  Colormap _temp_colormap;
 
 public:
   static TypeHandle get_class_type() {

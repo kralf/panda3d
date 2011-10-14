@@ -29,10 +29,13 @@ TypeHandle LensNode::_type_handle;
 //  Description:
 ////////////////////////////////////////////////////////////////////
 LensNode::
-LensNode(const string &name) :
-  PandaNode(name),
-  _lens(new PerspectiveLens())
+LensNode(const string &name, Lens *lens) :
+  PandaNode(name)
 {
+  if (lens == NULL) {
+    lens = new PerspectiveLens;
+  }
+  set_lens(0, lens);
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -43,7 +46,7 @@ LensNode(const string &name) :
 LensNode::
 LensNode(const LensNode &copy) :
   PandaNode(copy),
-  _lens(copy._lens)
+  _lenses(copy._lenses)
 {
 }
 
@@ -74,6 +77,65 @@ make_copy() const {
 }
 
 ////////////////////////////////////////////////////////////////////
+//     Function: LensNode::set_lens
+//       Access: Published
+//  Description: Sets the indicated lens.  Although a LensNode
+//               normally holds only one lens, it may optionally
+//               include multiple lenses, each with a different index
+//               number.  The different lenses may be referenced by
+//               index number on the DisplayRegion.  Adding a new lens
+//               automatically makes it active.
+////////////////////////////////////////////////////////////////////
+void LensNode::
+set_lens(int index, Lens *lens) {
+  nassertv(index >= 0 && index < max_lenses); // Sanity check
+
+  while (index >= (int)_lenses.size()) {
+    LensSlot slot;
+    slot._is_active = false;
+    _lenses.push_back(slot);
+  }
+  
+  _lenses[index]._lens = lens;
+  _lenses[index]._is_active = true;
+
+  if (_shown_frustum != (PandaNode *)NULL) {
+    show_frustum();
+  }
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: LensNode::set_lens_active
+//       Access: Published
+//  Description: Sets the active flag for the nth lens.  When a lens
+//               is inactive, it is not used for rendering, and any
+//               DisplayRegions associated with it are implicitly
+//               inactive as well.  Returns true if the flag is
+//               changed, false if it already had this value.
+////////////////////////////////////////////////////////////////////
+bool LensNode::
+set_lens_active(int index, bool flag) {
+  nassertr(index >= 0 && index < max_lenses, false);
+
+  while (index >= (int)_lenses.size()) {
+    LensSlot slot;
+    slot._is_active = false;
+    _lenses.push_back(slot);
+  }
+
+  if (_lenses[index]._is_active == flag) {
+    return false;
+  }
+
+  _lenses[index]._is_active = flag;
+
+  if (_shown_frustum != (PandaNode *)NULL) {
+    show_frustum();
+  }
+  return true;
+}
+
+////////////////////////////////////////////////////////////////////
 //     Function: LensNode::is_in_view
 //       Access: Published
 //  Description: Returns true if the given point is within the bounds
@@ -81,8 +143,10 @@ make_copy() const {
 //               see the point).
 ////////////////////////////////////////////////////////////////////
 bool LensNode::
-is_in_view(const LPoint3f &pos) {
-  PT(BoundingVolume) bv = _lens->make_bounds();
+is_in_view(int index, const LPoint3f &pos) {
+  Lens *lens = get_lens(index);
+  nassertr(lens != (Lens *)NULL, false);
+  PT(BoundingVolume) bv = lens->make_bounds();
   if (bv == (BoundingVolume *)NULL) {
     return false;
   }
@@ -107,8 +171,12 @@ show_frustum() {
   _shown_frustum = geom_node;
   add_child(_shown_frustum);
 
-  if (_lens != (Lens *)NULL) {
-    geom_node->add_geom(_lens->make_geometry());
+  for (Lenses::const_iterator li = _lenses.begin();
+       li != _lenses.end();
+       ++li) {
+    if ((*li)._is_active && (*li)._lens != (Lens *)NULL) {
+      geom_node->add_geom((*li)._lens->make_geometry());
+    }
   }
 }
 
@@ -134,11 +202,17 @@ hide_frustum() {
 void LensNode::
 output(ostream &out) const {
   PandaNode::output(out);
-  if (_lens != (Lens *)NULL) {
-    out << " (";
-    _lens->output(out);
-    out << ")";
+
+  out << " (";
+  for (Lenses::const_iterator li = _lenses.begin();
+       li != _lenses.end();
+       ++li) {
+    if ((*li)._is_active && (*li)._lens != (Lens *)NULL) {
+      out << " ";
+      (*li)._lens->output(out);
+    }
   }
+  out << " )";
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -149,8 +223,13 @@ output(ostream &out) const {
 void LensNode::
 write(ostream &out, int indent_level) const {
   PandaNode::write(out, indent_level);
-  if (_lens != (Lens *)NULL) {
-    _lens->write(out, indent_level + 2);
+
+  for (Lenses::const_iterator li = _lenses.begin();
+       li != _lenses.end();
+       ++li) {
+    if ((*li)._is_active && (*li)._lens != (Lens *)NULL) {
+      (*li)._lens->write(out, indent_level + 2);
+    }
   }
 }
 
@@ -175,7 +254,10 @@ void LensNode::
 write_datagram(BamWriter *manager, Datagram &dg) {
   PandaNode::write_datagram(manager, dg);
 
-  manager->write_pointer(dg, _lens);
+  // For now, we only write out lens 0, simply because that's what we
+  // always have done.  Should probably write out all lenses for the
+  // future.
+  manager->write_pointer(dg, get_lens(0));
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -188,7 +270,7 @@ write_datagram(BamWriter *manager, Datagram &dg) {
 int LensNode::
 complete_pointers(TypedWritable **p_list, BamReader *manager) {
   int pi = PandaNode::complete_pointers(p_list, manager);
-  _lens = DCAST(Lens, p_list[pi++]);
+  set_lens(0, DCAST(Lens, p_list[pi++]));
   return pi;
 }
 

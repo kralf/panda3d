@@ -749,7 +749,20 @@ clear_z_order() {
 ////////////////////////////////////////////////////////////////////
 //     Function: WindowProperties::set_mouse_mode
 //       Access: Published
-//  Description: Removes the z_order specification from the properties.
+//  Description: Specifies the mode in which the window is to operate
+//               its mouse pointer.  The default is M_absolute, which
+//               is the normal mode in which a mouse pointer operates;
+//               but you can also set M_relative, which is
+//               particularly useful for FPS-style mouse movements
+//               where you have hidden the mouse pointer and are are
+//               more interested in how fast the mouse is moving,
+//               rather than precisely where the pointer is hovering.
+//
+//               This has no effect on Windows, which does not
+//               have this concept; but is important to do on OSX
+//               and Unix/X11 to properly enable a smooth FPS-style
+//               mouselook mode.  On Unix/X11, this requires the
+//               Xxf86dga extension to be available.
 ////////////////////////////////////////////////////////////////////
 INLINE void WindowProperties::
 set_mouse_mode(MouseMode mode) {
@@ -760,7 +773,7 @@ set_mouse_mode(MouseMode mode) {
 ////////////////////////////////////////////////////////////////////
 //     Function: WindowProperties::get_mouse_mode
 //       Access: Published
-//  Description: Removes the z_order specification from the properties.
+//  Description: See set_mouse_mode().
 ////////////////////////////////////////////////////////////////////
 INLINE WindowProperties::MouseMode WindowProperties::
 get_mouse_mode() const {
@@ -768,9 +781,9 @@ get_mouse_mode() const {
 }
 
 ////////////////////////////////////////////////////////////////////
-//     Function: WindowProperties::has_moude_mode
+//     Function: WindowProperties::has_mouse_mode
 //       Access: Published
-//  Description: Removes the z_order specification from the properties.
+//  Description: 
 ////////////////////////////////////////////////////////////////////
 INLINE bool WindowProperties::
 has_mouse_mode() const {
@@ -780,7 +793,7 @@ has_mouse_mode() const {
 ////////////////////////////////////////////////////////////////////
 //     Function: WindowProperties::clear_mouse_mode
 //       Access: Published
-//  Description: Removes the z_order specification from the properties.
+//  Description: Removes the mouse_mode specification from the properties.
 ////////////////////////////////////////////////////////////////////
 INLINE void WindowProperties::
 clear_mouse_mode() {
@@ -791,20 +804,34 @@ clear_mouse_mode() {
 ////////////////////////////////////////////////////////////////////
 //     Function: WindowProperties::set_parent_window
 //       Access: Published
-//  Description: Removes the z_order specification from the properties.
+//  Description: Specifies the window that this window should be
+//               attached to.  If this is NULL or unspecified, the
+//               window will be created as a toplevel window on the
+//               desktop; if this is non-NULL, the window will be
+//               bound as a child window to the indicated parent
+//               window.
+//
+//               You should use GraphicsPipe::make_window_handle() to
+//               create an instance of a WindowHandle object given an
+//               appropriate OS-specific window handle representation.
+//               Each OS-specific GraphicsPipe class defines a
+//               make_window_handle() method that returns an
+//               appropriate WindowHandle object to wrap the
+//               particular OS-specific representation.
 ////////////////////////////////////////////////////////////////////
 INLINE void WindowProperties::
-set_parent_window(size_t parent) {
-  _parent_window=parent;
+set_parent_window(WindowHandle *parent_window) {
+  _parent_window = parent_window;
   _specified |= S_parent_window;
 }
 
 ////////////////////////////////////////////////////////////////////
 //     Function: WindowProperties::get_parent_window
 //       Access: Published
-//  Description: Removes the parent Window 
+//  Description: Returns the parent window specification, or NULL if
+//               there is no parent window specified.
 ////////////////////////////////////////////////////////////////////
-INLINE size_t WindowProperties::
+INLINE WindowHandle *WindowProperties::
 get_parent_window() const {
  return _parent_window;
 }
@@ -827,7 +854,7 @@ has_parent_window() const {
 INLINE void WindowProperties::
 clear_parent_window() {
   _specified &= ~S_parent_window;
-  _parent_window = (size_t)NULL;
+  _parent_window = NULL;
 }
 
 

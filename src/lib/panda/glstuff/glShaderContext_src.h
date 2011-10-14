@@ -12,6 +12,8 @@
 //
 ////////////////////////////////////////////////////////////////////
 
+#ifndef OPENGLES_1
+
 #include "pandabase.h"
 #include "string_utils.h"
 #include "internalName.h"
@@ -25,9 +27,9 @@ class CLP(GraphicsStateGuardian);
 //       Class : GLShaderContext
 // Description : xyz
 ////////////////////////////////////////////////////////////////////
-
 class EXPCL_GL CLP(ShaderContext): public ShaderContext {
 public:
+  friend class CLP(GraphicsStateGuardian);
   typedef CLP(GraphicsStateGuardian) GSG;
 
   CLP(ShaderContext)(Shader *s, GSG *gsg);
@@ -35,8 +37,8 @@ public:
   ALLOC_DELETED_CHAIN(CLP(ShaderContext));
 
   INLINE bool valid(void);
-  void bind(GSG *gsg);
-  void unbind();
+  void bind(GSG *gsg, bool reissue_parameters = true);
+  void unbind(GSG *gsg);
   void issue_parameters(GSG *gsg, int altered);
   void disable_shader_vertex_arrays(GSG *gsg);
   bool update_shader_vertex_arrays(CLP(ShaderContext) *prev, GSG *gsg,
@@ -44,18 +46,37 @@ public:
   void disable_shader_texture_bindings(GSG *gsg);
   void update_shader_texture_bindings(CLP(ShaderContext) *prev, GSG *gsg);
 
+  INLINE bool uses_custom_vertex_arrays(void);
+  INLINE bool uses_custom_texture_bindings(void);
+
 private:
 
-#ifdef HAVE_CG
+#if defined(HAVE_CG) && !defined(OPENGLES)
   CGcontext _cg_context;
   CGprogram _cg_vprogram;
   CGprogram _cg_fprogram;
-  pvector <CGparameter> _cg_parameter_map;
-  void cg_report_errors();
-#endif
+  CGprogram _cg_gprogram;
 
-  void release_resources(void);
+  pvector <CGparameter> _cg_parameter_map;
+#endif
   
+  GLuint _glsl_program;
+  GLuint _glsl_vshader;
+  GLuint _glsl_fshader;
+  GLuint _glsl_gshader;
+
+  int _stage_offset;
+  // Avoid using this! It merely exists so the
+  // destructor has access to the extension functions.
+  WPT(GSG) _last_gsg;
+
+  void glsl_report_shader_errors(GSG *gsg, unsigned int shader);
+  void glsl_report_program_errors(GSG *gsg, unsigned int program);
+  unsigned int glsl_compile_entry_point(GSG *gsg, Shader::ShaderType type);
+  bool glsl_compile_shader(GSG *gsg);
+
+  void release_resources(GSG *gsg);
+
 public:
   static TypeHandle get_class_type() {
     return _type_handle;
@@ -75,4 +96,6 @@ private:
 };
 
 #include "glShaderContext_src.I"
+
+#endif  // OPENGLES_1
 

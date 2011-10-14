@@ -18,18 +18,40 @@
 #include "pandabase.h"
 
 #include "light.h"
-#include "lensNode.h"
+#include "camera.h"
+#include "perspectiveLens.h"
+#include "graphicsStateGuardianBase.h"
+#include "graphicsOutputBase.h"
+
+class ShaderGenerator;
+class GraphicsStateGuardian;
 
 ////////////////////////////////////////////////////////////////////
 //       Class : LightLensNode
-// Description : A derivative of Light and of LensNode.  
+// Description : A derivative of Light and of Camera. The name might
+//               be misleading: it does not directly derive from
+//               LensNode, but through the Camera class. The Camera
+//               serves no purpose unless shadows are enabled.
 ////////////////////////////////////////////////////////////////////
-class EXPCL_PANDA_PGRAPHNODES LightLensNode : public Light, public LensNode {
+class EXPCL_PANDA_PGRAPHNODES LightLensNode : public Light, public Camera {
 PUBLISHED:
-  LightLensNode(const string &name);
+  LightLensNode(const string &name, Lens *lens = new PerspectiveLens());
+  virtual ~LightLensNode();
+
+  INLINE bool is_shadow_caster();
+  INLINE void set_shadow_caster(bool caster);
+  INLINE void set_shadow_caster(bool caster, int buffer_xsize, int buffer_ysize, int sort = -10);
 
 protected:
   LightLensNode(const LightLensNode &copy);
+  void clear_shadow_buffers();
+
+  bool _shadow_caster;
+  int _sb_xsize, _sb_ysize, _sb_sort;
+
+  // This is really a map of GSG -> GraphicsOutput.
+  typedef pmap<PT(GraphicsStateGuardianBase), PT(GraphicsOutputBase) > ShadowBuffers;
+  ShadowBuffers _sbuffers;
 
 public:
   virtual PandaNode *as_node();
@@ -53,10 +75,10 @@ public:
   }
   static void init_type() {
     Light::init_type();
-    LensNode::init_type();
+    Camera::init_type();
     register_type(_type_handle, "LightLensNode",
                   Light::get_class_type(),
-                  LensNode::get_class_type());
+                  Camera::get_class_type());
   }
   virtual TypeHandle get_type() const {
     return get_class_type();
@@ -65,6 +87,9 @@ public:
 
 private:
   static TypeHandle _type_handle;
+
+  friend class GraphicsStateGuardian;
+  friend class ShaderGenerator;
 };
 
 INLINE ostream &operator << (ostream &out, const LightLensNode &light) {

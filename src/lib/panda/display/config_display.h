@@ -41,12 +41,14 @@ extern EXPCL_PANDA_DISPLAY ConfigVariableBool allow_nonpipeline_threads;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool auto_flip;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool sync_flip;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool yield_timeslice;
+extern EXPCL_PANDA_DISPLAY ConfigVariableDouble subprocess_window_max_wait;
 
 extern EXPCL_PANDA_DISPLAY ConfigVariableString screenshot_filename;
 extern EXPCL_PANDA_DISPLAY ConfigVariableString screenshot_extension;
 
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool prefer_texture_buffer;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool prefer_parasite_buffer;
+extern EXPCL_PANDA_DISPLAY ConfigVariableBool force_parasite_buffer;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool prefer_single_buffer;
 
 extern EXPCL_PANDA_DISPLAY ConfigVariableInt max_texture_stages;
@@ -57,6 +59,9 @@ extern EXPCL_PANDA_DISPLAY ConfigVariableBool copy_texture_inverted;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool window_inverted;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool red_blue_stereo;
 extern EXPCL_PANDA_DISPLAY ConfigVariableString red_blue_stereo_colors;
+extern EXPCL_PANDA_DISPLAY ConfigVariableBool side_by_side_stereo;
+extern EXPCL_PANDA_DISPLAY ConfigVariableDouble sbs_left_dimensions;
+extern EXPCL_PANDA_DISPLAY ConfigVariableDouble sbs_right_dimensions;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool default_stereo_camera;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool color_scale_via_lighting;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool alpha_scale_via_texture;
@@ -66,11 +71,14 @@ extern EXPCL_PANDA_DISPLAY ConfigVariableInt win_size;
 extern EXPCL_PANDA_DISPLAY ConfigVariableInt win_origin;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool fullscreen;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool undecorated;
+extern EXPCL_PANDA_DISPLAY ConfigVariableBool win_fixed_size;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool cursor_hidden;
 extern EXPCL_PANDA_DISPLAY ConfigVariableFilename icon_filename;
 extern EXPCL_PANDA_DISPLAY ConfigVariableFilename cursor_filename;
 extern EXPCL_PANDA_DISPLAY ConfigVariableEnum<WindowProperties::ZOrder> z_order;
 extern EXPCL_PANDA_DISPLAY ConfigVariableString window_title;
+extern EXPCL_PANDA_DISPLAY ConfigVariableInt parent_window_handle;
+extern EXPCL_PANDA_DISPLAY ConfigVariableFilename subprocess_window;
 
 extern EXPCL_PANDA_DISPLAY ConfigVariableString framebuffer_mode;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool framebuffer_hardware;
@@ -79,11 +87,13 @@ extern EXPCL_PANDA_DISPLAY ConfigVariableBool framebuffer_multisample;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool framebuffer_depth;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool framebuffer_alpha;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool framebuffer_stencil;
+extern EXPCL_PANDA_DISPLAY ConfigVariableBool framebuffer_accum;
 extern EXPCL_PANDA_DISPLAY ConfigVariableBool framebuffer_stereo;
 extern EXPCL_PANDA_DISPLAY ConfigVariableInt depth_bits;
 extern EXPCL_PANDA_DISPLAY ConfigVariableInt color_bits;
 extern EXPCL_PANDA_DISPLAY ConfigVariableInt alpha_bits;
 extern EXPCL_PANDA_DISPLAY ConfigVariableInt stencil_bits;
+extern EXPCL_PANDA_DISPLAY ConfigVariableInt accum_bits;
 extern EXPCL_PANDA_DISPLAY ConfigVariableInt multisamples;
 extern EXPCL_PANDA_DISPLAY ConfigVariableInt back_buffers;
 

@@ -22,7 +22,15 @@
    C++-style comments, since this file is occasionally included by a C
    file. */
 
-#if defined(WIN32_VC) && !defined(CPPPARSER) && !defined(LINK_ALL_STATIC)
+#if (defined(WIN32_VC) || defined(WIN64_VC)) && !defined(CPPPARSER) && !defined(LINK_ALL_STATIC)
+
+#ifdef BUILDING_CFTALK
+  #define EXPCL_CFTALK __declspec(dllexport)
+  #define EXPTP_CFTALK
+#else
+  #define EXPCL_CFTALK __declspec(dllimport)
+  #define EXPTP_CFTALK extern
+#endif
 
 #ifdef BUILDING_FRAMEWORK
   #define EXPCL_FRAMEWORK __declspec(dllexport)
@@ -70,6 +78,14 @@
 #else
   #define EXPCL_PANDA __declspec(dllimport)
   #define EXPTP_PANDA extern
+#endif
+
+#ifdef BUILDING_PANDAAWESOMIUM
+  #define EXPCL_PANDAAWESOMIUM __declspec(dllexport)
+  #define EXPTP_PANDAAWESOMIUM
+#else
+  #define EXPCL_PANDAAWESOMIUM __declspec(dllimport)
+  #define EXPTP_PANDAAWESOMIUM extern
 #endif
 
 #ifdef BUILDING_PANDACR
@@ -120,12 +136,20 @@
   #define EXPTP_PANDAGL extern
 #endif
 
-#ifdef BUILDING_PANDAGLUT
-  #define EXPCL_PANDAGLUT __declspec(dllexport)
-  #define EXPTP_PANDAGLUT
+#ifdef BUILDING_PANDAGLES
+  #define EXPCL_PANDAGLES __declspec(dllexport)
+  #define EXPTP_PANDAGLES
 #else
-  #define EXPCL_PANDAGLUT __declspec(dllimport)
-  #define EXPTP_PANDAGLUT extern
+  #define EXPCL_PANDAGLES __declspec(dllimport)
+  #define EXPTP_PANDAGLES extern
+#endif
+
+#ifdef BUILDING_PANDAGLES2
+  #define EXPCL_PANDAGLES2 __declspec(dllexport)
+  #define EXPTP_PANDAGLES2
+#else
+  #define EXPCL_PANDAGLES2 __declspec(dllimport)
+  #define EXPTP_PANDAGLES2 extern
 #endif
 
 #ifdef BUILDING_PANDAMESA
@@ -152,12 +176,20 @@
   #define EXPTP_PANDAPHYSICS extern
 #endif
 
-#ifdef BUILDING_PANDARIB
-  #define EXPCL_PANDARIB __declspec(dllexport)
-  #define EXPTP_PANDARIB
+#ifdef BUILDING_PANDAPHYSX
+  #define EXPCL_PANDAPHYSX __declspec(dllexport)
+  #define EXPTP_PANDAPHYSX
 #else
-  #define EXPCL_PANDARIB __declspec(dllimport)
-  #define EXPTP_PANDARIB extern
+  #define EXPCL_PANDAPHYSX __declspec(dllimport)
+  #define EXPTP_PANDAPHYSX extern
+#endif
+
+#ifdef BUILDING_PANDASPEEDTREE
+  #define EXPCL_PANDASPEEDTREE __declspec(dllexport)
+  #define EXPTP_PANDASPEEDTREE
+#else
+  #define EXPCL_PANDASPEEDTREE __declspec(dllimport)
+  #define EXPTP_PANDASPEEDTREE extern
 #endif
 
 #ifdef BUILDING_PANDASKEL
@@ -176,6 +208,14 @@
   #define EXPTP_PANDAWIN extern
 #endif
 
+#ifdef BUILDING_PANDAX11
+  #define EXPCL_PANDAX11 __declspec(dllexport)
+  #define EXPTP_PANDAX11
+#else
+  #define EXPCL_PANDAX11 __declspec(dllimport)
+  #define EXPTP_PANDAX11 extern
+#endif
+
 #ifdef BUILDING_SHADER
   #define EXPCL_SHADER __declspec(dllexport)
   #define EXPTP_SHADER
@@ -192,7 +232,18 @@
   #define EXPTP_TINYDISPLAY extern
 #endif
 
+#ifdef BUILDING_VISION
+  #define EXPCL_VISION __declspec(dllexport)
+  #define EXPTP_VISION
+#else
+  #define EXPCL_VISION __declspec(dllimport)
+  #define EXPTP_VISION extern
+#endif
+
 #else   /* !WIN32_VC */
+
+#define EXPCL_CFTALK
+#define EXPTP_CFTALK
 
 #define EXPCL_FRAMEWORK
 #define EXPTP_FRAMEWORK
@@ -212,6 +263,9 @@
 #define EXPCL_PANDA
 #define EXPTP_PANDA
 
+#define EXPCL_PANDAAWESOMIUM
+#define EXPTP_PANDAAWESOMIUM
+
 #define EXPCL_PANDACR
 #define EXPTP_PANDACR
 
@@ -230,8 +284,11 @@
 #define EXPCL_PANDAGL
 #define EXPTP_PANDAGL
 
-#define EXPCL_PANDAGLUT
-#define EXPTP_PANDAGLUT
+#define EXPCL_PANDAGLES
+#define EXPTP_PANDAGLES
+
+#define EXPCL_PANDAGLES2
+#define EXPTP_PANDAGLES2
 
 #define EXPCL_PANDAMESA
 #define EXPTP_PANDAMESA
@@ -239,8 +296,15 @@
 #define EXPCL_PANDAODE
 #define EXPTP_PANDAODE
 
+
 #define EXPCL_PANDAPHYSICS
 #define EXPTP_PANDAPHYSICS
+
+#define EXPCL_PANDAPHYSX
+#define EXPTP_PANDAPHYSX
+
+#define EXPCL_PANDASPEEDTREE
+#define EXPTP_PANDASPEEDTREE
 
 #define EXPCL_PANDARIB
 #define EXPTP_PANDARIB
@@ -251,15 +315,21 @@
 #define EXPCL_PANDAWIN
 #define EXPTP_PANDAWIN
 
+#define EXPCL_PANDAX11
+#define EXPTP_PANDAX11
+
 #define EXPCL_SHADER
 #define EXPTP_SHADER
 
 #define EXPCL_TINYDISPLAY
 #define EXPTP_TINYDISPLAY
 
+#define EXPCL_VISION
+#define EXPTP_VISION
+
 #endif  /* WIN32_VC */
 
-#if defined(WIN32_VC) && !defined(CPPPARSER)
+#if (defined(WIN32_VC) || defined(WIN64_VC)) && !defined(CPPPARSER)
 #define INLINE_LINMATH __forceinline
 #define INLINE_MATHUTIL __forceinline
 

@@ -14,30 +14,6 @@
 
 
 ////////////////////////////////////////////////////////////////////
-//     Function: GLGraphicsStateGuardian::draw_display_list
-//       Access: Public
-//  Description: If the GeomContext is non-NULL and contains a valid
-//               display list, uses it to draw the geometry if
-//               appropriate, and returns true.  If the display list
-//               is absent or cannot be used for some reason, does
-//               nothing and returns false.
-////////////////////////////////////////////////////////////////////
-INLINE bool CLP(GraphicsStateGuardian)::
-draw_display_list(GeomContext *gc) {
-  if (gc != (GeomContext *)NULL && _vertex_colors_enabled) {
-    _draw_primitive_pcollector.start();
-    CLP(GeomContext) *ggc = DCAST(CLP(GeomContext), gc);
-    GLP(CallList)(ggc->_deprecated_index);
-#ifdef DO_PSTATS
-    _vertices_display_list_pcollector.add_level(ggc->_num_verts);
-#endif
-    _draw_primitive_pcollector.stop();
-    return true;
-  }
-  return false;
-}
-
-////////////////////////////////////////////////////////////////////
 //     Function: GLGraphicsStateGuardian::report_errors
 //       Access: Public, Static
 //  Description: Checks for any outstanding error codes and outputs
@@ -69,13 +45,59 @@ report_errors(int line, const char *source_file) {
 INLINE void CLP(GraphicsStateGuardian)::
 report_my_errors(int line, const char *source_file) {
 #ifndef NDEBUG
-  GLenum error_code = gl_get_error();
-  if (error_code != GL_NO_ERROR) {
-    if (!report_errors_loop(line, source_file, error_code, _error_count)) {
-      panic_deactivate();
+  if (_track_errors) {
+    GLenum error_code = GLP(GetError)();
+    if (error_code != GL_NO_ERROR) {
+      if (!report_errors_loop(line, source_file, error_code, _error_count)) {
+        panic_deactivate();
+      }
     }
   }
 #endif
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: GLGraphicsStateGuardian::clear_errors
+//       Access: Public, Static
+//  Description: This works like report_errors(), except that it
+//               always runs, even in the NDEBUG case.
+//
+//               It is designed to be called when it is important to
+//               clear the error stack (for instance, because we want
+//               to be able to reliably check the result of some
+//               upcoming GL operation).
+////////////////////////////////////////////////////////////////////
+INLINE bool CLP(GraphicsStateGuardian)::
+clear_errors(int line, const char *source_file) {
+  GLenum error_code = GLP(GetError)();
+  if (error_code != GL_NO_ERROR) {
+    int error_count = 0;
+    return report_errors_loop(line, source_file, error_code, error_count);
+  }
+
+  return true;
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: GLGraphicsStateGuardian::clear_my_errors
+//       Access: Public
+//  Description: This works like report_my_errors(), except that it
+//               always runs, even in the NDEBUG case (but not when
+//               _track_errors is false), and it never calls
+//               panic_deactivate().  It is designed to be called when
+//               it is important to clear the error stack (for
+//               instance, because we want to be able to reliably
+//               check the result of some upcoming GL operation).
+////////////////////////////////////////////////////////////////////
+INLINE void CLP(GraphicsStateGuardian)::
+clear_my_errors(int line, const char *source_file) {
+  if (_track_errors) {
+    GLenum error_code = GLP(GetError)();
+    if (error_code != GL_NO_ERROR) {
+      int error_count = 0;
+      report_errors_loop(line, source_file, error_code, error_count);
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -131,17 +153,6 @@ get_gl_version_minor() const {
 }
 
 ////////////////////////////////////////////////////////////////////
-//     Function: GLGraphicsStateGuardian::get_gl_version_release
-//       Access: Public
-//  Description: Returns the release part of the reported GL version
-//               number.
-////////////////////////////////////////////////////////////////////
-INLINE int CLP(GraphicsStateGuardian)::
-get_gl_version_release() const {
-  return _gl_version_release;
-}
-
-////////////////////////////////////////////////////////////////////
 //     Function: GLGraphicsStateGuardian::maybe_gl_finish
 //       Access: Protected
 //  Description: Calls glFinish() if the config variable gl-finish is
@@ -157,6 +168,56 @@ maybe_gl_finish() const {
 }
 
 ////////////////////////////////////////////////////////////////////
+//     Function: GLGraphicsStateGuardian::is_at_least_gl_version
+//       Access: Public
+//  Description: Returns true if we are compiled for mainline OpenGL,
+//               and the runtime GL version number is at least the
+//               indicated value, false otherwise.  Under OpenGL ES,
+//               this always returns false.
+////////////////////////////////////////////////////////////////////
+INLINE bool CLP(GraphicsStateGuardian)::
+is_at_least_gl_version(int major_version, int minor_version) const {
+#ifdef OPENGLES
+  return false;
+#else
+  if (_gl_version_major < major_version) {
+    return false;
+  } else if (_gl_version_major == major_version) {
+    if (_gl_version_minor < minor_version) {
+      return false;
+    }
+  }
+
+  return true;
+#endif  // OPENGLES
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: GLGraphicsStateGuardian::is_at_least_gles_version
+//       Access: Public
+//  Description: Returns true if we are compiled for OpenGL ES,
+//               and the runtime GL ES version number is at least the
+//               indicated value, false otherwise.  Under mainline
+//               OpenGL, this always returns false.
+////////////////////////////////////////////////////////////////////
+INLINE bool CLP(GraphicsStateGuardian)::
+is_at_least_gles_version(int major_version, int minor_version) const {
+#ifndef OPENGLES
+  return false;
+#else
+  if (_gl_version_major < major_version) {
+    return false;
+  } else if (_gl_version_major == major_version) {
+    if (_gl_version_minor < minor_version) {
+      return false;
+    }
+  }
+
+  return true;
+#endif  // OPENGLES
+}
+
+////////////////////////////////////////////////////////////////////
 //     Function: GLGraphicsStateGuardian::enable_multisample_antialias
 //       Access: Protected
 //  Description: Specifies whether multisample should be enabled for
@@ -164,6 +225,7 @@ maybe_gl_finish() const {
 ////////////////////////////////////////////////////////////////////
 INLINE void CLP(GraphicsStateGuardian)::
 enable_multisample_antialias(bool val) {
+#ifndef OPENGLES_2
   if (_supports_multisample) {
     if ((_multisample_mode & MM_antialias) != 0 && !val) {
       // Turn off antialias multisample.
@@ -179,6 +241,7 @@ enable_multisample_antialias(bool val) {
       _multisample_mode |= MM_antialias;
     }
   }
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -190,6 +253,7 @@ enable_multisample_antialias(bool val) {
 ////////////////////////////////////////////////////////////////////
 INLINE void CLP(GraphicsStateGuardian)::
 enable_multisample_alpha_one(bool val) {
+#ifndef OPENGLES_2
   if (_supports_multisample) {
     if ((_multisample_mode & MM_alpha_one) != 0 && !val) {
       // Turn off sample_alpha_to_one multisample.
@@ -207,6 +271,7 @@ enable_multisample_alpha_one(bool val) {
       _multisample_mode |= MM_alpha_one;
     }
   }
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -218,6 +283,7 @@ enable_multisample_alpha_one(bool val) {
 ////////////////////////////////////////////////////////////////////
 INLINE void CLP(GraphicsStateGuardian)::
 enable_multisample_alpha_mask(bool val) {
+#ifndef OPENGLES_2
   if (_supports_multisample) {
     if ((_multisample_mode & MM_alpha_mask) != 0 && !val) {
       // Turn off sample_alpha_to_mask multisample.
@@ -235,6 +301,7 @@ enable_multisample_alpha_mask(bool val) {
       _multisample_mode |= MM_alpha_mask;
     }
   }
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -244,6 +311,7 @@ enable_multisample_alpha_mask(bool val) {
 ////////////////////////////////////////////////////////////////////
 INLINE void CLP(GraphicsStateGuardian)::
 enable_line_smooth(bool val) {
+#ifndef OPENGLES_2
   if (_line_smooth_enabled != val) {
     _state_mask.clear_bit(TransparencyAttrib::get_class_slot());
     _line_smooth_enabled = val;
@@ -253,6 +321,7 @@ enable_line_smooth(bool val) {
       GLP(Disable)(GL_LINE_SMOOTH);
     }
   }
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -262,6 +331,7 @@ enable_line_smooth(bool val) {
 ////////////////////////////////////////////////////////////////////
 INLINE void CLP(GraphicsStateGuardian)::
 enable_point_smooth(bool val) {
+#ifndef OPENGLES_2
   if (_point_smooth_enabled != val) {
     _state_mask.clear_bit(TransparencyAttrib::get_class_slot());
     _point_smooth_enabled = val;
@@ -271,6 +341,7 @@ enable_point_smooth(bool val) {
       GLP(Disable)(GL_POINT_SMOOTH);
     }
   }
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -280,6 +351,7 @@ enable_point_smooth(bool val) {
 ////////////////////////////////////////////////////////////////////
 INLINE void CLP(GraphicsStateGuardian)::
 enable_polygon_smooth(bool val) {
+#ifndef OPENGLES  // GL_POLYGON_SMOOTH not supported in OpenGL ES.
   if (_polygon_smooth_enabled != val) {
     _polygon_smooth_enabled = val;
     if (val) {
@@ -288,6 +360,7 @@ enable_polygon_smooth(bool val) {
       GLP(Disable)(GL_POLYGON_SMOOTH);
     }
   }
+#endif  // OPENGLES
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -443,6 +516,7 @@ enable_depth_test(bool val) {
 ////////////////////////////////////////////////////////////////////
 INLINE void CLP(GraphicsStateGuardian)::
 enable_fog(bool val) {
+#ifndef OPENGLES_2
   if (_fog_enabled != val) {
     _fog_enabled = val;
     if (val) {
@@ -459,6 +533,7 @@ enable_fog(bool val) {
       GLP(Disable)(GL_FOG);
     }
   }
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -468,6 +543,7 @@ enable_fog(bool val) {
 ////////////////////////////////////////////////////////////////////
 INLINE void CLP(GraphicsStateGuardian)::
 enable_alpha_test(bool val) {
+#ifndef OPENGLES_2
   if (_alpha_test_enabled != val) {
     _alpha_test_enabled = val;
     if (val) {
@@ -484,6 +560,7 @@ enable_alpha_test(bool val) {
       GLP(Disable)(GL_ALPHA_TEST);
     }
   }
+#endif // OPENGLES_2
 }
 
 
@@ -502,16 +579,16 @@ enable_polygon_offset(bool val) {
         << "glEnable(GL_POLYGON_OFFSET_*)" << endl;
 #endif
       GLP(Enable)(GL_POLYGON_OFFSET_FILL);
-      GLP(Enable)(GL_POLYGON_OFFSET_LINE);
-      GLP(Enable)(GL_POLYGON_OFFSET_POINT);
+      //GLP(Enable)(GL_POLYGON_OFFSET_LINE);  // not widely supported anyway
+      //GLP(Enable)(GL_POLYGON_OFFSET_POINT);
     } else {
 #ifdef GSG_VERBOSE
       GLCAT.spam()
         << "glDisable(GL_POLYGON_OFFSET_*)" << endl;
 #endif
       GLP(Disable)(GL_POLYGON_OFFSET_FILL);
-      GLP(Disable)(GL_POLYGON_OFFSET_LINE);
-      GLP(Disable)(GL_POLYGON_OFFSET_POINT);
+      //GLP(Disable)(GL_POLYGON_OFFSET_LINE);  // not widely supported anyway
+      //GLP(Disable)(GL_POLYGON_OFFSET_POINT);
     }
   }
 }
@@ -522,7 +599,9 @@ enable_polygon_offset(bool val) {
 //  Description: Convert index to gl light id
 ////////////////////////////////////////////////////////////////////
 INLINE GLenum CLP(GraphicsStateGuardian)::get_light_id(int index) const {
+#ifndef OPENGLES_2
   return GL_LIGHT0 + index;
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -532,7 +611,43 @@ INLINE GLenum CLP(GraphicsStateGuardian)::get_light_id(int index) const {
 ////////////////////////////////////////////////////////////////////
 INLINE GLenum CLP(GraphicsStateGuardian)::
 get_clip_plane_id(int index) const {
+#ifndef OPENGLES_2
   return GL_CLIP_PLANE0 + index;
+#endif
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: CLP(GraphicsStateGuardian)::get_supports_framebuffer_multisample
+//       Access: Public
+//  Description: Returns if this glGsg supports multisample 
+//               antialiasing for framebuffer objects.
+////////////////////////////////////////////////////////////////////
+INLINE bool CLP(GraphicsStateGuardian)::
+get_supports_framebuffer_multisample() {
+    return _supports_framebuffer_multisample;
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: CLP(GraphicsStateGuardian)::get_supports_framebuffer_multisample
+//       Access: Public
+//  Description: Returns if this glGsg supports multisample 
+//               antialiasing for framebuffer objects.
+////////////////////////////////////////////////////////////////////
+INLINE bool CLP(GraphicsStateGuardian)::
+get_supports_framebuffer_multisample_coverage_nv() {
+    return _supports_framebuffer_multisample_coverage_nv;
+}
+
+
+////////////////////////////////////////////////////////////////////
+//     Function: CLP(GraphicsStateGuardian)::get_supports_framebuffer_blit
+//       Access: Public
+//  Description: Returns if this glGsg supports multisample 
+//               antialiasing for framebuffer objects.
+////////////////////////////////////////////////////////////////////
+INLINE bool CLP(GraphicsStateGuardian)::
+get_supports_framebuffer_blit() {
+    return _supports_framebuffer_blit;
 }
 
 #ifndef NDEBUG

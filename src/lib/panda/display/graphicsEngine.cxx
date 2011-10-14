@@ -365,6 +365,17 @@ make_output(GraphicsPipe *pipe,
     return buffer;
   }
 
+  // If force-parasite-buffer is set, we create a parasite buffer even
+  // if it's less than ideal.  You might set this if you really don't
+  // trust your graphics driver's support for offscreen buffers.
+  if (force_parasite_buffer && can_use_parasite) {
+    ParasiteBuffer *buffer = new ParasiteBuffer(host, name, x_size, y_size, flags);
+    buffer->_sort = sort;
+    do_add_window(buffer, threading_model);
+    do_add_gsg(host->get_gsg(), pipe, threading_model);
+    return buffer;
+  }
+
   // Ask the pipe to create a window.
   
   for (int retry=0; retry<10; retry++) {
@@ -397,8 +408,8 @@ make_output(GraphicsPipe *pipe,
             << "  got: " << window->get_fb_properties() << "\n";
         }
       } else {
-        display_cat.error()
-          << "Window wouldn't open; abandoning window.\n";
+        display_cat.info()
+          << window->get_type() << " wouldn't open; abandoning.\n";
       }
 
       // No good; delete the window and keep trying.
@@ -450,6 +461,7 @@ make_output(GraphicsPipe *pipe,
 ////////////////////////////////////////////////////////////////////
 bool GraphicsEngine::
 remove_window(GraphicsOutput *window) {
+  nassertr(window != NULL, false);
   Thread *current_thread = Thread::get_current_thread();
 
   // First, make sure we know what this window is.
@@ -514,17 +526,23 @@ void GraphicsEngine::
 remove_all_windows() {
   Thread *current_thread = Thread::get_current_thread();
 
+  // Let's move the _windows vector into a local copy first, and walk
+  // through that local copy, just in case someone we call during the
+  // loop attempts to modify _windows.  I don't know what code would
+  // be doing this, but it appeared to be happening, and this worked
+  // around it.
+  Windows old_windows;
+  old_windows.swap(_windows);
   Windows::iterator wi;
-  for (wi = _windows.begin(); wi != _windows.end(); ++wi) {
+  for (wi = old_windows.begin(); wi != old_windows.end(); ++wi) {
     GraphicsOutput *win = (*wi);
+    nassertv(win != NULL);
     do_remove_window(win, current_thread);
     GraphicsStateGuardian *gsg = win->get_gsg();
     if (gsg != (GraphicsStateGuardian *)NULL) {
       gsg->release_all();
     }
   }
-  
-  _windows.clear();
 
   _app.do_close(this, current_thread);
   _app.do_pending(this, current_thread);
@@ -665,6 +683,7 @@ render_frame() {
     Windows::iterator wi;
     for (wi = _windows.begin(); wi != _windows.end(); ++wi) {
       GraphicsOutput *win = (*wi);
+      nassertv(win != NULL);
       if (win->get_delete_flag()) {
         do_remove_window(win, current_thread);
         
@@ -927,6 +946,31 @@ sync_frame() {
 
   if (_flip_state == FS_draw) {
     do_sync_frame(current_thread);
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsEngine::ready_flip
+//       Access: Published
+//  Description: Waits for all the threads that started drawing their
+//               last frame to finish drawing. Returns when all threads have
+//               actually finished drawing, as opposed to 'sync_frame'
+//               we seems to return once all draw calls have been submitted.
+//               Calling 'flip_frame' after this function should immediately
+//               cause a buffer flip.  This function will only work in
+//               opengl right now, for all other graphics pipelines it will 
+//               simply return immediately.  In opengl it's a bit of a hack:
+//               it will attempt to read a single pixel from the frame buffer to
+//               force the graphics card to finish drawing before it returns
+////////////////////////////////////////////////////////////////////
+void GraphicsEngine::
+ready_flip() {
+  Thread *current_thread = Thread::get_current_thread();
+  LightReMutexHolder holder(_lock, current_thread);
+
+  if (_flip_state == FS_draw) {
+    do_ready_flip(current_thread);
   }
 }
 
@@ -1520,7 +1564,7 @@ process_events(const GraphicsEngine::Windows &wlist, Thread *current_thread) {
   // We're not using a vector iterator here, since it's possible that
   // the window list changes in an event, which would invalidate the
   // iterator and cause a crash.
-  for (int i = 0; i < wlist.size(); ++i) {
+  for (size_t i = 0; i < wlist.size(); ++i) {
     wlist[i]->process_events();
   }
 }
@@ -1552,6 +1596,27 @@ flip_windows(const GraphicsEngine::Windows &wlist, Thread *current_thread) {
 }
 
 ////////////////////////////////////////////////////////////////////
+//     Function: GraphicsEngine::ready_flip_windows
+//       Access: Private
+//  Description: This is called by the RenderThread object to flip the
+//               buffers for all of the non-single-buffered windows in
+//               the given list.  This is run in the draw thread.
+////////////////////////////////////////////////////////////////////
+void GraphicsEngine::
+ready_flip_windows(const GraphicsEngine::Windows &wlist, Thread *current_thread) {
+  Windows::const_iterator wi;
+  for (wi = wlist.begin(); wi != wlist.end(); ++wi) {
+    GraphicsOutput *win = (*wi);
+    if (win->flip_ready()) {
+      PStatTimer timer(GraphicsEngine::_flip_begin_pcollector, current_thread);
+      win->ready_flip();
+    }
+  }
+}
+
+
+
+////////////////////////////////////////////////////////////////////
 //     Function: GraphicsEngine::do_sync_frame
 //       Access: Private
 //  Description: The implementation of sync_frame().  We assume _lock
@@ -1576,6 +1641,36 @@ do_sync_frame(Thread *current_thread) {
   }
 
   _flip_state = FS_sync;
+}
+
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsEngine::do_ready_flip
+//       Access: Private
+//  Description: Wait until all draw calls have finished drawing and
+//               the frame is ready to flip
+////////////////////////////////////////////////////////////////////
+void GraphicsEngine::
+do_ready_flip(Thread *current_thread) {
+  nassertv(_lock.debug_is_locked());
+
+  // Statistics
+  PStatTimer timer(_sync_pcollector, current_thread);
+
+  nassertv(_flip_state == FS_draw);
+
+  // Wait for all the threads to finish their current frame.  Grabbing
+  // and releasing the mutex should achieve that.
+  Threads::const_iterator ti;
+  for (ti = _threads.begin(); ti != _threads.end(); ++ti) {
+    RenderThread *thread = (*ti).second;
+    thread->_cv_mutex.acquire();
+    thread->_cv_mutex.release();
+  }
+  _app.do_ready_flip(this,current_thread);
+  _flip_state = FS_sync;
+  
+
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -1660,8 +1755,9 @@ setup_scene(GraphicsStateGuardian *gsg, DisplayRegionPipelineReader *dr) {
   }
   camera_node->cleanup_aux_scene_data(current_thread);
 
-  Lens *lens = camera_node->get_lens();
-  if (lens == (Lens *)NULL) {
+  int lens_index = dr->get_lens_index();
+  Lens *lens = camera_node->get_lens(lens_index);
+  if (lens == (Lens *)NULL || !camera_node->get_lens_active(lens_index)) {
     // No lens, no draw.
     return NULL;
   }
@@ -1813,6 +1909,7 @@ do_draw(CullResult *cull_result, SceneSetup *scene_setup,
 void GraphicsEngine::
 do_add_window(GraphicsOutput *window,
               const GraphicsThreadingModel &threading_model) {
+  nassertv(window != NULL);
   LightReMutexHolder holder(_lock);
   nassertv(window->get_engine() == this);
 
@@ -1906,8 +2003,9 @@ do_add_gsg(GraphicsStateGuardian *gsg, GraphicsPipe *pipe,
 ////////////////////////////////////////////////////////////////////
 void GraphicsEngine::
 do_remove_window(GraphicsOutput *window, Thread *current_thread) {
+  nassertv(window != NULL);
   PT(GraphicsPipe) pipe = window->get_pipe();
-  window->_pipe = (GraphicsPipe *)NULL;
+  window->clear_pipe();
 
   if (!_windows_sorted) {
     do_resort_windows();
@@ -2284,6 +2382,7 @@ add_window(Windows &wlist, GraphicsOutput *window) {
 ////////////////////////////////////////////////////////////////////
 void GraphicsEngine::WindowRenderer::
 remove_window(GraphicsOutput *window) {
+  nassertv(window != NULL);
   LightReMutexHolder holder(_wl_lock);
   PT(GraphicsOutput) ptwin = window;
 
@@ -2422,6 +2521,20 @@ do_flip(GraphicsEngine *engine, Thread *current_thread) {
 }
 
 ////////////////////////////////////////////////////////////////////
+//     Function: GraphicsEngine::WindowRenderer::do_ready_flip
+//       Access: Public
+//  Description: Prepares windows for flipping by waiting until all draw
+//               calls are finished
+////////////////////////////////////////////////////////////////////
+void GraphicsEngine::WindowRenderer::
+do_ready_flip(GraphicsEngine *engine, Thread *current_thread) {
+  LightReMutexHolder holder(_wl_lock);
+  engine->ready_flip_windows(_cdraw, current_thread);
+  engine->ready_flip_windows(_draw, current_thread);
+}
+
+
+////////////////////////////////////////////////////////////////////
 //     Function: GraphicsEngine::WindowRenderer::do_close
 //       Access: Public
 //  Description: Closes all the windows on the _window list.
@@ -2469,13 +2582,16 @@ do_pending(GraphicsEngine *engine, Thread *current_thread) {
         << "_pending_close.size() = " << _pending_close.size() << "\n";
     }
 
-    // Close any windows that were pending closure.
+    // Close any windows that were pending closure.  Carefully protect
+    // against recursive entry to this function by swapping the vector
+    // to a local copy first.
     Windows::iterator wi;
-    for (wi = _pending_close.begin(); wi != _pending_close.end(); ++wi) {
+    Windows pending_close;
+    _pending_close.swap(pending_close);
+    for (wi = pending_close.begin(); wi != pending_close.end(); ++wi) {
       GraphicsOutput *win = (*wi);
       win->set_close_now();
     }
-    _pending_close.clear();
   }
 }
 

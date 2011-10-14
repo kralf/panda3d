@@ -1,5 +1,6 @@
 // Filename: texture.h
 // Created by:  mike (09Jan97)
+// Updated by: fperazzi, PandaSE(29Apr10) (added TT_2d_texture_array)
 //
 ////////////////////////////////////////////////////////////////////
 //
@@ -66,6 +67,7 @@ PUBLISHED:
     TT_1d_texture,
     TT_2d_texture,
     TT_3d_texture,
+    TT_2d_texture_array,
     TT_cube_map,
   };
 
@@ -73,6 +75,7 @@ PUBLISHED:
     T_unsigned_byte,
     T_unsigned_short,
     T_float,
+    T_unsigned_int_24_8,
   };
 
   enum Format {
@@ -112,6 +115,9 @@ PUBLISHED:
     F_rgba32,  // 32 bits per R,G,B,A channel
 
     F_depth_component,
+    F_depth_component16,
+    F_depth_component24,
+    F_depth_component32,
   };
 
   enum FilterType {
@@ -213,7 +219,9 @@ PUBLISHED:
   INLINE void setup_cube_map();
   INLINE void setup_cube_map(int size,
                              ComponentType component_type, Format format);
-
+  INLINE void setup_2d_texture_array(int z_size = 1);
+  INLINE void setup_2d_texture_array(int x_size, int y_size, int z_size,
+                                     ComponentType component_type, Format format);
   void generate_normalization_cube_map(int size);
   void generate_alpha_scale_map();
 
@@ -243,7 +251,7 @@ PUBLISHED:
   INLINE bool store(PNMImage &pnmimage) const;
   INLINE bool store(PNMImage &pnmimage, int z, int n) const;
 
-  bool reload();
+  INLINE bool reload();
   Texture *load_related(const InternalName *suffix) const;
 
   INLINE bool has_filename() const;
@@ -280,7 +288,10 @@ PUBLISHED:
   INLINE WrapMode get_wrap_w() const;
   INLINE FilterType get_minfilter() const;
   INLINE FilterType get_magfilter() const;
+  FilterType get_effective_minfilter() const;
+  FilterType get_effective_magfilter() const;
   INLINE int get_anisotropic_degree() const;
+  INLINE int get_effective_anisotropic_degree() const;
   INLINE Colorf get_border_color() const;
   INLINE CompressionMode get_compression() const;
   INLINE bool has_compression() const;
@@ -289,6 +300,7 @@ PUBLISHED:
 
   INLINE void set_quality_level(QualityLevel quality_level);
   INLINE QualityLevel get_quality_level() const;
+  INLINE QualityLevel get_effective_quality_level() const;
 
   INLINE int get_expected_num_mipmap_levels() const;
   INLINE int get_expected_mipmap_x_size(int n) const;
@@ -310,6 +322,7 @@ PUBLISHED:
   INLINE PTA_uchar make_ram_image();
   void set_ram_image(CPTA_uchar image, CompressionMode compression = CM_off,
                      size_t page_size = 0);
+  void set_ram_image_as(CPTA_uchar image, const string &provided_format);
   INLINE void clear_ram_image();
   INLINE void set_keep_ram_image(bool keep_ram_image);
   virtual bool get_keep_ram_image() const;
@@ -328,8 +341,11 @@ PUBLISHED:
   INLINE size_t get_expected_ram_mipmap_image_size(int n) const;
   INLINE size_t get_expected_ram_mipmap_page_size(int n) const;
   CPTA_uchar get_ram_mipmap_image(int n);
+  void *get_ram_mipmap_pointer(int n);
   INLINE PTA_uchar modify_ram_mipmap_image(int n);
   INLINE PTA_uchar make_ram_mipmap_image(int n);
+  void set_ram_mipmap_pointer(int n, void *image, size_t page_size = 0);
+  void set_ram_mipmap_pointer_from_int(long long pointer, int n, int page_size);
   INLINE void set_ram_mipmap_image(int n, CPTA_uchar image, size_t page_size = 0);
   void clear_ram_mipmap_image(int n);
   INLINE void clear_ram_mipmap_images();
@@ -395,6 +411,7 @@ PUBLISHED:
   INLINE int get_pad_x_size() const;
   INLINE int get_pad_y_size() const;
   INLINE int get_pad_z_size() const;
+  INLINE LVecBase2f get_tex_scale() const;
   
   INLINE void set_pad_size(int x=0, int y=0, int z=0);
   void set_size_padded(int x=1, int y=1, int z=1);
@@ -427,14 +444,35 @@ PUBLISHED:
   static int up_to_power_2(int value);
   static int down_to_power_2(int value);
 
+  void consider_rescale(PNMImage &pnmimage);
+  static void consider_rescale(PNMImage &pnmimage, const string &name);
+
+  static string format_texture_type(TextureType tt);
+  static TextureType string_texture_type(const string &str);
+
+  static string format_component_type(ComponentType ct);
+  static ComponentType string_component_type(const string &str);
+
+  static string format_format(Format f);
+  static Format string_format(const string &str);
+  
+  static string format_filter_type(FilterType ft);
+  static FilterType string_filter_type(const string &str);
+  
+  static string format_wrap_mode(WrapMode wm);
+  static WrapMode string_wrap_mode(const string &str);
+  
+  static string format_compression_mode(CompressionMode cm);
+  static CompressionMode string_compression_mode(const string &str);
+
+  static string format_quality_level(QualityLevel tql);
+  static QualityLevel string_quality_level(const string &str);
+    
 public:
   void texture_uploaded();
   
   virtual bool has_cull_callback() const;
   virtual bool cull_callback(CullTraverser *trav, const CullTraverserData &data) const;
-
-  static WrapMode string_wrap_mode(const string &string);
-  static FilterType string_filter_type(const string &string);
 
   static PT(Texture) make_texture();
 
@@ -443,7 +481,8 @@ public:
   static bool has_alpha(Format format);
   static bool has_binary_alpha(Format format);
 
-  static bool adjust_size(int &x_size, int &y_size, const string &name);
+  static bool adjust_size(int &x_size, int &y_size, const string &name,
+                          bool for_padding);
 
 protected:
   virtual void reconsider_dirty();
@@ -478,7 +517,7 @@ protected:
   bool do_write_txo_file(const Filename &fullpath) const;
   bool do_write_txo(ostream &out, const string &filename) const;
 
-  void do_unlock_and_reload_ram_image(bool allow_compression);
+  virtual void do_unlock_and_reload_ram_image(bool allow_compression);
   virtual void do_reload_ram_image(bool allow_compression);
   PTA_uchar do_modify_ram_image();
   PTA_uchar do_make_ram_image();
@@ -543,12 +582,20 @@ protected:
   void do_clear_ram_mipmap_images();
   void do_generate_ram_mipmap_images();
   void do_set_pad_size(int x, int y, int z);
+  virtual bool do_can_reload();
+  bool do_reload();
 
   // This nested class declaration is used below.
   class RamImage {
   public:
+    INLINE RamImage();
+
     PTA_uchar _image;
     size_t _page_size;
+
+    // If _pointer_image is non-NULL, it represents an external block
+    // of memory that is used instead of the above PTA_uchar.
+    void *_pointer_image;
   };
 
 private:
@@ -570,6 +617,9 @@ private:
   static PTA_uchar read_dds_level_generic_uncompressed(Texture *tex, 
                                                        const DDSHeader &header, 
                                                        int n, istream &in);
+  static PTA_uchar read_dds_level_luminance_uncompressed(Texture *tex, 
+                                                         const DDSHeader &header, 
+                                                         int n, istream &in);
   static PTA_uchar read_dds_level_dxt1(Texture *tex, 
                                        const DDSHeader &header, 
                                        int n, istream &in);
@@ -582,7 +632,6 @@ private:
 
   void clear_prepared(PreparedGraphicsObjects *prepared_objects);
 
-  static void consider_rescale(PNMImage &pnmimage, const string &name);
   static void consider_downgrade(PNMImage &pnmimage, int num_channels, const string &name);
 
   static bool compare_images(const PNMImage &a, const PNMImage &b);
@@ -767,6 +816,9 @@ private:
 };
 
 extern EXPCL_PANDA_GOBJ ConfigVariableEnum<Texture::QualityLevel> texture_quality_level;
+extern EXPCL_PANDA_GOBJ ConfigVariableEnum<Texture::FilterType> texture_minfilter;
+extern EXPCL_PANDA_GOBJ ConfigVariableEnum<Texture::FilterType> texture_magfilter;
+extern EXPCL_PANDA_GOBJ ConfigVariableInt texture_anisotropic_degree;
 
 EXPCL_PANDA_GOBJ ostream &operator << (ostream &out, Texture::TextureType tt);
 EXPCL_PANDA_GOBJ ostream &operator << (ostream &out, Texture::ComponentType ct);

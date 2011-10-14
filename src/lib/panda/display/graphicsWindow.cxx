@@ -39,7 +39,7 @@ GraphicsWindow(GraphicsEngine *engine, GraphicsPipe *pipe,
                int flags,
                GraphicsStateGuardian *gsg,
                GraphicsOutput *host) :
-  GraphicsOutput(engine, pipe, name, fb_prop, win_prop, flags, gsg, host),
+  GraphicsOutput(engine, pipe, name, fb_prop, win_prop, flags, gsg, host, true),
   _input_lock("GraphicsWindow::_input_lock"),
   _properties_lock("GraphicsWindow::_properties_lock")
 {
@@ -50,11 +50,6 @@ GraphicsWindow(GraphicsEngine *engine, GraphicsPipe *pipe,
   if (display_cat.is_debug()) {
     display_cat.debug()
       << "Creating new window " << get_name() << "\n";
-  }
-
-  _red_blue_stereo = red_blue_stereo && !fb_prop.is_stereo();
-  if (_red_blue_stereo) {
-    _left_eye_color_mask = parse_color_mask(red_blue_stereo_colors.get_word(0));    _right_eye_color_mask = parse_color_mask(red_blue_stereo_colors.get_word(1));
   }
 
   _properties.set_open(false);
@@ -77,6 +72,15 @@ GraphicsWindow(GraphicsEngine *engine, GraphicsPipe *pipe,
 ////////////////////////////////////////////////////////////////////
 GraphicsWindow::
 ~GraphicsWindow() {
+  // Clean up python event handlers.
+#ifdef HAVE_PYTHON
+  PythonWinProcClasses::iterator iter;
+  for (iter = _python_window_proc_classes.begin(); 
+       iter != _python_window_proc_classes.end(); 
+       ++iter) {
+    delete *iter;
+  }
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -749,6 +753,15 @@ void GraphicsWindow::
 close_window() {
   display_cat.info()
     << "Closing " << get_type() << "\n";
+
+  // Tell our parent window (if any) that we're no longer its child.
+  if (_window_handle != (WindowHandle *)NULL &&
+      _parent_window_handle != (WindowHandle *)NULL) {
+    _parent_window_handle->detach_child(_window_handle);
+  }
+
+  _window_handle = NULL;
+  _parent_window_handle = NULL;
   _is_valid = false;
 }
 
@@ -841,56 +854,6 @@ system_changed_size(int x_size, int y_size) {
 }
 
 ////////////////////////////////////////////////////////////////////
-//     Function: GraphicsWindow::parse_color_mask
-//       Access: Private, Static
-//  Description: Parses one of the keywords in the
-//               red-blue-stereo-colors Config.prc variable, and
-//               returns the corresponding bitmask.
-//
-//               These bitmask values are taken from ColorWriteAttrib.
-////////////////////////////////////////////////////////////////////
-unsigned int GraphicsWindow::
-parse_color_mask(const string &word) {
-  unsigned int result = 0;
-  vector_string components;
-  tokenize(word, components, "|");
-
-  vector_string::const_iterator ci;
-  for (ci = components.begin(); ci != components.end(); ++ci) {
-    string w = downcase(*ci);
-    if (w == "red" || w == "r") {
-      result |= 0x001;
-
-    } else if (w == "green" || w == "g") {
-      result |= 0x002;
-
-    } else if (w == "blue" || w == "b") {
-      result |= 0x004;
-
-    } else if (w == "yellow" || w == "y") {
-      result |= 0x003;
-
-    } else if (w == "magenta" || w == "m") {
-      result |= 0x005;
-
-    } else if (w == "cyan" || w == "c") {
-      result |= 0x006;
-
-    } else if (w == "alpha" || w == "a") {
-      result |= 0x008;
-
-    } else if (w == "off") {
-      
-    } else {
-      display_cat.warning()
-        << "Invalid color in red-blue-stereo-colors: " << (*ci) << "\n";
-    }
-  }
-
-  return result;
-}
-
-////////////////////////////////////////////////////////////////////
 //     Function: GraphicsWindow::mouse_mode_relative
 //       Access: Protected, Virtual
 //  Description: detaches mouse. Only mouse delta from now on. 
@@ -898,9 +861,7 @@ parse_color_mask(const string &word) {
 ////////////////////////////////////////////////////////////////////
 void GraphicsWindow::
 mouse_mode_relative() {
-
 }
-
 
 ////////////////////////////////////////////////////////////////////
 //     Function: GraphicsWindow::mouse_mode_absolute
@@ -911,4 +872,89 @@ mouse_mode_relative() {
 void GraphicsWindow::
 mouse_mode_absolute() {
 
+}
+
+#ifdef HAVE_PYTHON
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsWindow::add_custom_event_handler
+//       Access: Published
+//  Description: Adds a python event handler to be called
+//               when a window event occurs.
+//               
+////////////////////////////////////////////////////////////////////
+void GraphicsWindow::
+add_python_event_handler(PyObject* handler, PyObject* name){
+  PythonGraphicsWindowProc* pgwp = new PythonGraphicsWindowProc(handler, name);
+  _python_window_proc_classes.insert(pgwp);
+  add_window_proc(pgwp);
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsWindow::remove_custom_event_handler
+//       Access: Published
+//  Description: Removes the specified python event handler.
+//               
+////////////////////////////////////////////////////////////////////
+void GraphicsWindow::
+remove_python_event_handler(PyObject* name){
+  list<PythonGraphicsWindowProc*> toRemove;
+  PythonWinProcClasses::iterator iter;
+  for(iter = _python_window_proc_classes.begin(); iter != _python_window_proc_classes.end(); ++iter){
+    PythonGraphicsWindowProc* pgwp = *iter;
+    if(PyObject_Compare(pgwp->get_name(), name) == 0)
+      toRemove.push_back(pgwp);
+  }
+  list<PythonGraphicsWindowProc*>::iterator iter2;
+  for(iter2 = toRemove.begin(); iter2 != toRemove.end(); ++iter2){
+    PythonGraphicsWindowProc* pgwp = *iter2;
+    remove_window_proc(pgwp);
+    _python_window_proc_classes.erase(pgwp);
+    delete pgwp;
+  }
+}
+
+#endif // HAVE_PYTHON
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsWindow::is_touch_event
+//       Access: Published, Virtual
+//  Description: Returns whether the specified event msg is a touch message.
+//               
+////////////////////////////////////////////////////////////////////
+bool GraphicsWindow::
+is_touch_event(GraphicsWindowProcCallbackData* callbackData){
+  return false;
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsWindow::get_num_touches
+//       Access: Published, Virtual
+//  Description: Returns the current number of touches on this window.
+//               
+////////////////////////////////////////////////////////////////////
+int GraphicsWindow::
+get_num_touches(){
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsWindow::get_touch_info
+//       Access: Published, Virtual
+//  Description: Returns the TouchInfo object describing the specified touch.
+//               
+////////////////////////////////////////////////////////////////////
+TouchInfo GraphicsWindow::
+get_touch_info(int index){
+  return TouchInfo();
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsWindow::supports_window_procs
+//       Access: Published, Virtual
+//  Description: Returns whether this window supports adding of Windows proc handlers.
+//               
+////////////////////////////////////////////////////////////////////
+bool GraphicsWindow::supports_window_procs() const{
+  return false;
 }

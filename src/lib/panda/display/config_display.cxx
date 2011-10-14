@@ -12,7 +12,6 @@
 //
 ////////////////////////////////////////////////////////////////////
 
-
 #include "config_display.h"
 #include "displayRegion.h"
 #include "displayRegionCullCallbackData.h"
@@ -24,9 +23,16 @@
 #include "graphicsBuffer.h"
 #include "graphicsWindow.h"
 #include "graphicsDevice.h"
+#ifdef HAVE_PYTHON
+#include "pythonGraphicsWindowProc.h"
+#endif
+#include "graphicsWindowProcCallbackData.h"
+#include "nativeWindowHandle.h"
 #include "parasiteBuffer.h"
 #include "pandaSystem.h"
 #include "stereoDisplayRegion.h"
+#include "subprocessWindow.h"
+#include "windowHandle.h"
 
 ConfigureDef(config_display);
 NotifyCategoryDef(display, "");
@@ -92,6 +98,14 @@ ConfigVariableBool yield_timeslice
  PRC_DESC("Set this true to yield the timeslice at the end of the frame to be "
           "more polite to other applications that are trying to run."));
 
+ConfigVariableDouble subprocess_window_max_wait
+("subprocess-window-max-wait", 0.2,
+ PRC_DESC("This is the amount of time, in seconds, that the SubprocessWindow will "
+          "wait in begin_flip for the parent process to remove the previously-rendered "
+          "frame.  When this time is exceeded, the next frame will be rendered without "
+          "having flipped the previous one.  This is designed to allow the Python "
+          "process some time to run even when the parent window is offscreen or minimized."));
+
 ConfigVariableString screenshot_filename
 ("screenshot-filename", "%~p-%a-%b-%d-%H-%M-%S-%Y-%~f.%~e",
  PRC_DESC("This specifies the filename pattern to be used to generate "
@@ -124,6 +138,17 @@ ConfigVariableBool prefer_parasite_buffer
           "requirements by sharing memory with the framebuffer, but it can "
           "cause problems if the user subsequently resizes the window "
           "smaller than the buffer."));
+
+ConfigVariableBool force_parasite_buffer
+("force-parasite-buffer", false,
+ PRC_DESC("Set this true to make GraphicsOutput::make_texture_buffer() really "
+          "strongly prefer ParasiteBuffers over conventional offscreen buffers.  "
+          "With this set, it will create a ParasiteBuffer every time an offscreen "
+          "buffer is requested, even if this means reducing the buffer size to fit "
+          "within the window.  The only exceptions are for buffers that, by their "
+          "nature, really cannot use ParasiteBuffers (like depth textures).  You might "
+          "set this true if you don't trust your graphics driver's support for "
+          "offscreen buffers."));
 
 ConfigVariableBool prefer_single_buffer
 ("prefer-single-buffer", true,
@@ -189,8 +214,8 @@ ConfigVariableBool window_inverted
 ConfigVariableBool red_blue_stereo
 ("red-blue-stereo", false,
  PRC_DESC("Set this true to create windows with red-blue stereo mode enabled "
-	  "by default, if the framebuffer does not support true stereo "
-	  "rendering."));
+          "by default, if the framebuffer does not support true stereo "
+          "rendering."));
 
 ConfigVariableString red_blue_stereo_colors
 ("red-blue-stereo-colors", "red cyan",
@@ -199,6 +224,26 @@ ConfigVariableString red_blue_stereo_colors
           "be a two-word string, where each word is one of 'red', 'blue', "
           "'green', 'cyan', 'magenta', 'yellow', or 'alpha', or a union "
           "of two or more words separated by a vertical pipe (|)."));
+
+ConfigVariableBool side_by_side_stereo
+("side-by-side-stereo", false,
+ PRC_DESC("Set this true to create windows with side-by-side stereo mode enabled "
+          "by default, if the framebuffer does not support true stereo "
+          "rendering."));
+
+ConfigVariableDouble sbs_left_dimensions
+("sbs-left-dimensions", "0.0 0.5 0.0 1.0",
+ PRC_DESC("Defines the default region of the window that is used for the "
+          "left eye, when side-by-side stereo is enabled.  This is a set of "
+          "four numbers, in the form left right top bottom, similar to a "
+          "normal DisplayRegion layout."));
+
+ConfigVariableDouble sbs_right_dimensions
+("sbs-right-dimensions", "0.5 1.0 0.0 1.0",
+ PRC_DESC("Defines the default region of the window that is used for the "
+          "right eye, when side-by-side stereo is enabled.  This is a set of "
+          "four numbers, in the form left right top bottom, similar to a "
+          "normal DisplayRegion layout."));
 
 ConfigVariableBool default_stereo_camera
 ("default-stereo-camera", true,
@@ -249,13 +294,24 @@ ConfigVariableInt win_size
 ConfigVariableInt win_origin
 ("win-origin", "",
  PRC_DESC("This is the default position at which to open a new window.  This "
-          "replaces the deprecated win-origin-x and win-origin-y variables."));
+          "replaces the deprecated win-origin-x and win-origin-y variables. "
+          "A window coordinate of -1 means to choose a default value, "
+          "whereas -2 means to center the window on the screen."));
 
 ConfigVariableBool fullscreen
 ("fullscreen", false);
 
 ConfigVariableBool undecorated
-("undecorated", false);
+("undecorated", false,
+ PRC_DESC("This specifies the default value of the 'undecorated' window "
+          "property.  When this is true, the default window is created "
+          "without a title bar or resizable border."));
+
+ConfigVariableBool win_fixed_size
+("win-fixed-size", false,
+ PRC_DESC("This specifies the default value of the 'fixed_size' window "
+          "property.  When this is true, the default window is created "
+          "without a resizable border."));
 
 ConfigVariableBool cursor_hidden
 ("cursor-hidden", false);
@@ -271,6 +327,22 @@ ConfigVariableEnum<WindowProperties::ZOrder> z_order
 
 ConfigVariableString window_title
 ("window-title", "Panda");
+
+ConfigVariableInt parent_window_handle
+("parent-window-handle", 0,
+ PRC_DESC("The window handle of the parent window to attach the Panda window "
+          "to, for the purposes of creating an embedded window.  This is "
+          "an HWND on Windows, or the NSWindow pointer or XWindow pointer "
+          "converted to an integer, on OSX and X11."));
+
+ConfigVariableFilename subprocess_window
+("subprocess-window", "",
+ PRC_DESC("The filename of a SubprocessWindowBuffer's temporary mmap file, "
+          "used for opening a window in a child process and rendering "
+          "to a different window in the parent process.  "
+          "This is specifically used for OSX when the plugin is compiled, "
+          "and is not used or needed in other environments.  See "
+          "WindowProperties::set_subprocess_window()."));
 
 ConfigVariableString framebuffer_mode
 ("framebuffer-mode", "",
@@ -302,6 +374,10 @@ ConfigVariableBool framebuffer_stencil
 ("framebuffer-stencil", false,
  PRC_DESC("True if FM_stencil should be added to the default framebuffer "
           "properties, which requests an stencil buffer if possible."));
+ConfigVariableBool framebuffer_accum
+("framebuffer-accum", false,
+ PRC_DESC("True if FM_accum should be added to the default framebuffer "
+          "properties, which requests an accumulator buffer if possible."));
 ConfigVariableBool framebuffer_stereo
 ("framebuffer-stereo", false,
  PRC_DESC("True if FM_stereo should be added to the default framebuffer "
@@ -320,6 +396,9 @@ ConfigVariableInt alpha_bits
 ConfigVariableInt stencil_bits
 ("stencil-bits", 0,
  PRC_DESC("The minimum number of stencil buffer bits requested."));
+ConfigVariableInt accum_bits
+("accum-bits", 0,
+ PRC_DESC("The minimum number of accumulator buffer bits requested."));
 ConfigVariableInt multisamples
 ("multisamples", 0,
  PRC_DESC("The minimum number of samples requested."));
@@ -380,9 +459,19 @@ init_libdisplay() {
   GraphicsPipe::init_type();
   GraphicsStateGuardian::init_type();
   GraphicsWindow::init_type();
+#ifdef HAVE_PYTHON
+  PythonGraphicsWindowProc::init_type();
+#endif
+  GraphicsWindowProcCallbackData::init_type();
+  NativeWindowHandle::init_type();
   ParasiteBuffer::init_type();
   StandardMunger::init_type();
   StereoDisplayRegion::init_type();
+#ifdef SUPPORT_SUBPROCESS_WINDOW
+  SubprocessWindow::init_type();
+#endif
+  WindowHandle::init_type();
+  WindowHandle::OSHandle::init_type();
 
 #if defined(HAVE_THREADS) && defined(DO_PIPELINING)
   PandaSystem *ps = PandaSystem::get_global_ptr();

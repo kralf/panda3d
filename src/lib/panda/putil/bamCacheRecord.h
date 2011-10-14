@@ -63,7 +63,7 @@ PUBLISHED:
 
   INLINE bool has_data() const;
   INLINE void clear_data();
-  INLINE const TypedWritable *get_data() const;
+  INLINE TypedWritable *get_data() const;
   INLINE TypedWritable *extract_data();
   INLINE void set_data(TypedWritable *data, bool owns_pointer);
 

@@ -1,5 +1,8 @@
 // Filename: graphicsStateGuardian.cxx
 // Created by:  drose (02Feb99)
+// Updated by: fperazzi, PandaSE (05May10) (added fetch_ptr_parameter,
+//  _max_2d_texture_array_layers, _supports_2d_texture_array,
+//  get_supports_cg_profile)
 //
 ////////////////////////////////////////////////////////////////////
 //
@@ -46,6 +49,8 @@
 #include "depthWriteAttrib.h"
 #include "lightAttrib.h"
 #include "texGenAttrib.h"
+#include "shaderGenerator.h"
+#include "lightLensNode.h"
 #include "colorAttrib.h"
 #include "colorScaleAttrib.h"
 
@@ -53,7 +58,7 @@
 #include <limits.h>
 
 #ifdef HAVE_PYTHON
-#include "py_panda.h"  
+#include "py_panda.h"
 #ifndef CPPPARSER
 IMPORT_THIS struct Dtool_PyTypedObject Dtool_Texture;
 #endif
@@ -150,6 +155,7 @@ GraphicsStateGuardian(CoordinateSystem internal_coordinate_system,
   _prepared_objects = new PreparedGraphicsObjects;
   _stereo_buffer_mask = ~0;
   _incomplete_render = allow_incomplete_render;
+  _effective_incomplete_render = false;
   _loader = Loader::get_global_ptr();
 
   _is_hardware = false;
@@ -166,6 +172,7 @@ GraphicsStateGuardian(CoordinateSystem internal_coordinate_system,
   // and that 3-d and cube-map textures are not supported.
   _max_texture_dimension = -1;
   _max_3d_texture_dimension = 0;
+  _max_2d_texture_array_layers = 0;
   _max_cube_map_dimension = 0;
 
   // Assume we don't support these fairly advanced texture combiner
@@ -175,6 +182,7 @@ GraphicsStateGuardian(CoordinateSystem internal_coordinate_system,
   _supports_texture_dot3 = false;
 
   _supports_3d_texture = false;
+  _supports_2d_texture_array = false;
   _supports_cube_map = false;
   _supports_tex_non_pow2 = false;
   _supports_compressed_texture = false;
@@ -203,10 +211,12 @@ GraphicsStateGuardian(CoordinateSystem internal_coordinate_system,
   _supports_depth_stencil = false;
   _supports_shadow_filter = false;
   _supports_basic_shaders = false;
+  _supports_glsl = false;
 
   _supports_stencil = false;
   _supports_stencil_wrap = false;
   _supports_two_sided_stencil = false;
+  _supports_geometry_instancing = false;
 
   _maximum_simultaneous_render_targets = 1;
 
@@ -233,6 +243,8 @@ GraphicsStateGuardian(CoordinateSystem internal_coordinate_system,
   
   _gamma = 1.0f;
   _texture_quality_override = Texture::QL_default;
+  
+  _shader_generator = NULL;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -247,6 +259,11 @@ GraphicsStateGuardian::
   if (_stencil_render_states) {
     delete _stencil_render_states;
     _stencil_render_states = 0;
+  }
+  
+  if (_shader_generator) {
+    delete _shader_generator;
+    _shader_generator = 0;
   }
 
   GeomMunger::unregister_mungers_for_gsg(this);
@@ -299,6 +316,17 @@ get_supports_multisample() const {
 int GraphicsStateGuardian::
 get_supported_geom_rendering() const {
   return _supported_geom_rendering;
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsStateGuardian::get_supports_cg_profile
+//       Access: Published, Virtual
+//  Description: Returns true if this particular GSG supports the 
+//               specified Cg Shader Profile.
+////////////////////////////////////////////////////////////////////
+bool GraphicsStateGuardian::
+get_supports_cg_profile(const string &name) const {
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -884,7 +912,7 @@ compute_distance_to(const LPoint3f &point) const {
 const LMatrix4f *GraphicsStateGuardian::
 fetch_specified_value(Shader::ShaderMatSpec &spec, int altered) {
   LVecBase3f v;
-
+  
   if (altered & spec._dep[0]) {
     const LMatrix4f *t = fetch_specified_part(spec._part[0], spec._arg[0], spec._cache[0]);
     if (t != &spec._cache[0]) {
@@ -1081,6 +1109,15 @@ fetch_specified_part(Shader::ShaderMatInput part, InternalName *name, LMatrix4f 
     t = LMatrix4f(c[0],c[1],c[2],c[3],s[0],s[1],s[2],s[3],p[0],p[1],p[2],0,d[0],d[1],d[2],cutoff);
     return &t;
   }
+  case Shader::SMO_texmat_x: {
+    const TexMatrixAttrib *tma = DCAST(TexMatrixAttrib, _target_rs->get_attrib_def(TexMatrixAttrib::get_class_slot()));
+    const TextureAttrib *ta = DCAST(TextureAttrib, _target_rs->get_attrib_def(TextureAttrib::get_class_slot()));
+    int stagenr = atoi(name->get_name().c_str());
+    if (stagenr >= ta->get_num_on_stages()) {
+      return &LMatrix4f::ident_mat();
+    }
+    return &tma->get_mat(ta->get_on_stage(stagenr));
+  }
   case Shader::SMO_plane_x: {
     const NodePath &np = _target_shader->get_shader_input_nodepath(name);
     nassertr(!np.is_empty(), &LMatrix4f::zeros_mat());
@@ -1093,8 +1130,6 @@ fetch_specified_part(Shader::ShaderMatInput part, InternalName *name, LMatrix4f 
     const ClipPlaneAttrib *cpa = DCAST(ClipPlaneAttrib, _target_rs->get_attrib_def(ClipPlaneAttrib::get_class_slot()));
     int planenr = atoi(name->get_name().c_str());
     if (planenr >= cpa->get_num_on_planes()) {
-      // The identity matrix happens to have 0,0,0,1 in the last row,
-      // which is exactly what we need, because that won't clip anything.
       return &LMatrix4f::zeros_mat();
     }
     const NodePath &np = cpa->get_on_plane(planenr);
@@ -1233,6 +1268,16 @@ fetch_specified_part(Shader::ShaderMatInput part, InternalName *name, LMatrix4f 
 }
 
 ////////////////////////////////////////////////////////////////////
+//     Function: GraphicsStateGuardian::fetch_ptr_parameter
+//       Access: Public
+//  Description: Return a pointer to struct ShaderPtrData
+////////////////////////////////////////////////////////////////////
+const Shader::ShaderPtrData *GraphicsStateGuardian::
+fetch_ptr_parameter(const Shader::ShaderPtrSpec& spec) {
+  return (_target_shader->get_shader_input_ptr(spec._arg));
+}
+
+////////////////////////////////////////////////////////////////////
 //     Function: GraphicsStateGuardian::prepare_display_region
 //       Access: Public, Virtual
 //  Description: Makes the specified DisplayRegion current.  All
@@ -1305,6 +1350,23 @@ clear_state_and_transform() {
   // Now clear the state flags to unknown.
   _state_rs = RenderState::make_empty();
   _state_mask.clear();
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsStateGuardian::remove_window
+//       Access: Public, Virtual
+//  Description: This is simply a transparent call to
+//               GraphicsEngine::remove_window().  It exists primary
+//               to support removing a window from that compiles
+//               before the display module, and therefore has no
+//               knowledge of a GraphicsEngine object.
+////////////////////////////////////////////////////////////////////
+void GraphicsStateGuardian::
+remove_window(GraphicsOutputBase *window) {
+  nassertv(_engine != (GraphicsEngine *)NULL);
+  GraphicsOutput *win;
+  DCAST_INTO_V(win, window);
+  _engine->remove_window(win);
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -1687,6 +1749,7 @@ reset() {
   _lighting_enabled = false;
   _num_lights_enabled = 0;
   _num_clip_planes_enabled = 0;
+  _clip_planes_enabled = false;
 
   _color_scale_enabled = false;
   _current_color_scale.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -2029,6 +2092,38 @@ do_issue_light() {
 }
 
 ////////////////////////////////////////////////////////////////////
+//     Function: GraphicsStateGuardian::framebuffer_copy_to_texture
+//       Access: Public, Virtual
+//  Description: Copy the pixels within the indicated display
+//               region from the framebuffer into texture memory.
+//
+//               If z > -1, it is the cube map index into which to
+//               copy.
+////////////////////////////////////////////////////////////////////
+bool GraphicsStateGuardian::
+framebuffer_copy_to_texture(Texture *, int, const DisplayRegion *,
+                            const RenderBuffer &) {
+  return false;
+}
+
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsStateGuardian::framebuffer_copy_to_ram
+//       Access: Public, Virtual
+//  Description: Copy the pixels within the indicated display region
+//               from the framebuffer into system memory, not texture
+//               memory.  Returns true on success, false on failure.
+//
+//               This completely redefines the ram image of the
+//               indicated texture.
+////////////////////////////////////////////////////////////////////
+bool GraphicsStateGuardian::
+framebuffer_copy_to_ram(Texture *, int, const DisplayRegion *,
+                        const RenderBuffer &) {
+  return false;
+}
+
+////////////////////////////////////////////////////////////////////
 //     Function: GraphicsStateGuardian::bind_light
 //       Access: Public, Virtual
 //  Description: Called the first time a particular light has been
@@ -2319,11 +2414,17 @@ free_pointers() {
 ////////////////////////////////////////////////////////////////////
 void GraphicsStateGuardian::
 close_gsg() {
+  // Protect from multiple calls, and also inform any other functions
+  // not to try to create new stuff while we're going down.
+  if (_closing_gsg) {
+    return;
+  }
+  _closing_gsg = true;
+
   if (display_cat.is_debug()) {
     display_cat.debug()
       << this << " close_gsg " << get_type() << "\n";
   }
-  _closing_gsg = true;
   free_pointers();
 
   // As tempting as it may be to try to release all the textures and
@@ -2486,3 +2587,61 @@ async_reload_texture(TextureContext *tc) {
   request->set_priority(priority);
   _loader->load_async(request);
 }
+
+////////////////////////////////////////////////////////////////////
+//     Function: GraphicsStateGuardian::make_shadow_buffer
+//       Access: Protected
+//  Description: Creates a depth buffer for shadow mapping. This
+//               is a convenience function for the ShaderGenerator;
+//               putting this directly in the ShaderGenerator would
+//               cause circular dependency issues.
+//               Returns the depth texture.
+////////////////////////////////////////////////////////////////////
+PT(Texture) GraphicsStateGuardian::
+make_shadow_buffer(const NodePath &light_np, GraphicsOutputBase *host) {
+  // Make sure everything is valid.
+  nassertr(light_np.node()->is_of_type(DirectionalLight::get_class_type()) ||
+           light_np.node()->is_of_type(Spotlight::get_class_type()), NULL);
+  PT(LightLensNode) light = DCAST(LightLensNode, light_np.node());
+  if (light == NULL || !light->_shadow_caster) {
+    return NULL;
+  }
+  
+  nassertr(light->_sbuffers.count(this) == 0, NULL);
+  
+  display_cat.debug() << "Constructing shadow buffer for light '" << light->get_name()
+    << "', size=" << light->_sb_xsize << "x" << light->_sb_ysize
+    << ", sort=" << light->_sb_sort << "\n";
+  FrameBufferProperties fbp;
+  fbp.set_depth_bits(1); // We only need depth
+  PT(GraphicsOutput) sbuffer = get_engine()->make_output(get_pipe(), light->get_name(),
+      light->_sb_sort, fbp, WindowProperties::size(light->_sb_xsize, light->_sb_ysize),
+      GraphicsPipe::BF_refuse_window, this, DCAST(GraphicsOutput, host));
+  nassertr(sbuffer != NULL, NULL);
+  
+  // Create a texture and fill it in with some data to workaround an OpenGL error
+  PT(Texture) tex = new Texture(light->get_name());
+  tex->setup_2d_texture(light->_sb_xsize, light->_sb_ysize, Texture::T_float, Texture::F_depth_component);
+  tex->make_ram_image();
+  sbuffer->add_render_texture(tex, GraphicsOutput::RTM_bind_or_copy,
+                                   GraphicsOutput::RTP_depth);
+  // Set the wrap mode to BORDER_COLOR
+  tex->set_wrap_u(Texture::WM_border_color);
+  tex->set_wrap_v(Texture::WM_border_color);
+  tex->set_border_color(LVecBase4f(1, 1, 1, 1));
+
+  if (get_supports_shadow_filter()) {
+    // If we have the ARB_shadow extension, enable shadow filtering.
+    tex->set_minfilter(Texture::FT_shadow);
+    tex->set_magfilter(Texture::FT_shadow);
+  } else {
+    // We only accept linear - this tells the GPU to use hardware PCF.
+    tex->set_minfilter(Texture::FT_linear);
+    tex->set_magfilter(Texture::FT_linear);
+  }
+  sbuffer->make_display_region(0, 1, 0, 1)->set_camera(light_np);
+  light->_sbuffers[this] = sbuffer;
+  
+  return tex;
+}
+

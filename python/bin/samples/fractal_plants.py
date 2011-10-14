@@ -309,7 +309,7 @@ def makeFractalTree(bodydata, nodePath,length, pos=Vec3(0,0,0), numIterations=11
 
 alight = AmbientLight('alight')
 alight.setColor(Vec4(0.5, 0.5, 0.5, 1))
-alnp = render.attachNewNode(alight.upcastToPandaNode())
+alnp = render.attachNewNode(alight)
 render.setLight(alnp)
 
 slight = Spotlight('slight')

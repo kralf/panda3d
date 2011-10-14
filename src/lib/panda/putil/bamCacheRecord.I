@@ -138,7 +138,7 @@ clear_data() {
 //               record, or NULL if there is no data.  This does not
 //               change ownership of the data pointer.
 ////////////////////////////////////////////////////////////////////
-INLINE const TypedWritable *BamCacheRecord::
+INLINE TypedWritable *BamCacheRecord::
 get_data() const {
   return _data;
 }

@@ -108,9 +108,9 @@ ConfigVariableBool keep_texture_ram
 ConfigVariableBool compressed_textures
 ("compressed-textures", false,
  PRC_DESC("Set this to true to compress textures as they are loaded into "
-	  "texture memory, if the driver supports this.  Specifically, this "
-	  "changes the meaning of set_compression(Texture::CM_default) to "
-	  "Texture::CM_on."));
+          "texture memory, if the driver supports this.  Specifically, this "
+          "changes the meaning of set_compression(Texture::CM_default) to "
+          "Texture::CM_on."));
 
 ConfigVariableBool driver_compress_textures
 ("driver-compress-textures", false,
@@ -368,6 +368,14 @@ ConfigVariableDouble default_far
 ("default-far", 100000.0,
  PRC_DESC("The default far clipping distance for all cameras."));
 
+ConfigVariableDouble lens_far_limit
+("lens-far-limit", 0.0000001,
+  PRC_DESC("This number is used to reduce the effect of numeric inaccuracies "
+           "in Lens::extrude().  It should be a very small, positive number, "
+           "almost zero; set it larger if Lens::extrude() returns values "
+           "that appear meaningless, and set it smaller if you appear to be "
+           "unable to move the far plane out far enough."));
+
 ConfigVariableDouble default_fov
 ("default-fov", 30.0,
  PRC_DESC("The default field of view in degrees for all cameras.  This is "
@@ -541,6 +549,12 @@ operator << (ostream &out, AutoTextureScale ats) {
     
   case ATS_up:
     return out << "up";
+    
+  case ATS_pad:
+    return out << "pad";
+
+  case ATS_UNSPECIFIED:
+    return out << "UNSPECIFIED";
   }
 
   return out << "**invalid AutoTextureScale (" << (int)ats << ")**";
@@ -566,6 +580,9 @@ operator >> (istream &in, AutoTextureScale &ats) {
   } else if (cmp_nocase(word, "up") == 0) {
     ats = ATS_up;
 
+  } else if (cmp_nocase(word, "pad") == 0) {
+    ats = ATS_pad;
+
   } else {
     gobj_cat->error() << "Invalid AutoTextureScale value: " << word << "\n";
     ats = ATS_none;
@@ -585,6 +602,9 @@ operator << (ostream &out, ShaderUtilization sgc) {
     
   case SUT_advanced:
     return out << "advanced";
+
+  case SUT_UNSPECIFIED:
+    return out << "UNSPECIFIED";
   }
 
   return out << "**invalid ShaderUtilization (" << (int)sgc << ")**";

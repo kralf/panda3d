@@ -1,5 +1,7 @@
 // Filename: glGraphicsStateGuardian_src.h
 // Created by:  drose (02Feb99)
+// Updated by: fperazzi, PandaSE (05May10) (added 
+//   get_supports_cg_profile)
 //
 ////////////////////////////////////////////////////////////////////
 //
@@ -77,7 +79,7 @@ typedef void (APIENTRYP PFNGLCOMPRESSEDTEXIMAGE1DPROC) (GLenum target, GLint lev
 typedef void (APIENTRYP PFNGLCOMPRESSEDTEXSUBIMAGE3DPROC) (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data);
 typedef void (APIENTRYP PFNGLCOMPRESSEDTEXSUBIMAGE2DPROC) (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data);
 typedef void (APIENTRYP PFNGLCOMPRESSEDTEXSUBIMAGE1DPROC) (GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLsizei imageSize, const GLvoid *data);
-typedef void (APIENTRY * PFNGLACTIVESTENCILFACEEXTPROC) (GLenum face);
+typedef void (APIENTRYP PFNGLACTIVESTENCILFACEEXTPROC) (GLenum face);
 typedef void (APIENTRYP PFNGLWEIGHTPOINTERARBPROC) (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer); 
 typedef void (APIENTRYP PFNGLVERTEXBLENDARBPROC) (GLint count); 
 typedef void (APIENTRYP PFNGLWEIGHTFVARBPROC) (GLint size, const GLfloat *weights); 
@@ -94,10 +96,63 @@ typedef void (APIENTRYP PFNGLGENFRAMEBUFFERSEXTPROC) (GLsizei n, GLuint *framebu
 typedef GLenum (APIENTRYP PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC) (GLenum target); 
 typedef void (APIENTRYP PFNGLFRAMEBUFFERTEXTURE1DEXTPROC) (GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level); 
 typedef void (APIENTRYP PFNGLFRAMEBUFFERTEXTURE2DEXTPROC) (GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level); 
+#ifdef OPENGLES_2
+typedef void (APIENTRYP PFNGLFRAMEBUFFERTEXTURE3DOES) (GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset);
+#else
 typedef void (APIENTRYP PFNGLFRAMEBUFFERTEXTURE3DEXTPROC) (GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset); 
+#endif
 typedef void (APIENTRYP PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC) (GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer); 
 typedef void (APIENTRYP PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVEXTPROC) (GLenum target, GLenum attachment, GLenum pname, GLint *params); 
 typedef void (APIENTRYP PFNGLGENERATEMIPMAPEXTPROC) (GLenum target);
+typedef void (APIENTRYP PFNGLCURRENTPALETTEMATRIXARBPROC) (GLint index);
+typedef void (APIENTRYP PFNGLMATRIXINDEXUIVARBPROC) (GLint size, const GLuint *indices);
+typedef void (APIENTRYP PFNGLMATRIXINDEXPOINTERARBPROC) (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
+typedef void (APIENTRYP PFNGLBLITFRAMEBUFFEREXTPROC) (GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
+typedef void (APIENTRYP PFNGLRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC) (GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height);
+typedef void (APIENTRYP PFNGLRENDERBUFFERSTORAGEMULTISAMPLECOVERAGENVPROC) (GLenum target, GLsizei coverageSamples, GLsizei colorSamples, GLenum internalformat, GLsizei width, GLsizei height);
+typedef void (APIENTRYP PFNGLCURRENTPALETTEMATRIXOESPROC) (GLuint matrixpaletteindex);
+typedef void (APIENTRYP PFNGLLOADPALETTEFROMMODELVIEWMATRIXOESPROC) (void);
+typedef void (APIENTRYP PFNGLMATRIXINDEXPOINTEROESPROC) (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
+typedef void (APIENTRYP PFNGLWEIGHTPOINTEROESPROC) (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer);
+
+#ifndef OPENGLES_1
+// GLSL shader functions
+typedef void (APIENTRYP PFNGLATTACHSHADERPROC) (GLuint program, GLuint shader);
+typedef void (APIENTRYP PFNGLBINDATTRIBLOCATIONPROC) (GLuint program, GLuint index, const GLchar *name);
+typedef void (APIENTRYP PFNGLCOMPILESHADERPROC) (GLuint shader);
+typedef GLuint (APIENTRYP PFNGLCREATEPROGRAMPROC) (void);
+typedef GLuint (APIENTRYP PFNGLCREATESHADERPROC) (GLenum type);
+typedef void (APIENTRYP PFNGLDELETEPROGRAMPROC) (GLuint program);
+typedef void (APIENTRYP PFNGLDELETESHADERPROC) (GLuint shader);
+typedef void (APIENTRYP PFNGLDETACHSHADERPROC) (GLuint program, GLuint shader);
+typedef void (APIENTRYP PFNGLDISABLEVERTEXATTRIBARRAYPROC) (GLuint index);
+typedef void (APIENTRYP PFNGLENABLEVERTEXATTRIBARRAYPROC) (GLuint index);
+typedef void (APIENTRYP PFNGLGETACTIVEATTRIBPROC) (GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name);
+typedef void (APIENTRYP PFNGLGETACTIVEUNIFORMPROC) (GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name);
+typedef GLint (APIENTRYP PFNGLGETATTRIBLOCATIONPROC) (GLuint program, const GLchar *name);
+typedef void (APIENTRYP PFNGLGETPROGRAMIVPROC) (GLuint program, GLenum pname, GLint *params);
+typedef void (APIENTRYP PFNGLGETPROGRAMINFOLOGPROC) (GLuint program, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
+typedef void (APIENTRYP PFNGLGETSHADERIVPROC) (GLuint shader, GLenum pname, GLint *params);
+typedef void (APIENTRYP PFNGLGETSHADERINFOLOGPROC) (GLuint shader, GLsizei bufSize, GLsizei *length, GLchar *infoLog);
+typedef GLint (APIENTRYP PFNGLGETUNIFORMLOCATIONPROC) (GLuint program, const GLchar *name);
+typedef void (APIENTRYP PFNGLLINKPROGRAMPROC) (GLuint program);
+typedef void (APIENTRYP PFNGLSHADERSOURCEPROC) (GLuint shader, GLsizei count, const GLchar* *string, const GLint *length);
+typedef void (APIENTRYP PFNGLUSEPROGRAMPROC) (GLuint program);
+typedef void (APIENTRYP PFNGLUNIFORM4FPROC) (GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
+typedef void (APIENTRYP PFNGLUNIFORM1IPROC) (GLint location, GLint v0);
+typedef void (APIENTRYP PFNGLUNIFORM1FVPROC) (GLint location, GLsizei count, const GLfloat *value);
+typedef void (APIENTRYP PFNGLUNIFORM2FVPROC) (GLint location, GLsizei count, const GLfloat *value);
+typedef void (APIENTRYP PFNGLUNIFORM3FVPROC) (GLint location, GLsizei count, const GLfloat *value);
+typedef void (APIENTRYP PFNGLUNIFORM4FVPROC) (GLint location, GLsizei count, const GLfloat *value);
+typedef void (APIENTRYP PFNGLUNIFORMMATRIX4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
+typedef void (APIENTRYP PFNGLVALIDATEPROGRAMPROC) (GLuint program);
+typedef void (APIENTRYP PFNGLVERTEXATTRIBPOINTERPROC) (GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer);
+#endif  // OPENGLES_1
+#ifndef OPENGLES
+typedef void (APIENTRYP PFNGLPROGRAMPARAMETERIEXTPROC) (GLuint program, GLenum pname, GLint value);
+typedef void (APIENTRYP PFNGLDRAWARRAYSINSTANCEDPROC) (GLenum mode, GLint first, GLsizei count, GLsizei primcount);
+typedef void (APIENTRYP PFNGLDRAWELEMENTSINSTANCEDPROC) (GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, GLsizei primcount);
+#endif  // OPENGLES
 #endif  // __EDG__
 
 ////////////////////////////////////////////////////////////////////
@@ -141,8 +196,6 @@ public:
   virtual bool draw_points(const GeomPrimitivePipelineReader *reader,
                            bool force);
   virtual void end_draw_primitives();
-
-  INLINE bool draw_display_list(GeomContext *gc);
 
   virtual TextureContext *prepare_texture(Texture *tex);
   virtual bool update_texture(TextureContext *tc, bool force);
@@ -209,18 +262,21 @@ public:
 
   INLINE static bool report_errors(int line, const char *source_file);
   INLINE void report_my_errors(int line, const char *source_file);
+  INLINE static bool clear_errors(int line, const char *source_file);
+  INLINE void clear_my_errors(int line, const char *source_file);
 
   INLINE const string &get_gl_vendor() const;
   INLINE const string &get_gl_renderer() const;
   INLINE const string &get_gl_version() const;
   INLINE int get_gl_version_major() const;
   INLINE int get_gl_version_minor() const;
-  INLINE int get_gl_version_release() const;
 
   virtual void set_state_and_transform(const RenderState *state,
                                        const TransformState *transform);
 
   void bind_fbo(GLuint fbo);
+  virtual bool get_supports_cg_profile(const string &name) const;
+  void finish();
 
 protected:
   void do_issue_transform();
@@ -235,7 +291,7 @@ protected:
   void do_issue_fog();
   void do_issue_depth_offset();
   void do_issue_shade_model();
-  void do_issue_shader();
+  void do_issue_shader(bool state_has_changed = false);
   void do_issue_material();
   void do_issue_texture();
   void do_issue_blending();
@@ -257,8 +313,10 @@ protected:
   virtual void get_extra_extensions();
   void report_extensions() const;
   bool has_extension(const string &extension) const;
-  bool is_at_least_version(int major_version, int minor_version, int release_version = 0) const;
-  virtual void *get_extension_func(const char *prefix, const char *name);
+  INLINE bool is_at_least_gl_version(int major_version, int minor_version) const;
+  INLINE bool is_at_least_gles_version(int major_version, int minor_version) const;
+  void *get_extension_func(const char *prefix, const char *name);
+  virtual void *do_get_extension_func(const char *prefix, const char *name);
 
   virtual void reissue_transforms();
   virtual void enable_lighting(bool enable);
@@ -302,9 +360,9 @@ protected:
   GLenum get_texture_wrap_mode(Texture::WrapMode wm) const;
   static Texture::WrapMode get_panda_wrap_mode(GLenum wm);
   static GLenum get_texture_filter_type(Texture::FilterType ft,
-                             Texture::Format fmt, bool ignore_mipmaps);
+                                        bool ignore_mipmaps);
   static Texture::FilterType get_panda_filter_type(GLenum ft);
-  static GLenum get_component_type(Texture::ComponentType component_type);
+  GLenum get_component_type(Texture::ComponentType component_type);
   GLint get_external_image_format(Texture *tex) const;
   GLint get_internal_image_format(Texture *tex) const;
   static bool is_mipmap_filter(GLenum min_filter);
@@ -392,12 +450,17 @@ protected:
   bool _point_perspective;
   bool _vertex_blending_enabled;
 
+#ifndef OPENGLES_1
   PT(Shader)  _current_shader;
   CLP(ShaderContext)  *_current_shader_context;
   PT(Shader)  _vertex_array_shader;
   CLP(ShaderContext)  *_vertex_array_shader_context;
   PT(Shader)  _texture_binding_shader;
   CLP(ShaderContext)  *_texture_binding_shader_context;
+#endif
+#ifdef OPENGLES_2
+  static PT(Shader)  _default_shader;
+#endif
 
 #ifdef SUPPORT_IMMEDIATE_MODE
   CLP(ImmediateModeSender) _sender;
@@ -422,13 +485,14 @@ protected:
   GLuint _current_fbo;
   int _num_active_texture_stages;
   float _max_anisotropy;
+  bool _supports_anisotropy;
   
   int _error_count;
 
   string _gl_vendor;
   string _gl_renderer;
   string _gl_version;
-  int _gl_version_major, _gl_version_minor, _gl_version_release;
+  int _gl_version_major, _gl_version_minor;
   pset<string> _extensions;
 
 public:
@@ -443,9 +507,14 @@ public:
   PFNGLWEIGHTFVARBPROC _glWeightfvARB;
 
   bool _supports_matrix_palette;
-  PFNGLCURRENTPALETTEMATRIXARBPROC _glCurrentPaletteMatrixARB;
-  PFNGLMATRIXINDEXPOINTERARBPROC _glMatrixIndexPointerARB;
-  PFNGLMATRIXINDEXUIVARBPROC _glMatrixIndexuivARB;
+#ifdef OPENGLES
+  PFNGLCURRENTPALETTEMATRIXOESPROC _glCurrentPaletteMatrix;
+  PFNGLMATRIXINDEXPOINTEROESPROC _glMatrixIndexPointer;
+#else
+  PFNGLCURRENTPALETTEMATRIXARBPROC _glCurrentPaletteMatrix;
+  PFNGLMATRIXINDEXPOINTERARBPROC _glMatrixIndexPointer;
+  PFNGLMATRIXINDEXUIVARBPROC _glMatrixIndexuiv;
+#endif
 
   bool _supports_draw_range_elements;
   PFNGLDRAWRANGEELEMENTSPROC _glDrawRangeElements;
@@ -497,14 +566,28 @@ public:
   PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC _glCheckFramebufferStatus;
   PFNGLFRAMEBUFFERTEXTURE1DEXTPROC _glFramebufferTexture1D;
   PFNGLFRAMEBUFFERTEXTURE2DEXTPROC _glFramebufferTexture2D;
+#ifdef OPENGLES_2
+  PFNGLFRAMEBUFFERTEXTURE3DOES _glFramebufferTexture3D;
+#else
   PFNGLFRAMEBUFFERTEXTURE3DEXTPROC _glFramebufferTexture3D;
+#endif
   PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC _glFramebufferRenderbuffer;
   PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVEXTPROC _glGetFramebufferAttachmentParameteriv;
   PFNGLGENERATEMIPMAPEXTPROC _glGenerateMipmap;
   PFNGLBINDPROGRAMARBPROC _glBindProgram;
 
+  bool _supports_framebuffer_multisample;
+  bool _supports_framebuffer_multisample_coverage_nv;
+  INLINE bool get_supports_framebuffer_multisample();
+  INLINE bool get_supports_framebuffer_multisample_coverage_nv();
+  PFNGLRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC _glRenderbufferStorageMultisample;
+  PFNGLRENDERBUFFERSTORAGEMULTISAMPLECOVERAGENVPROC _glRenderbufferStorageMultisampleCoverage;
+  bool _supports_framebuffer_blit;
+  INLINE bool get_supports_framebuffer_blit();
+  PFNGLBLITFRAMEBUFFEREXTPROC _glBlitFramebuffer;
   PFNGLDRAWBUFFERSPROC _glDrawBuffers;
   int _max_draw_buffers;
+  int _max_fb_samples;
 
   PFNGLGENQUERIESPROC _glGenQueries;
   PFNGLBEGINQUERYPROC _glBeginQuery;
@@ -515,12 +598,54 @@ public:
 
   PFNGLACTIVESTENCILFACEEXTPROC _glActiveStencilFaceEXT;
 
+#ifndef OPENGLES_1
+  // GLSL functions
+  PFNGLATTACHSHADERPROC _glAttachShader;
+  PFNGLBINDATTRIBLOCATIONPROC _glBindAttribLocation;
+  PFNGLCOMPILESHADERPROC _glCompileShader;
+  PFNGLCREATEPROGRAMPROC _glCreateProgram;
+  PFNGLCREATESHADERPROC _glCreateShader;
+  PFNGLDELETEPROGRAMPROC _glDeleteProgram;
+  PFNGLDELETESHADERPROC _glDeleteShader;
+  PFNGLDETACHSHADERPROC _glDetachShader;
+  PFNGLDISABLEVERTEXATTRIBARRAYPROC _glDisableVertexAttribArray;
+  PFNGLENABLEVERTEXATTRIBARRAYPROC _glEnableVertexAttribArray;
+  PFNGLGETACTIVEATTRIBPROC _glGetActiveAttrib;
+  PFNGLGETACTIVEUNIFORMPROC _glGetActiveUniform;
+  PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation;
+  PFNGLGETPROGRAMIVPROC _glGetProgramiv;
+  PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
+  PFNGLGETSHADERIVPROC _glGetShaderiv;
+  PFNGLGETSHADERINFOLOGPROC _glGetShaderInfoLog;
+  PFNGLGETUNIFORMLOCATIONPROC _glGetUniformLocation;
+  PFNGLLINKPROGRAMPROC _glLinkProgram;
+  PFNGLSHADERSOURCEPROC _glShaderSource;
+  PFNGLUSEPROGRAMPROC  _glUseProgram;
+  PFNGLUNIFORM4FPROC _glUniform4f;
+  PFNGLUNIFORM1IPROC _glUniform1i;
+  PFNGLUNIFORM1FVPROC _glUniform1fv;
+  PFNGLUNIFORM2FVPROC _glUniform2fv;
+  PFNGLUNIFORM3FVPROC _glUniform3fv;
+  PFNGLUNIFORM4FVPROC _glUniform4fv;
+  PFNGLUNIFORMMATRIX4FVPROC _glUniformMatrix4fv;
+  PFNGLVALIDATEPROGRAMPROC _glValidateProgram;
+  PFNGLVERTEXATTRIBPOINTERPROC _glVertexAttribPointer;
+#endif  // OPENGLES_1
+#ifndef OPENGLES
+  PFNGLPROGRAMPARAMETERIEXTPROC _glProgramParameteri;
+  PFNGLDRAWARRAYSINSTANCEDPROC _glDrawArraysInstanced;
+  PFNGLDRAWELEMENTSINSTANCEDPROC _glDrawElementsInstanced;
+#endif  // OPENGLES
+
   GLenum _edge_clamp;
   GLenum _border_clamp;
   GLenum _mirror_repeat;
   GLenum _mirror_clamp;
   GLenum _mirror_edge_clamp;
   GLenum _mirror_border_clamp;
+#ifndef OPENGLES
+  GLsizei _instance_count;
+#endif
 
   LightMutex _lock;
   typedef pvector<GLuint> DeletedDisplayLists;
@@ -528,6 +653,9 @@ public:
   DeletedDisplayLists _deleted_queries;
 
   RenderState::SlotMask _inv_state_mask;
+
+  bool _track_errors;
+  bool _allow_flush;
 
 #ifndef NDEBUG
   bool _show_texture_usage;

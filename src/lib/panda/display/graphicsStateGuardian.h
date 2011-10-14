@@ -1,5 +1,7 @@
 // Filename: graphicsStateGuardian.h
 // Created by:  drose (02Feb99)
+// Updated by: fperazzi, PandaSE (05May10) (added fetch_ptr_parameter,
+//  _max_2d_texture_array_layers on z axis, get_supports_cg_profile)
 //
 ////////////////////////////////////////////////////////////////////
 //
@@ -50,6 +52,7 @@
 
 class DrawableRegion;
 class GraphicsEngine;
+class ShaderGenerator;
 
 ////////////////////////////////////////////////////////////////////
 //       Class : GraphicsStateGuardian
@@ -112,6 +115,7 @@ PUBLISHED:
   INLINE int get_max_texture_stages() const;
   virtual INLINE int get_max_texture_dimension() const;
   INLINE int get_max_3d_texture_dimension() const;
+  INLINE int get_max_2d_texture_array_layers() const; //z axis
   INLINE int get_max_cube_map_dimension() const;
 
   INLINE bool get_supports_texture_combine() const;
@@ -119,6 +123,7 @@ PUBLISHED:
   INLINE bool get_supports_texture_dot3() const;
 
   INLINE bool get_supports_3d_texture() const;
+  INLINE bool get_supports_2d_texture_array() const;
   INLINE bool get_supports_cube_map() const;
   INLINE bool get_supports_tex_non_pow2() const;
 
@@ -139,8 +144,10 @@ PUBLISHED:
   INLINE bool get_supports_depth_stencil() const;
   INLINE bool get_supports_shadow_filter() const;
   INLINE bool get_supports_basic_shaders() const;
+  INLINE bool get_supports_glsl() const;
   INLINE bool get_supports_stencil() const;
   INLINE bool get_supports_two_sided_stencil() const;
+  INLINE bool get_supports_geometry_instancing() const;
 
   INLINE int get_maximum_simultaneous_render_targets() const;
 
@@ -148,6 +155,8 @@ PUBLISHED:
   INLINE void set_shader_model(int shader_model);
 
   virtual int get_supported_geom_rendering() const;
+  virtual bool get_supports_cg_profile(const string &name) const;
+
 
   INLINE bool get_color_scale_via_lighting() const;
   INLINE bool get_alpha_scale_via_texture() const;
@@ -221,12 +230,15 @@ public:
   
   const LMatrix4f *fetch_specified_value(Shader::ShaderMatSpec &spec, int altered);
   const LMatrix4f *fetch_specified_part(Shader::ShaderMatInput input, InternalName *name, LMatrix4f &t);
-  
+  const Shader::ShaderPtrData *fetch_ptr_parameter(const Shader::ShaderPtrSpec& spec);
+
   virtual void prepare_display_region(DisplayRegionPipelineReader *dr,
                                       Lens::StereoChannel stereo_channel);
 
   virtual void clear_before_callback();
   virtual void clear_state_and_transform();
+
+  virtual void remove_window(GraphicsOutputBase *window);
 
   virtual CPT(TransformState) calc_projection_mat(const Lens *lens);
   virtual bool prepare_lens();
@@ -285,6 +297,11 @@ public:
   void do_issue_color_scale();
   virtual void do_issue_light();
 
+  virtual bool framebuffer_copy_to_texture
+  (Texture *tex, int z, const DisplayRegion *dr, const RenderBuffer &rb);
+  virtual bool framebuffer_copy_to_ram
+  (Texture *tex, int z, const DisplayRegion *dr, const RenderBuffer &rb);
+
   virtual void bind_light(PointLight *light_obj, const NodePath &light,
                           int light_id);
   virtual void bind_light(DirectionalLight *light_obj, const NodePath &light,
@@ -293,6 +310,8 @@ public:
                           int light_id);
 
   static void create_gamma_table (float gamma, unsigned short *red_table, unsigned short *green_table, unsigned short *blue_table);
+
+  virtual PT(Texture) make_shadow_buffer(const NodePath &light_np, GraphicsOutputBase *host);
 
 #ifdef DO_PSTATS
   static void init_frame_pstats();
@@ -419,6 +438,7 @@ protected:
   int _max_texture_stages;
   int _max_texture_dimension;
   int _max_3d_texture_dimension;
+  int _max_2d_texture_array_layers; //on the z axis
   int _max_cube_map_dimension;
 
   bool _supports_texture_combine;
@@ -426,6 +446,7 @@ protected:
   bool _supports_texture_dot3;
 
   bool _supports_3d_texture;
+  bool _supports_2d_texture_array;
   bool _supports_cube_map;
   bool _supports_tex_non_pow2;
 
@@ -449,10 +470,14 @@ protected:
   bool _supports_depth_stencil;
   bool _supports_shadow_filter;
   bool _supports_basic_shaders;
+  bool _supports_glsl;
+  bool _supports_framebuffer_multisample;
+  bool _supports_framebuffer_blit;
   
   bool _supports_stencil;
   bool _supports_stencil_wrap;
   bool _supports_two_sided_stencil;
+  bool _supports_geometry_instancing;
 
   int _maximum_simultaneous_render_targets;
 
@@ -474,6 +499,8 @@ protected:
 
   float _gamma;
   Texture::QualityLevel _texture_quality_override;
+  
+  ShaderGenerator* _shader_generator;
 
 #ifndef NDEBUG
   PT(Texture) _flash_texture;

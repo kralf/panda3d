@@ -18,6 +18,7 @@
 #include "pandabase.h"
 #include "filename.h"
 #include "pnotify.h"
+#include "windowHandle.h"
    
 ////////////////////////////////////////////////////////////////////
 //       Class : WindowProperties
@@ -28,8 +29,6 @@
 ////////////////////////////////////////////////////////////////////
 class EXPCL_PANDA_DISPLAY WindowProperties {
 PUBLISHED:
-
-
   enum ZOrder {
     Z_bottom,
     Z_normal,
@@ -46,7 +45,11 @@ PUBLISHED:
   void operator = (const WindowProperties &copy);
   INLINE ~WindowProperties();
 
+  static WindowProperties get_config_properties();
   static WindowProperties get_default();
+  static void set_default(const WindowProperties &default_properties);
+  static void clear_default();
+
   static WindowProperties size(int x_size, int y_size);
 
   bool operator == (const WindowProperties &other) const;
@@ -132,9 +135,9 @@ PUBLISHED:
   INLINE bool has_z_order() const;
   INLINE void clear_z_order();
 
-
-  INLINE void set_parent_window(size_t parent);
-  INLINE size_t  get_parent_window() const;
+  void set_parent_window(size_t parent);
+  INLINE void set_parent_window(WindowHandle *parent_window = NULL);
+  INLINE WindowHandle *get_parent_window() const;
   INLINE bool has_parent_window() const;
   INLINE void clear_parent_window();
 
@@ -147,22 +150,22 @@ private:
   // structure have been filled in by the user, and which remain
   // unspecified.
   enum Specified {
-    S_origin           = 0x0001,
-    S_size             = 0x0002,
-    S_title            = 0x0004,
-    S_undecorated      = 0x0008,
-    S_fullscreen       = 0x0010,
-    S_foreground       = 0x0020,
-    S_minimized        = 0x0040,
-    S_open             = 0x0080,
-    S_cursor_hidden    = 0x0100,
-    S_fixed_size       = 0x0200,
-    S_z_order          = 0x0400,
-    S_icon_filename    = 0x0800,
-    S_cursor_filename  = 0x1000,
-    S_mouse_mode       = 0x2000,
-    S_parent_window    = 0x4000,
-    S_raw_mice         = 0x8000,
+    S_origin               = 0x00001,
+    S_size                 = 0x00002,
+    S_title                = 0x00004,
+    S_undecorated          = 0x00008,
+    S_fullscreen           = 0x00010,
+    S_foreground           = 0x00020,
+    S_minimized            = 0x00040,
+    S_open                 = 0x00080,
+    S_cursor_hidden        = 0x00100,
+    S_fixed_size           = 0x00200,
+    S_z_order              = 0x00400,
+    S_icon_filename        = 0x00800,
+    S_cursor_filename      = 0x01000,
+    S_mouse_mode           = 0x02000,
+    S_parent_window        = 0x04000,
+    S_raw_mice             = 0x08000,
   };
 
   // This bitmask represents the true/false settings for various
@@ -189,8 +192,10 @@ private:
   Filename _cursor_filename;
   Filename _icon_filename;
   ZOrder _z_order;
-  int _flags;
-  size_t _parent_window;  // a HWND or WindowRef or .. what ever it is on X win...
+  unsigned int _flags;
+  PT(WindowHandle) _parent_window;
+
+  static WindowProperties *_default_properties;
 };
 
 EXPCL_PANDA_DISPLAY ostream &

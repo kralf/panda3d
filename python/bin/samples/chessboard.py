@@ -225,8 +225,8 @@ self.pickerRay.getDirection())
     directionalLight.setDirection( Vec3( 0, 45, -45 ) )
     directionalLight.setColor( Vec4( 0.2, 0.2, 0.2, 1 ) )
     lAttrib = lAttrib.addLight( directionalLight )
-    render.attachNewNode( directionalLight.upcastToPandaNode() ) 
-    render.attachNewNode( ambientLight.upcastToPandaNode() ) 
+    render.attachNewNode( directionalLight ) 
+    render.attachNewNode( ambientLight ) 
     render.node().setAttrib( lAttrib )
 
 #Class for a piece. This just handels loading the model and setting initial

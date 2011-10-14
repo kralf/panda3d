@@ -16,6 +16,7 @@
 #include "glxGraphicsBuffer.h"
 #include "glxGraphicsPipe.h"
 #include "glxGraphicsPixmap.h"
+#include "glxGraphicsBuffer.h"
 #include "glxGraphicsWindow.h"
 #include "glxGraphicsStateGuardian.h"
 #include "graphicsPipeSelection.h"
@@ -29,57 +30,35 @@ ConfigureFn(config_glxdisplay) {
   init_libglxdisplay();
 }
 
-ConfigVariableString display_cfg
-("display", "",
- PRC_DESC("Specify the X display string for the default display.  If this "
-          "is not specified, $DISPLAY is used."));
-
-ConfigVariableBool x_error_abort
-("x-error-abort", false,
- PRC_DESC("Set this true to trigger and abort (and a stack trace) on receipt "
-          "of an error from the X window system.  This can make it easier "
-          "to discover where these errors are generated."));
-
 ConfigVariableBool glx_get_proc_address
 ("glx-get-proc-address", true,
  PRC_DESC("Set this to true to allow the use of glxGetProcAddress(), if "
-	  "it is available, to query the OpenGL extension functions.  This "
-	  "is the standard way to query extension functions."));
+          "it is available, to query the OpenGL extension functions.  This "
+          "is the standard way to query extension functions."));
 
 
 ConfigVariableBool glx_get_os_address
 ("glx-get-os-address", true,
  PRC_DESC("Set this to true to allow Panda to query the OpenGL library "
-	  "directly using standard operating system calls to locate "
-	  "addresses of extension functions.  This will be done only "
-	  "if glxGetProcAddress() cannot be used for some reason."));
+          "directly using standard operating system calls to locate "
+          "addresses of extension functions.  This will be done only "
+          "if glxGetProcAddress() cannot be used for some reason."));
 
-ConfigVariableInt x_wheel_up_button
-("x-wheel-up-button", 4,
- PRC_DESC("This is the mouse button index of the wheel_up event: which "
-          "mouse button number does the system report when the mouse wheel "
-          "is rolled one notch up?"));
+ConfigVariableBool gl_support_fbo
+("gl-support-fbo", true,
+ PRC_DESC("Configure this false if your GL's implementation of "
+          "EXT_framebuffer_object is broken.  The system might still be "
+          "able to create buffers using pbuffers or the like."));
 
-ConfigVariableInt x_wheel_down_button
-("x-wheel-down-button", 5,
- PRC_DESC("This is the mouse button index of the wheel_down event: which "
-          "mouse button number does the system report when the mouse wheel "
-          "is rolled one notch down?"));
-
-ConfigVariableInt x_wheel_left_button
-("x-wheel-left-button", 6,
- PRC_DESC("This is the mouse button index of the wheel_left event: which "
-          "mouse button number does the system report when one scrolls "
-          "to the left?"));
-
-ConfigVariableInt x_wheel_right_button
-("x-wheel-right-button", 7,
- PRC_DESC("This is the mouse button index of the wheel_right event: which "
-          "mouse button number does the system report when one scrolls "
-          "to the right?"));
+ConfigVariableBool glx_support_fbconfig
+("glx-support-fbconfig", true,
+ PRC_DESC("Set this true to enable the use of the advanced FBConfig "
+          "interface (as opposed to the older XVisual interface) "
+          "if it is available, to select a graphics visual and "
+          "create an OpenGL context."));
 
 ConfigVariableBool glx_support_pbuffer
-("glx-support-pbuffer", false,
+("glx-support-pbuffer", true,
  PRC_DESC("Set this true to enable the use of X pbuffer-based offscreen "
           "buffers, if available.  This is usually preferred over "
           "pixmap-based buffers, but not all drivers support them."));
@@ -88,9 +67,7 @@ ConfigVariableBool glx_support_pixmap
 ("glx-support-pixmap", false,
  PRC_DESC("Set this true to enable the use of X pixmap-based offscreen "
           "buffers.  This is false by default because pixmap-based buffers "
-          "are usually slower than pbuffer-based buffers, and because at "
-          "least one driver is known to crash (crash!) when it attempts "
-          "to create a pixmap-based buffer."));
+          "are usually slower than pbuffer-based buffers."));
 
 
 ////////////////////////////////////////////////////////////////////
@@ -114,6 +91,7 @@ init_libglxdisplay() {
 #endif  // HAVE_GLXFBCONFIG
   glxGraphicsPipe::init_type();
   glxGraphicsPixmap::init_type();
+  glxGraphicsBuffer::init_type();
   glxGraphicsWindow::init_type();
   glxGraphicsStateGuardian::init_type();
 

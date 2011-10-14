@@ -27,6 +27,7 @@ class Thread;
 class RenderBuffer;
 class GraphicsWindow;
 class NodePath;
+class GraphicsOutputBase;
 
 class VertexBufferContext;
 class IndexBufferContext;
@@ -86,6 +87,7 @@ class PointLight;
 class DirectionalLight;
 class Spotlight;
 class AmbientLight;
+class LightLensNode;
 
 class DisplayRegion;
 class Lens;
@@ -121,6 +123,7 @@ PUBLISHED:
   virtual bool get_supports_multisample() const=0;
   virtual int get_supported_geom_rendering() const=0;
   virtual bool get_supports_occlusion_query() const=0;
+  virtual bool get_supports_shadow_filter() const=0;
 
 public:
   // These are some general interface functions; they're defined here
@@ -130,6 +133,8 @@ public:
 
   virtual void clear_before_callback()=0;
   virtual void clear_state_and_transform()=0;
+
+  virtual void remove_window(GraphicsOutputBase *window)=0;
 
 #ifndef CPPPARSER
   // We hide this from interrogate, so that it will be properly
@@ -214,6 +219,10 @@ public:
                           int light_id) { }
   virtual void bind_light(Spotlight *light_obj, const NodePath &light,
                           int light_id) { }
+
+  // This function creates a shadow mapping buffer. This is not put in ShaderGenerator
+  // because that would cause circular dependencies.
+  virtual PT(Texture) make_shadow_buffer(const NodePath &light_np, GraphicsOutputBase *host)=0;
 
 PUBLISHED:
   static GraphicsStateGuardianBase *get_default_gsg();

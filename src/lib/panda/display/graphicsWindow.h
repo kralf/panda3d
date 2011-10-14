@@ -19,14 +19,22 @@
 
 #include "graphicsOutput.h"
 #include "graphicsWindowInputDevice.h"
+#include "graphicsWindowProc.h"
+#include "graphicsWindowProcCallbackData.h"
+#ifdef HAVE_PYTHON
+#include "pythonGraphicsWindowProc.h"
+#endif
 #include "windowProperties.h"
 #include "mouseData.h"
 #include "modifierButtons.h"
 #include "buttonEvent.h"
+#include "keyboardButton.h"
 #include "pnotify.h"
 #include "lightMutex.h"
 #include "lightReMutex.h"
 #include "pvector.h"
+#include "windowHandle.h"
+#include "touchInfo.h"
 
 ////////////////////////////////////////////////////////////////////
 //       Class : GraphicsWindow
@@ -63,6 +71,8 @@ PUBLISHED:
   void set_close_request_event(const string &close_request_event);
   string get_close_request_event() const;
 
+  INLINE WindowHandle *get_window_handle() const;
+  
   // Mouse and keyboard routines
   int get_num_input_devices() const;
   string get_input_device_name(int device) const;
@@ -80,6 +90,11 @@ PUBLISHED:
   virtual bool move_pointer(int device, int x, int y);
   virtual void close_ime();
 
+#ifdef HAVE_PYTHON
+  void add_python_event_handler(PyObject* handler, PyObject* name);
+  void remove_python_event_handler(PyObject* name);
+#endif
+
 public:
   // No need to publish these.
   bool has_button_event(int device) const;
@@ -87,7 +102,16 @@ public:
   bool has_pointer_event(int device) const;
   PT(PointerEventList) get_pointer_events(int device);
 
+  virtual void add_window_proc( const GraphicsWindowProc* wnd_proc_object ){};
+  virtual void remove_window_proc( const GraphicsWindowProc* wnd_proc_object ){};
+  virtual void clear_window_procs(){};
+  virtual bool supports_window_procs() const;
+
   virtual int verify_window_sizes(int numsizes, int *dimen);
+
+  virtual bool is_touch_event(GraphicsWindowProcCallbackData* callbackData);
+  virtual int get_num_touches();
+  virtual TouchInfo get_touch_info(int index);
 
 public:
   virtual void request_open();
@@ -116,9 +140,6 @@ protected:
   void system_changed_properties(const WindowProperties &properties);
   void system_changed_size(int x_size, int y_size);
 
-private:
-  static unsigned int parse_color_mask(const string &word);
-
 protected:
   INLINE void add_input_device(const GraphicsWindowInputDevice &device);
   typedef vector_GraphicsWindowInputDevice InputDevices;
@@ -127,6 +148,8 @@ protected:
 
 protected:
   WindowProperties _properties;
+  PT(WindowHandle) _window_handle;
+  PT(WindowHandle) _parent_window_handle;
 
 private:
   LightReMutex _properties_lock; 
@@ -137,7 +160,12 @@ private:
   WindowProperties _rejected_properties;
   string _window_event;
   string _close_request_event;
-  
+
+#ifdef HAVE_PYTHON
+  typedef pset<PythonGraphicsWindowProc*> PythonWinProcClasses;
+  PythonWinProcClasses _python_window_proc_classes;
+#endif
+
 public:
   static TypeHandle get_class_type() {
     return _type_handle;

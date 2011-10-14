@@ -17,11 +17,19 @@
 
 #include "pandabase.h"
 #include "dconfig.h"
+#include "lodNodeType.h"
+#include "configVariableEnum.h"
+#include "configVariableDouble.h"
+#include "configVariableInt.h"
 
 class DSearchPath;
 
 ConfigureDecl(config_pgraphnodes, EXPCL_PANDA_PGRAPHNODES, EXPTP_PANDA_PGRAPHNODES);
 NotifyCategoryDecl(pgraphnodes, EXPCL_PANDA_PGRAPHNODES, EXPTP_PANDA_PGRAPHNODES);
+
+extern ConfigVariableEnum<LODNodeType> default_lod_type;
+extern ConfigVariableInt parallax_mapping_samples;
+extern ConfigVariableDouble parallax_mapping_scale;
 
 extern EXPCL_PANDA_PGRAPHNODES void init_libpgraphnodes();
 

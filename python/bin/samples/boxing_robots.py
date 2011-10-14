@@ -181,8 +181,8 @@ class World(DirectObject):
     directionalLight.setDirection( Vec3( 0, 0, -2.5 ) )
     directionalLight.setColor( Vec4( 0.9, 0.8, 0.9, 1 ) )
     lAttrib = lAttrib.addLight( directionalLight )
-    render.attachNewNode( directionalLight.upcastToPandaNode() ) 
-    render.attachNewNode( ambientLight.upcastToPandaNode() ) 
+    render.attachNewNode( directionalLight ) 
+    render.attachNewNode( ambientLight ) 
     render.node().setAttrib( lAttrib )
 
 w = World()

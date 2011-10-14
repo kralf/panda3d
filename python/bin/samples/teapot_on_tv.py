@@ -61,8 +61,8 @@ class World(DirectObject):
         #put some lighting on the teapot
         dlight = DirectionalLight('dlight')
         alight = AmbientLight('alight')
-        dlnp = altRender.attachNewNode(dlight.upcastToPandaNode()) 
-        alnp = altRender.attachNewNode(alight.upcastToPandaNode())
+        dlnp = altRender.attachNewNode(dlight) 
+        alnp = altRender.attachNewNode(alight)
         dlight.setColor(Vec4(0.8, 0.8, 0.5, 1))
         alight.setColor(Vec4(0.2, 0.2, 0.2, 1))
         dlnp.setHpr(0, -60, 0) 

@@ -140,6 +140,22 @@ ConfigVariableBool CLP(finish)
             "more accurately reflect where the graphics bottlenecks are.  "
             "This variable is enabled only if PStats is compiled in."));
 
+ConfigVariableBool CLP(force_depth_stencil)
+  ("gl-force-depth-stencil", false, 
+   PRC_DESC("Temporary hack variable 7x00 vs 8x00 nVidia bug.  See glGraphicsStateGuardian_src.cxx."));
+
+ConfigVariableBool CLP(matrix_palette)
+  ("gl-matrix-palette", false, 
+   PRC_DESC("Temporary hack variable protecting untested code.  See glGraphicsStateGuardian_src.cxx."));
+
+ConfigVariableBool CLP(force_no_error)
+  ("gl-force-no-error", false,
+   PRC_DESC("Avoid reporting OpenGL errors, for a small performance benefit."));
+
+ConfigVariableBool CLP(force_no_flush)
+  ("gl-force-no-flush", false, 
+   PRC_DESC("Avoid calling glFlush(), for a potential performance benefit.  This may be a little dangerous."));
+
 extern ConfigVariableBool CLP(parallel_arrays);
 
 void CLP(init_classes)() {
@@ -147,11 +163,17 @@ void CLP(init_classes)() {
   CLP(GeomMunger)::init_type();
   CLP(GraphicsStateGuardian)::init_type();
   CLP(IndexBufferContext)::init_type();
-  CLP(OcclusionQueryContext)::init_type();
+#ifndef OPENGLES_1
   CLP(ShaderContext)::init_type();
+#endif
   CLP(TextureContext)::init_type();
   CLP(VertexBufferContext)::init_type();
   CLP(GraphicsBuffer)::init_type();
+
+#ifndef OPENGLES
+  CLP(OcclusionQueryContext)::init_type();
+#endif
+
   PandaSystem *ps = PandaSystem::get_global_ptr();
   ps->add_system(GLSYSTEM_NAME);
 

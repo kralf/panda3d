@@ -1,5 +1,6 @@
 // Filename: texture.I
 // Created by:  drose (05Feb99)
+// Updated by: fperazzi, PandaSE(29Apr10) (added setup_2d_texture_array)
 //
 ////////////////////////////////////////////////////////////////////
 //
@@ -142,6 +143,34 @@ INLINE void Texture::
 setup_3d_texture(int x_size, int y_size, int z_size,
                  ComponentType component_type, Format format) {
   setup_texture(TT_3d_texture, x_size, y_size, z_size, component_type, format);
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: Texture::setup_2d_texture_array
+//       Access: Published
+//  Description: Sets the texture as an empty 2-d texture array with
+//               no dimensions (though if you know the depth ahead
+//               of time, it saves a bit of reallocation later).
+//               Follow up with read() or load() to fill the texture
+//               properties and image data.
+////////////////////////////////////////////////////////////////////
+INLINE void Texture::
+setup_2d_texture_array(int z_size) {
+  setup_2d_texture_array(0, 1, z_size, T_unsigned_byte, F_rgb);
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: Texture::setup_2d_texture_array
+//       Access: Published
+//  Description: Sets the texture as an empty 2-d texture array with the
+//               specified dimensions and properties. Follow up with
+//               set_ram_image() or modify_ram_image() to fill the
+//               image data.
+////////////////////////////////////////////////////////////////////
+INLINE void Texture::
+setup_2d_texture_array(int x_size, int y_size, int z_size,
+                 ComponentType component_type, Format format) {
+  setup_texture(TT_2d_texture_array, x_size, y_size, z_size, component_type, format);
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -304,6 +333,22 @@ INLINE bool Texture::
 store(PNMImage &pnmimage, int z, int n) const {
   MutexHolder holder(_lock);
   return do_store_one(pnmimage, z, n);
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: Texture::reload
+//       Access: Published
+//  Description: Re-reads the Texture from its disk file.  Useful when
+//               you know the image on disk has recently changed, and
+//               you want to update the Texture image.
+//
+//               Returns true on success, false on failure (in which
+//               case, the Texture may or may not still be valid).
+////////////////////////////////////////////////////////////////////
+bool Texture::
+reload() {
+  MutexHolder holder(_lock);
+  return do_reload();
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -470,6 +515,31 @@ get_pad_y_size() const {
 INLINE int Texture::
 get_pad_z_size() const {
   return _pad_z_size;
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: Texture::get_tex_scale
+//       Access: Published
+//  Description: Returns a scale pair that is suitable for applying to
+//               geometry via NodePath::set_tex_scale(), which will
+//               convert texture coordinates on the geometry from the
+//               range 0..1 into the appropriate range to render the
+//               video part of the texture.
+//
+//               This is necessary only if a padding size has been set
+//               via set_pad_size() (or implicitly via something like
+//               "textures-power-2 pad" in the config.prc file).  In
+//               this case, this is a convenient way to generate UV's
+//               that reflect the built-in padding size.
+////////////////////////////////////////////////////////////////////
+INLINE LVecBase2f Texture::
+get_tex_scale() const {
+  if (_pad_x_size == 0 || _pad_y_size == 0 ||
+      _x_size == 0 || _y_size == 0) {
+    LVecBase2f(1.0f, 1.0f);
+  }
+  return LVecBase2f((float)(_x_size - _pad_x_size) / (float)_x_size,
+                    (float)(_y_size - _pad_y_size) / (float)_y_size);
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -650,10 +720,14 @@ set_magfilter(Texture::FilterType filter) {
 //     Function: Texture::set_anisotropic_degree
 //       Access: Published
 //  Description: Specifies the level of anisotropic filtering to apply
-//               to the texture.  Normally, this is 1, to indicate
-//               anisotropic filtering is disabled.  This may be set
-//               to a number higher than one to enable anisotropic
-//               filtering, if the rendering backend supports this.
+//               to the texture.  Set this 0 to indicate the default
+//               value, which is specified in the
+//               texture-anisotropic-degree config variable.
+//
+//               To explicitly disable anisotropic filtering, set this
+//               value to 1.  To explicitly enable anisotropic
+//               filtering, set it to a value higher than 1; larger
+//               numbers indicate greater degrees of filtering.
 ////////////////////////////////////////////////////////////////////
 INLINE void Texture::
 set_anisotropic_degree(int anisotropic_degree) {
@@ -761,7 +835,9 @@ get_wrap_w() const {
 //       Access: Published
 //  Description: Returns the filter mode of the texture for
 //               minification.  If this is one of the mipmap
-//               constants, then the texture requires mipmaps.
+//               constants, then the texture requires mipmaps.  This
+//               may return FT_default; see also
+//               get_effective_minfilter().
 ////////////////////////////////////////////////////////////////////
 INLINE Texture::FilterType Texture::
 get_minfilter() const {
@@ -773,7 +849,8 @@ get_minfilter() const {
 //       Access: Published
 //  Description: Returns the filter mode of the texture for
 //               magnification.  The mipmap constants are invalid
-//               here.
+//               here.  This may return FT_default; see also
+//               get_effective_minfilter().
 ////////////////////////////////////////////////////////////////////
 INLINE Texture::FilterType Texture::
 get_magfilter() const {
@@ -784,15 +861,29 @@ get_magfilter() const {
 //     Function: Texture::get_anisotropic_degree
 //       Access: Published
 //  Description: Returns the degree of anisotropic filtering that
-//               should be applied to the texture.  Normally, this is
-//               1, to indicate that anisotropic filtering should be
-//               disabled.  If this is a number higher than 1,
-//               anisotropic filtering should be enabled (if the
-//               rendering backend supports it).
+//               should be applied to the texture.  This value may
+//               return 0, indicating the default value; see also
+//               get_effective_anisotropic_degree.
 ////////////////////////////////////////////////////////////////////
 INLINE int Texture::
 get_anisotropic_degree() const {
   return _anisotropic_degree;
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: Texture::get_effective_anisotropic_degree
+//       Access: Published
+//  Description: Returns the degree of anisotropic filtering that
+//               should be applied to the texture.  This value will
+//               normally not return 0, unless there is an error in
+//               the config file.
+////////////////////////////////////////////////////////////////////
+INLINE int Texture::
+get_effective_anisotropic_degree() const {
+  if (_anisotropic_degree != 0) {
+    return _anisotropic_degree;
+  }
+  return texture_anisotropic_degree;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -874,7 +965,7 @@ get_render_to_texture() const {
 ////////////////////////////////////////////////////////////////////
 INLINE bool Texture::
 uses_mipmaps() const {
-  return is_mipmap(get_minfilter());
+  return is_mipmap(get_effective_minfilter());
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -896,10 +987,28 @@ set_quality_level(Texture::QualityLevel quality_level) {
 //     Function: Texture::get_quality_level
 //       Access: Public
 //  Description: Returns the current quality_level hint.  See
-//               set_quality_level().
+//               set_quality_level().  This value may return
+//               QL_default; see get_effective_quality_level().
 ////////////////////////////////////////////////////////////////////
 INLINE Texture::QualityLevel Texture::
 get_quality_level() const {
+  return _quality_level;
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: Texture::get_effective_quality_level
+//       Access: Public
+//  Description: Returns the current quality_level hint, or the global
+//               default quality_level if this texture doesn't specify
+//               a quality level.  This value will not normally return
+//               QL_default (unless there is an error in the config
+//               file)
+////////////////////////////////////////////////////////////////////
+INLINE Texture::QualityLevel Texture::
+get_effective_quality_level() const {
+  if (_quality_level == QL_default) {
+    return texture_quality_level;
+  }
   return _quality_level;
 }
 
@@ -2144,3 +2253,14 @@ have_textures_power_2() {
   return (_textures_power_2 != ATS_UNSPECIFIED);
 }
 
+////////////////////////////////////////////////////////////////////
+//     Function: Texture::RamImage::Constructor
+//       Access: Public
+//  Description: 
+////////////////////////////////////////////////////////////////////
+INLINE Texture::RamImage::
+RamImage() :
+  _page_size(0),
+  _pointer_image(NULL)
+{
+}

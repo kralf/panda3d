@@ -19,6 +19,7 @@
 
 #include "pandaNode.h"
 #include "lens.h"
+#include "perspectiveLens.h"
 #include "pointerTo.h"
 
 ////////////////////////////////////////////////////////////////////
@@ -30,7 +31,7 @@
 ////////////////////////////////////////////////////////////////////
 class EXPCL_PANDA_PGRAPH LensNode : public PandaNode {
 PUBLISHED:
-  LensNode(const string &name);
+  LensNode(const string &name, Lens *lens = NULL);
 
 protected:
   LensNode(const LensNode &copy);
@@ -43,18 +44,35 @@ public:
 
 PUBLISHED:
   INLINE void copy_lens(const Lens &lens);
+  INLINE void copy_lens(int index, const Lens &lens);
   INLINE void set_lens(Lens *lens);
-  INLINE Lens *get_lens() const;
+  void set_lens(int index, Lens *lens);
+  INLINE Lens *get_lens(int index = 0) const;
+  
+  bool set_lens_active(int index, bool active);
+  INLINE bool get_lens_active(int index) const;
 
-  bool is_in_view(const LPoint3f &pos);
+  INLINE bool activate_lens(int index);
+  INLINE bool deactivate_lens(int index);
+
+  INLINE bool is_in_view(const LPoint3f &pos);
+  bool is_in_view(int index, const LPoint3f &pos);
 
   void show_frustum();
   void hide_frustum();
 
 protected:
-  PT(Lens) _lens;
   PT(PandaNode) _shown_frustum;
 
+  class LensSlot {
+  public:
+    PT(Lens) _lens;
+    bool _is_active;
+  };
+
+  typedef pvector<LensSlot> Lenses;
+  Lenses _lenses;
+  
 public:
   static void register_with_read_factory();
   virtual void write_datagram(BamWriter *manager, Datagram &dg);

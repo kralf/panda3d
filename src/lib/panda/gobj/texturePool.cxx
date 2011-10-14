@@ -1,5 +1,6 @@
 // Filename: texturePool.cxx
 // Created by:  drose (26Apr00)
+// Updated by: fperazzi, PandaSE(29Apr10) (added ns_load_2d_texture_array)
 //
 ////////////////////////////////////////////////////////////////////
 //
@@ -324,7 +325,7 @@ ns_load_texture(const Filename &orig_filename, int primary_file_num_channels,
 
   if (store_record && tex->has_ram_image()) {
     // Store the on-disk cache record for next time.
-    record->set_data(tex, false);
+    record->set_data(tex, tex);
     cache->store(record);
   }
 
@@ -456,7 +457,7 @@ ns_load_texture(const Filename &orig_filename,
 
   if (store_record && tex->has_ram_image()) {
     // Store the on-disk cache record for next time.
-    record->set_data(tex, false);
+    record->set_data(tex, tex);
     cache->store(record);
   }
 
@@ -492,8 +493,10 @@ ns_load_3d_texture(const Filename &filename_pattern,
     Textures::const_iterator ti;
     ti = _textures.find(filename);
     if (ti != _textures.end()) {
-      // This texture was previously loaded.
-      return (*ti).second;
+      if ((*ti).second->get_texture_type() == Texture::TT_3d_texture) {
+        // This texture was previously loaded, as a 3d texture
+        return (*ti).second;
+      }
     }
   }
 
@@ -555,8 +558,10 @@ ns_load_3d_texture(const Filename &filename_pattern,
     Textures::const_iterator ti;
     ti = _textures.find(filename);
     if (ti != _textures.end()) {
-      // This texture was previously loaded.
-      return (*ti).second;
+      if ((*ti).second->get_texture_type() == Texture::TT_3d_texture) {
+        // This texture was previously loaded, as a 3d texture
+        return (*ti).second;
+      }
     }
 
     _textures[filename] = tex;
@@ -564,7 +569,113 @@ ns_load_3d_texture(const Filename &filename_pattern,
 
   if (store_record && tex->has_ram_image()) {
     // Store the on-disk cache record for next time.
-    record->set_data(tex, false);
+    record->set_data(tex, tex);
+    cache->store(record);
+  }
+
+  nassertr(!tex->get_fullpath().empty(), tex);
+  return tex;
+}
+
+////////////////////////////////////////////////////////////////////
+//     Function: TexturePool::ns_load_2d_texture_array
+//       Access: Private
+//  Description: The nonstatic implementation of load_2d_texture_array().
+////////////////////////////////////////////////////////////////////
+Texture *TexturePool::
+ns_load_2d_texture_array(const Filename &filename_pattern,
+                         bool read_mipmaps, const LoaderOptions &options) {
+  Filename orig_filename(filename_pattern);
+  orig_filename.set_pattern(true);
+
+  Filename filename;
+  Filename unique_filename; //differentiate 3d-textures from 2d-texture arrays
+  {
+    MutexHolder holder(_lock);
+    resolve_filename(filename, orig_filename);
+    // Differentiate from preloaded 3d textures
+    unique_filename = filename + ".2DARRAY";
+
+    Textures::const_iterator ti;
+    ti = _textures.find(unique_filename);
+    if (ti != _textures.end()) {
+      if ((*ti).second->get_texture_type() == Texture::TT_2d_texture_array) {
+        // This texture was previously loaded, as a 2d texture array
+        return (*ti).second;
+      }
+    }
+  }
+
+  PT(Texture) tex;
+  PT(BamCacheRecord) record;
+  bool store_record = false;
+
+  BamCache *cache = BamCache::get_global_ptr();
+  bool compressed_cache_record = false;
+  try_load_cache(tex, cache, filename, record, compressed_cache_record,
+                 options);
+
+  if (tex == (Texture *)NULL || 
+      tex->get_texture_type() != Texture::TT_2d_texture_array) {
+    // The texture was neither in the pool, nor found in the on-disk
+    // cache; it needs to be loaded from its source image(s).
+    gobj_cat.info()
+      << "Loading 2-d texture array " << filename << "\n";
+    tex = make_texture(filename.get_extension());
+    tex->setup_2d_texture_array();
+    if (!tex->read(filename, 0, 0, true, read_mipmaps, options)) {
+      // This texture was not found or could not be read.
+      report_texture_unreadable(filename);
+      return NULL;
+    }
+    store_record = (record != (BamCacheRecord *)NULL);
+  }
+
+  if (cache->get_cache_compressed_textures() && tex->has_compression()) {
+#ifndef HAVE_SQUISH
+    bool needs_driver_compression = true;
+#else
+    bool needs_driver_compression = driver_compress_textures;
+#endif // HAVE_SQUISH
+    if (needs_driver_compression) {
+      // We don't want to save the uncompressed version; we'll save the
+      // compressed version when it becomes available.
+      store_record = false;
+      if (!compressed_cache_record) {
+        tex->set_post_load_store_cache(true);
+      }
+    }
+
+  } else if (!cache->get_cache_textures()) {
+    // We don't want to save this texture.
+    store_record = false;
+  }
+
+  // Set the original filename, before we searched along the path.
+  nassertr(tex != (Texture *)NULL, false);
+  tex->set_filename(filename_pattern);
+  tex->set_fullpath(filename);
+  tex->_texture_pool_key = filename;
+
+  {
+    MutexHolder holder(_lock);
+
+    // Now look again.
+    Textures::const_iterator ti;
+    ti = _textures.find(unique_filename);
+    if (ti != _textures.end()) {
+      if ((*ti).second->get_texture_type() == Texture::TT_2d_texture_array) {
+        // This texture was previously loaded, as a 2d texture array
+        return (*ti).second;
+      }
+    }
+
+    _textures[unique_filename] = tex;
+  }
+
+  if (store_record && tex->has_ram_image()) {
+    // Store the on-disk cache record for next time.
+    record->set_data(tex, tex);
     cache->store(record);
   }
 
@@ -663,7 +774,7 @@ ns_load_cube_map(const Filename &filename_pattern, bool read_mipmaps,
 
   if (store_record && tex->has_ram_image()) {
     // Store the on-disk cache record for next time.
-    record->set_data(tex, false);
+    record->set_data(tex, tex);
     cache->store(record);
   }
 
@@ -942,11 +1053,11 @@ try_load_cache(PT(Texture) &tex, BamCache *cache, const Filename &filename,
       record = cache->lookup(filename, "txo");
       if (record != (BamCacheRecord *)NULL) {
         if (record->has_data()) {
-          tex = DCAST(Texture, record->extract_data());
+          tex = DCAST(Texture, record->get_data());
           compressed_cache_record = (tex->get_ram_image_compression() != Texture::CM_off);
           int x_size = tex->get_orig_file_x_size();
           int y_size = tex->get_orig_file_y_size();
-          Texture::adjust_size(x_size, y_size, filename.get_basename());
+          Texture::adjust_size(x_size, y_size, filename.get_basename(), true);
 
           if (!cache->get_cache_textures() && !compressed_cache_record) {
             // We're not supposed to be caching uncompressed textures.
@@ -1003,7 +1114,7 @@ try_load_cache(PT(Texture) &tex, BamCache *cache, const Filename &filename,
                   // from the cache.  To keep the cache current,
                   // rewrite it to the cache now, in its newly
                   // compressed form.
-                  record->set_data(tex, false);
+                  record->set_data(tex, tex);
                   cache->store(record);
                   compressed_cache_record = true;
                 }
@@ -1140,8 +1251,7 @@ load_filters() {
   for (int i = 0; i < num_aux; i++) {
     string name = texture_filter.get_unique_value(i);
     
-    Filename dlname = Filename::dso_filename(
-      "lib" PANDA_LIBRARY_PREFIX + name + ".so");
+    Filename dlname = Filename::dso_filename("lib" + name + ".so");
     gobj_cat->info()
       << "loading texture filter: " << dlname.to_os_specific() << endl;
     void *tmp = load_dso(get_plugin_path().get_value(), dlname);
