@@ -978,7 +978,7 @@ glsl_report_shader_errors(GSG *gsg, unsigned int shader) {
   if (length > 0) {
     info_log = (char *) malloc(length);
     gsg->_glGetShaderInfoLog(shader, length, &num_chars, info_log);
-    if (strcmp(info_log, "Success.\n") != 0) {
+    if ((info_log[0] != 0) && (strcmp(info_log, "Success.\n") != 0)) {
       GLCAT.error(false) << info_log << "\n";
     }
   }
