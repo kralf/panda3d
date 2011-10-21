@@ -34,6 +34,7 @@ NotifyCategoryDecl(portal, EXPCL_PANDA_PGRAPH, EXPTP_PANDA_PGRAPH);
 extern ConfigVariableBool fake_view_frustum_cull;
 extern ConfigVariableBool clip_plane_cull;
 extern ConfigVariableBool allow_portal_cull;
+extern ConfigVariableBool debug_portal_cull;
 extern ConfigVariableBool unambiguous_graph;
 extern ConfigVariableBool detect_graph_cycles;
 extern ConfigVariableBool no_unsupported_copy;
@@ -56,6 +57,7 @@ extern ConfigVariableInt max_collect_indices;
 extern EXPCL_PANDA_PGRAPH ConfigVariableBool premunge_data;
 extern ConfigVariableBool preserve_geom_nodes;
 extern ConfigVariableBool flatten_geoms;
+extern EXPCL_PANDA_PGRAPH ConfigVariableInt max_lenses;
 
 extern ConfigVariableBool polylight_info;
 extern ConfigVariableDouble lod_fade_time;

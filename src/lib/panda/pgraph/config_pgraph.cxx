@@ -121,6 +121,13 @@ ConfigVariableBool allow_portal_cull
           "renderer to cull more objects that are clipped if not in the "
           "current list of portals.  This is still somewhat experimental."));
 
+ConfigVariableBool debug_portal_cull
+("debug-portal-cull", false,
+ PRC_DESC("Set this true to enable debug visualization during portal clipping."
+          "(You first need to enable portal culling, using the allow-portal-cull"
+          "variable.)"));
+
+
 ConfigVariableBool unambiguous_graph
 ("unambiguous-graph", false,
  PRC_DESC("Set this true to make ambiguous path warning messages generate an "
@@ -287,6 +294,15 @@ ConfigVariableBool flatten_geoms
           "NodePath flatten operations will only reduce nodes.  This affects "
           "only the NodePath interfaces; you may still make the lower-level "
           "SceneGraphReducer calls directly."));
+
+ConfigVariableInt max_lenses
+("max-lenses", 100,
+ PRC_DESC("Specifies an upper limit on the maximum number of lenses "
+          "and the maximum lens index number) that may be associated with "
+          "a single LensNode.  There is no technical reason for this "
+          "limitation, but very large numbers are probably a mistake, so "
+          "this can be used as a simple sanity check.  Set it larger or "
+          "smaller to suit your needs."));
 
 ConfigVariableBool polylight_info
 ("polylight-info", false,
