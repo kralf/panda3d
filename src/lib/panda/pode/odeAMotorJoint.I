@@ -81,9 +81,9 @@ set_param_lo_stop(int axis, dReal val) {
   if ( axis == 0 ) {
     dJointSetAMotorParam(_id, dParamLoStop, val);
   } else if ( axis == 1 ) {
-    dJointSetAMotorParam(_id, dParamLoStop, val);
+    dJointSetAMotorParam(_id, dParamLoStop2, val);
   } else if ( axis == 2 ) {
-    dJointSetAMotorParam(_id, dParamLoStop, val);
+    dJointSetAMotorParam(_id, dParamLoStop3, val);
   }
 }
 
@@ -94,9 +94,9 @@ set_param_hi_stop(int axis, dReal val) {
   if ( axis == 0 ) {
     dJointSetAMotorParam(_id, dParamHiStop, val);
   } else if ( axis == 1 ) {
-    dJointSetAMotorParam(_id, dParamHiStop, val);
+    dJointSetAMotorParam(_id, dParamHiStop2, val);
   } else if ( axis == 2 ) {
-    dJointSetAMotorParam(_id, dParamHiStop, val);
+    dJointSetAMotorParam(_id, dParamHiStop3, val);
   }
 }
 
@@ -107,9 +107,9 @@ set_param_vel(int axis, dReal val) {
   if ( axis == 0 ) {
     dJointSetAMotorParam(_id, dParamVel, val);
   } else if ( axis == 1 ) {
-    dJointSetAMotorParam(_id, dParamVel, val);
+    dJointSetAMotorParam(_id, dParamVel2, val);
   } else if ( axis == 2 ) {
-    dJointSetAMotorParam(_id, dParamVel, val);
+    dJointSetAMotorParam(_id, dParamVel3, val);
   }
 }
 
@@ -120,9 +120,9 @@ set_param_f_max(int axis, dReal val) {
   if ( axis == 0 ) {
     dJointSetAMotorParam(_id, dParamFMax, val);
   } else if ( axis == 1 ) {
-    dJointSetAMotorParam(_id, dParamFMax, val);
+    dJointSetAMotorParam(_id, dParamFMax2, val);
   } else if ( axis == 2 ) {
-    dJointSetAMotorParam(_id, dParamFMax, val);
+    dJointSetAMotorParam(_id, dParamFMax3, val);
   }
 }
 
@@ -133,9 +133,9 @@ set_param_fudge_factor(int axis, dReal val) {
   if ( axis == 0 ) {
     dJointSetAMotorParam(_id, dParamFudgeFactor, val);
   } else if ( axis == 1 ) {
-    dJointSetAMotorParam(_id, dParamFudgeFactor, val);
+    dJointSetAMotorParam(_id, dParamFudgeFactor2, val);
   } else if ( axis == 2 ) {
-    dJointSetAMotorParam(_id, dParamFudgeFactor, val);
+    dJointSetAMotorParam(_id, dParamFudgeFactor3, val);
   }
 }
 
@@ -146,9 +146,9 @@ set_param_bounce(int axis, dReal val) {
   if ( axis == 0 ) {
     dJointSetAMotorParam(_id, dParamBounce, val);
   } else if ( axis == 1 ) {
-    dJointSetAMotorParam(_id, dParamBounce, val);
+    dJointSetAMotorParam(_id, dParamBounce2, val);
   } else if ( axis == 2 ) {
-    dJointSetAMotorParam(_id, dParamBounce, val);
+    dJointSetAMotorParam(_id, dParamBounce3, val);
   }
 }
 
@@ -159,9 +159,9 @@ set_param_CFM(int axis, dReal val) {
   if ( axis == 0 ) {
     dJointSetAMotorParam(_id, dParamCFM, val);
   } else if ( axis == 1 ) {
-    dJointSetAMotorParam(_id, dParamCFM, val);
+    dJointSetAMotorParam(_id, dParamCFM2, val);
   } else if ( axis == 2 ) {
-    dJointSetAMotorParam(_id, dParamCFM, val);
+    dJointSetAMotorParam(_id, dParamCFM3, val);
   }
 }
 
@@ -172,9 +172,9 @@ set_param_stop_ERP(int axis, dReal val) {
   if ( axis == 0 ) {
     dJointSetAMotorParam(_id, dParamStopERP, val);
   } else if ( axis == 1 ) {
-    dJointSetAMotorParam(_id, dParamStopERP, val);
+    dJointSetAMotorParam(_id, dParamStopERP2, val);
   } else if ( axis == 2 ) {
-    dJointSetAMotorParam(_id, dParamStopERP, val);
+    dJointSetAMotorParam(_id, dParamStopERP3, val);
   }
 }
 
@@ -185,9 +185,9 @@ set_param_stop_CFM(int axis, dReal val) {
   if ( axis == 0 ) {
     dJointSetAMotorParam(_id, dParamStopCFM, val);
   } else if ( axis == 1 ) {
-    dJointSetAMotorParam(_id, dParamStopCFM, val);
+    dJointSetAMotorParam(_id, dParamStopCFM2, val);
   } else if ( axis == 2 ) {
-    dJointSetAMotorParam(_id, dParamStopCFM, val);
+    dJointSetAMotorParam(_id, dParamStopCFM3, val);
   }
 }
 
@@ -198,9 +198,9 @@ get_param_lo_stop(int axis) const {
   if ( axis == 0 ) {
     return dJointGetAMotorParam(_id, dParamLoStop);
   } else if ( axis == 1 ) {
-    return dJointGetAMotorParam(_id, dParamLoStop);
+    return dJointGetAMotorParam(_id, dParamLoStop2);
   } else if ( axis == 2 ) {
-    return dJointGetAMotorParam(_id, dParamLoStop);
+    return dJointGetAMotorParam(_id, dParamLoStop3);
   }
   return 0;
 }
@@ -212,9 +212,9 @@ get_param_hi_stop(int axis) const {
   if ( axis == 0 ) {
     return dJointGetAMotorParam(_id, dParamHiStop);
   } else if ( axis == 1 ) {
-    return dJointGetAMotorParam(_id, dParamHiStop);
+    return dJointGetAMotorParam(_id, dParamHiStop2);
   } else if ( axis == 2 ) {
-    return dJointGetAMotorParam(_id, dParamHiStop);
+    return dJointGetAMotorParam(_id, dParamHiStop3);
   }
   return 0;
 }
@@ -226,9 +226,9 @@ get_param_vel(int axis) const {
   if ( axis == 0 ) {
     return dJointGetAMotorParam(_id, dParamVel);
   } else if ( axis == 1 ) {
-    return dJointGetAMotorParam(_id, dParamVel);
+    return dJointGetAMotorParam(_id, dParamVel2);
   } else if ( axis == 2 ) {
-    return dJointGetAMotorParam(_id, dParamVel);
+    return dJointGetAMotorParam(_id, dParamVel3);
   }
   return 0;
 }
@@ -240,9 +240,9 @@ get_param_f_max(int axis) const {
   if ( axis == 0 ) {
     return dJointGetAMotorParam(_id, dParamFMax);
   } else if ( axis == 1 ) {
-    return dJointGetAMotorParam(_id, dParamFMax);
+    return dJointGetAMotorParam(_id, dParamFMax2);
   } else if ( axis == 2 ) {
-    return dJointGetAMotorParam(_id, dParamFMax);
+    return dJointGetAMotorParam(_id, dParamFMax3);
   }
   return 0;
 }
@@ -254,9 +254,9 @@ get_param_fudge_factor(int axis) const {
   if ( axis == 0 ) {
     return dJointGetAMotorParam(_id, dParamFudgeFactor);
   } else if ( axis == 1 ) {
-    return dJointGetAMotorParam(_id, dParamFudgeFactor);
+    return dJointGetAMotorParam(_id, dParamFudgeFactor2);
   } else if ( axis == 2 ) {
-    return dJointGetAMotorParam(_id, dParamFudgeFactor);
+    return dJointGetAMotorParam(_id, dParamFudgeFactor3);
   }
   return 0;
 }
@@ -268,9 +268,9 @@ get_param_bounce(int axis) const {
   if ( axis == 0 ) {
     return dJointGetAMotorParam(_id, dParamBounce);
   } else if ( axis == 1 ) {
-    return dJointGetAMotorParam(_id, dParamBounce);
+    return dJointGetAMotorParam(_id, dParamBounce2);
   } else if ( axis == 2 ) {
-    return dJointGetAMotorParam(_id, dParamBounce);
+    return dJointGetAMotorParam(_id, dParamBounce3);
   }
   return 0;
 }
@@ -282,9 +282,9 @@ get_param_CFM(int axis) const {
   if ( axis == 0 ) {
     return dJointGetAMotorParam(_id, dParamCFM);
   } else if ( axis == 1 ) {
-    return dJointGetAMotorParam(_id, dParamCFM);
+    return dJointGetAMotorParam(_id, dParamCFM2);
   } else if ( axis == 2 ) {
-    return dJointGetAMotorParam(_id, dParamCFM);
+    return dJointGetAMotorParam(_id, dParamCFM3);
   }
   return 0;
 }
@@ -296,9 +296,9 @@ get_param_stop_ERP(int axis) const {
   if ( axis == 0 ) {
     return dJointGetAMotorParam(_id, dParamStopERP);
   } else if ( axis == 1 ) {
-    return dJointGetAMotorParam(_id, dParamStopERP);
+    return dJointGetAMotorParam(_id, dParamStopERP2);
   } else if ( axis == 2 ) {
-    return dJointGetAMotorParam(_id, dParamStopERP);
+    return dJointGetAMotorParam(_id, dParamStopERP3);
   }
   return 0;
 }
@@ -310,9 +310,9 @@ get_param_stop_CFM(int axis) const {
   if ( axis == 0 ) {
     return dJointGetAMotorParam(_id, dParamStopCFM);
   } else if ( axis == 1 ) {
-    return dJointGetAMotorParam(_id, dParamStopCFM);
+    return dJointGetAMotorParam(_id, dParamStopCFM2);
   } else if ( axis == 2 ) {
-    return dJointGetAMotorParam(_id, dParamStopCFM);
+    return dJointGetAMotorParam(_id, dParamStopCFM3);
   }
   return 0;
 }
