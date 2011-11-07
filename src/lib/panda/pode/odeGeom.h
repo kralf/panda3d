@@ -24,6 +24,11 @@
 #include "odeSpace.h"
 #include "odeBody.h"
 
+#ifdef HAVE_PYTHON
+  #include "py_panda.h"
+  #include "Python.h"
+#endif
+
 class OdeBoxGeom;
 class OdeCappedCylinderGeom;
 // class OdeConvexGeom;
@@ -39,6 +44,7 @@ class OdeQuadTreeSpace;
 
 class OdeUtil;
 class OdeCollisionEntry;
+class OdeContact;
 
 ////////////////////////////////////////////////////////////////////
 //       Class : OdeGeom
@@ -137,14 +143,19 @@ PUBLISHED:
   OdeHashSpace convert_to_hash_space() const;
   OdeQuadTreeSpace convert_to_quad_tree_space() const;
   
-  
+#ifdef HAVE_PYTHON
+  int collide(PyObject* callback);
+  static void callback(dGeomID id, dContact& contact);
+#endif
 
 public:
   INLINE static int get_geom_class() { return -1; };
 
 protected:
   dGeomID _id;
-
+#ifdef HAVE_PYTHON
+  PyObject* _python_callback;
+#endif
 
 public:
   static TypeHandle get_class_type() {

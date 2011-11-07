@@ -214,8 +214,11 @@ auto_callback(void *data, dGeomID o1, dGeomID o2) {
       entry->_num_contacts = numc;
       entry->_contact_geoms = new OdeContactGeom[numc];
     }
-    
+
     for(i=0; i < numc; i++) {
+      OdeGeom::callback(o1, contact[i]);
+      OdeGeom::callback(o2, contact[i]);
+
       dJointID c = dJointCreateContact(_collide_world->get_id(), _collide_joint_group, contact + i);
       if ((_collide_space->get_collide_id(o1) >= 0) && (_collide_space->get_collide_id(o2) >= 0)) {
         dJointAttach(c, b1, b2);
@@ -263,16 +266,19 @@ collide(PyObject* arg, PyObject* callback) {
 
 void OdeSpace::
 near_callback(void *data, dGeomID o1, dGeomID o2) {
-  odespace_cat.spam() << "near_callback called, data: " << data << ", dGeomID1: " << o1 << ", dGeomID2: " << o2 << "\n";
-  OdeGeom g1 (o1);
-  OdeGeom g2 (o2);
-  PyObject* p1 = DTool_CreatePyInstanceTyped(&g1, Dtool_OdeGeom, true, false, g1.get_type_index());
-  PyObject* p2 = DTool_CreatePyInstanceTyped(&g2, Dtool_OdeGeom, true, false, g2.get_type_index());
+  OdeGeom *g1 = new OdeGeom(o1);
+  OdeGeom *g2 = new OdeGeom(o2);
+  PyObject *p1 = DTool_CreatePyInstanceTyped(g1, Dtool_OdeGeom, true, false, g1->get_type_index());
+  PyObject *p2 = DTool_CreatePyInstanceTyped(g2, Dtool_OdeGeom, true, false, g2->get_type_index());
   PyObject* result = PyEval_CallFunction(_python_callback, "OOO", (PyObject*) data, p1, p2);
   if (!result) {
     odespace_cat.error() << "An error occurred while calling python function!\n";
     PyErr_Print();
+  } else {
+    Py_DECREF(result);
   }
+  Py_XDECREF(p2);
+  Py_XDECREF(p1);
 }
 #endif
 

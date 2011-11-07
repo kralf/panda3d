@@ -24,6 +24,15 @@
 #include "odeSimpleSpace.h"
 #include "odeHashSpace.h"
 #include "odeQuadTreeSpace.h"
+#include "odeContact.h"
+
+#ifdef HAVE_PYTHON
+  #include "py_panda.h"
+  #include "typedReferenceCount.h"
+  #ifndef CPPPARSER
+    extern EXPCL_PANDAODE Dtool_PyTypedObject Dtool_OdeContact;
+  #endif
+#endif
 
 //OdeGeom::GeomSurfaceMap OdeGeom::_geom_surface_map;
 //OdeGeom::GeomCollideIdMap OdeGeom::_geom_collide_id_map;
@@ -31,6 +40,9 @@ TypeHandle OdeGeom::_type_handle;
 
 OdeGeom::
 OdeGeom(dGeomID id) :
+#ifdef HAVE_PYTHON
+  _python_callback(NULL),
+#endif
   _id(id) {
   odegeom_cat.debug() << get_type() << "(" << _id << ")\n";
 }
@@ -200,6 +212,51 @@ convert_to_quad_tree_space() const {
   nassertr(get_class() == GC_quad_tree_space, OdeQuadTreeSpace((dSpaceID)0));
   return OdeQuadTreeSpace((dSpaceID)_id);
 }
+
+#ifdef HAVE_PYTHON
+int OdeGeom::
+collide(PyObject* callback) {
+  nassertr(callback != NULL, -1);
+  if (_python_callback)
+    Py_XDECREF(_python_callback);
+  if (!PyCallable_Check(callback)) {
+    PyErr_Format(PyExc_TypeError, "'%s' object is not callable",
+      callback->ob_type->tp_name);
+    _python_callback = NULL;
+    dGeomSetData(_id, _python_callback);
+    return -1;
+  } else if (_id == NULL) {
+    PyErr_Format(PyExc_TypeError, "OdeGeom is not valid!");
+    _python_callback = NULL;
+    return -1;
+  } else {
+    Py_XINCREF(callback);
+    _python_callback = (PyObject*) callback;
+    dGeomSetData(_id, _python_callback);
+    return 0;
+  }
+}
+
+void OdeGeom::
+callback(dGeomID id, dContact& contact) {
+  PyObject* callback = (PyObject*) dGeomGetData(id);
+  if (callback) {
+    OdeContact *c1 = new OdeContact(contact);
+    PyObject *p1 = DTool_CreatePyInstanceTyped(c1, Dtool_OdeContact, true,
+      false, c1->get_type_index());
+    PyObject* result = PyEval_CallFunction(callback, "(O)", p1);
+    if (!result) {
+      odegeom_cat.error() <<
+        "An error occurred while calling python function!\n";
+      PyErr_Print();
+    } else {
+      Py_DECREF(result);
+    }
+    contact = *c1->get_contact_ptr();
+    Py_XDECREF(p1);
+  }
+}
+#endif
 
 OdeGeom::
 operator bool () const {

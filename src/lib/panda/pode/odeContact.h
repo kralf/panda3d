@@ -45,7 +45,7 @@ PUBLISHED:
 
 public:
   void operator = (const OdeContact &copy);
-  bool operator == (const OdeContact &other);
+  void operator = (const dContact &copy);
   const dContact* get_contact_ptr() const;
 
 private:

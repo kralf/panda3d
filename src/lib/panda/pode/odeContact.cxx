@@ -35,3 +35,17 @@ const dContact* OdeContact::
 get_contact_ptr() const {
   return &_contact;
 }
+
+void OdeContact::
+operator = (const OdeContact &copy) {
+  *this = copy._contact;
+}
+
+void OdeContact::
+operator = (const dContact &contact) {
+  _contact.surface = contact.surface;
+  _contact.geom = contact.geom;
+  _contact.fdir1[0] = contact.fdir1[0];
+  _contact.fdir1[1] = contact.fdir1[1];
+  _contact.fdir1[2] = contact.fdir1[2];
+}
