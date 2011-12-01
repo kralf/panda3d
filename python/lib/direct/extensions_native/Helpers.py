@@ -71,6 +71,17 @@ def Dtool_PreloadDLL(module):
         lib = os.path.join(PANDA_LIBRARY_PATH, filename)
         if (os.path.exists(lib)):
             target = PANDA_LIBRARY_PATH
+    if target == None:
+      try:
+        ld_library_path = os.environ["LD_LIBRARY_PATH"]
+      except KeyError:
+        pass
+      else:
+        for dir in ld_library_path.split(":"):
+          lib = os.path.join(dir, filename)
+          if (os.path.exists(lib)):
+              target = dir
+              break
             
     if target == None:
         message = "DLL loader cannot find %s." % (filename)
