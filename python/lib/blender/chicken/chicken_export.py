@@ -527,7 +527,7 @@ class Exporter:
           else:
             args.append('ppython')
 
-          args.append(os.path.join(Blender.Get('datadir'),'chicken/eggoctree.py'))
+          args.append(os.path.join(Blender.Get('scriptsdir'),'chicken_eggoctree.py'))
 
           if self.octreeCollision: args.append('-c')
 
