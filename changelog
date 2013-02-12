@@ -1,85 +1,593 @@
-panda3d (1.6.2) stable; urgency=high
+panda3d (1.6.2-95) lucid; urgency=low
 
-  * Fixed a static-init issue in ptloader on Windows
-  * Fixed texture scaling issue when using buffers
-  * x2egg is no longer broken
-  * Threading in OSX build fixed
-  * Fixed issue with flickering colors in Shader Generator
-  * Eggcacher now uses less RAM
-  * Missing 'models' dirs in packpanda games fixed
-  * Eggcacher step in Panda3D installer is now optional
-  * Fixes broken shortcut links in Start Menu on Windows
-  * Shader Generator now supports clip planes
-  * Bug with combine modes in Shader Generator fixed
-  * Fixed bug with Texture::make_copy()
-  * Bug with Actor LOD fixed
-  * Fixed bug with missing geometry in Collada converter
-  * OdeUtil.collide instability fixed
-  * OdeBody setData/getData methods exposed to Python
+  * Release distribution
+  * Added build and binary dependencies
 
- -- pro-rsoft <niertie1@gmail.com>  Wed, 13 May 2009 19:00:00 +0100
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 12 Feb 2013 13:38:00 +0100
 
-panda3d (1.6.1) stable; urgency=medium
+panda3d (1.6.2-94) unstable; urgency=low
 
-  * Threading layer is now enabled by default
-  * cTrav.showCollisions fixed
-  * Fixed broken MovieTexture
-  * OpenAL is now stable on Linux, too
-  * OpenAL now supports dynamic playrate changing
-  * MayaPandaTool now handles NURBS correctly
-  * Fixed particle panel and directtools bugs
-  * Fix crash with collada exporter on Windows
-  * ARToolkit jittering fixed
-  * Now possible to override shader vertex/fragment profiles
-  * Maya exporter fixed on OSX
-  * Fixed depth texture crash for padded textures
-  * Fixed bug that made OdeUtil.collide return empty geoms
-  * Fixed crash with render.flattenStrong() when using trackball
-  * Several improvements to the ODE layer
-  * Performance improvements to GeoMipTerrain
-  * GeoMipTerrain.setBorderStitching to fix seams between terrains
-  * installpanda.py for installing Panda on Linux without deb/rpm
-  * Several other minor bugfixes
+  * Added LD_LIBRARY_PATH linking support to Python helpers
 
- -- pro-rsoft <niertie1@gmail.com>  Tue, 23 Apr 2009 03:33:00 +0100
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 01 Dec 2011 22:54:19 +0100
 
-panda3d (1.6.0) stable; urgency=low
+panda3d (1.6.2-93) unstable; urgency=low
 
-  * Lightweight threading framework without runtime overhead
-  * Makepanda now fully supports OSX
-  * DDS textures are now supported
-  * COLLADA->egg converter added
-  * New C++-based Task system, which includes async threading support
-  * Support for asynchronous on-demand loading of textures and/or animations
-  * New software-based renderer "tinydisplay"
-  * More pythonic features: iterable methods, implicit parameter casting
-  * Packpanda now also supports Linux
-  * Added libsquish support for DXT compression
-  * New MeshDrawer class for realtime mesh manipulation
-  * Infamous FBO bug fixed
-  * Preliminary support for Volumetric Lighting
-  * Shader k-parameters can now contain underscores
-  * Fixed OpenCVTexture and ARToolKit on Linux
-  * GeoMipTerrain now supports multi-channel heightmaps
-  * GeoMipTerrain features new near/far LOD system
-  * GeoMipTerrain performance improved
-  * CallbackNode added to support low-level drawing callbacks from Python
-  * Fixed some minor but annoying OpenAL/FFMpeg issues
-  * Fixed bug with lcontrol and rcontrol on Linux
-  * Fixed bug regarding icon filenames
-  * Multisampling fixed on Linux and OSX
-  * Left and right scrolling events now available
-  * Several improvements to API reference
-  * ShaderGenerator now supports several more blend modes and color scale
-  * .x converter now supports AnimTicksPerSecond
-  * vfs-mount-url can load models directly off the web
-  * Smoother transitions in FadeLodNode
-  * Dynamically-generated outline on fonts: loader.loadFont(outlineWidth = xxx)
-  * Texture.getRamImageAs()
-  * base.toggleTexMem()
-  * Text generation performance optimization
-  * Various performance optimizations
-  * Several more minor bugs fixed
+  * Added Blender install rules
 
- -- pro-rsoft <niertie1@gmail.com>  Tue, 31 Mar 2009 07:53:00 +0100
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 01 Dec 2011 08:41:05 +0100
 
+panda3d (1.6.2-92) unstable; urgency=low
+
+  * Added collision callbacks to OdeGeom
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 07 Nov 2011 21:18:43 +0100
+
+panda3d (1.6.2-91) unstable; urgency=low
+
+  * Fixed bugs in OdeAMotorJoint that would cause all parameters to be set
+    on the first axis
+  * Completed implementation of OdeLMotorJoint
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 04 Nov 2011 12:43:16 +0100
+
+panda3d (1.6.2-90) unstable; urgency=low
+
+  * Added config variables that will cause build failures in Debug
+    mode
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 21 Oct 2011 09:46:53 +0200
+
+panda3d (1.6.2-89) unstable; urgency=low
+
+  * Added new Panda shader inputs to NodePath implementation
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 18 Oct 2011 09:22:11 +0200
+
+panda3d (1.6.2-88) unstable; urgency=low
+
+  * Removed unnecessary new-line output from glsl_report_shader_errors()
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 17 Oct 2011 15:26:53 +0200
+
+panda3d (1.6.2-87) unstable; urgency=low
+
+  * Merged runtime components with Panda3D runtime version 1.0.3 to support
+    GLSL shaders
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 14 Oct 2011 21:29:54 +0200
+
+panda3d (1.6.2-86) unstable; urgency=low
+
+  * Fixed collision box
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 13 Oct 2011 17:05:48 +0200
+
+panda3d (1.6.2-85) unstable; urgency=low
+
+  * CollisionBox bug fixing
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Sat, 16 Jul 2011 13:54:41 +0200
+
+panda3d (1.6.2-84) unstable; urgency=low
+
+  * Merged in collision box from later Panda version
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Sat, 16 Jul 2011 07:18:39 +0200
+
+panda3d (1.6.2-83) unstable; urgency=low
+
+  * Added fix that would cause wrong building of ODE trimesh data when compiling
+    with double precision
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 13 Jul 2011 09:45:15 +0200
+
+panda3d (1.6.2-82) unstable; urgency=low
+
+  * Removed ode.h from parser includes
+  * Added dDOUBLE compiler definition for ODE to work
+  * Added dInitODE() to libpode initialization
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Sat, 09 Jul 2011 16:20:46 +0200
+
+panda3d (1.6.2-81) unstable; urgency=low
+
+  * Bugfixes in Texture and glGraphicsBuffer that would cause a wrong number
+    of depth bits to be reported
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 08 Jul 2011 12:36:43 +0200
+
+panda3d (1.6.2-80) unstable; urgency=low
+
+  * Added blender chicken export modules, yet no package is built
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 01 Jul 2011 11:57:53 +0200
+
+panda3d (1.6.2-79) unstable; urgency=low
+
+  * Made PANDA_LIBRARY_PATH the fall-back option for library directory
+    search
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 30 Jun 2011 08:01:40 +0200
+
+panda3d (1.6.2-78) unstable; urgency=low
+
+  * Added SOURCES parameter to panda3d_interrogate()
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 30 Jun 2011 06:54:03 +0200
+
+panda3d (1.6.2-77) unstable; urgency=low
+
+  * Reverted the latest change to panda3d_interrogate()
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 17:32:52 +0200
+
+panda3d (1.6.2-76) unstable; urgency=low
+
+  * Changed panda3d_interrogate() default globs to *.h
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 17:18:49 +0200
+
+panda3d (1.6.2-75) unstable; urgency=low
+
+  * Changed Python pandac module layout, Module.py has been replaced by
+    __init__.py
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 16:41:25 +0200
+
+panda3d (1.6.2-74) unstable; urgency=low
+
+  * Added PROMISCUOUS option to panda3d_interrogate() macro
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 16:01:47 +0200
+
+panda3d (1.6.2-73) unstable; urgency=low
+
+  * Fixed gen_pycode to generate output in pandac directory
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 10:55:55 +0200
+
+panda3d (1.6.2-72) unstable; urgency=low
+
+  * Re-added Python package processing
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 10:09:42 +0200
+
+panda3d (1.6.2-71) unstable; urgency=low
+
+  * Renamed gen_pycode wrapper
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 10:00:24 +0200
+
+panda3d (1.6.2-70) unstable; urgency=low
+
+  * Added missing parser includes
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 08:15:51 +0200
+
+panda3d (1.6.2-69) unstable; urgency=low
+
+  * Added netinet and openssl directories to parser includes
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 07:56:24 +0200
+
+panda3d (1.6.2-68) unstable; urgency=low
+
+  * Moved parser includes to parser-inc directory
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 29 Jun 2011 07:55:39 +0200
+
+panda3d (1.6.2-67) unstable; urgency=low
+
+  * Made Cg and CgGL linkage optional
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 28 Jun 2011 11:00:57 +0200
+
+panda3d (1.6.2-66) unstable; urgency=low
+
+  * Added shader functionality
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 28 Jun 2011 10:31:51 +0200
+
+panda3d (1.6.2-65) unstable; urgency=low
+
+  * Removed Pmw modules, added as external dependency
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 28 Jun 2011 06:53:37 +0200
+
+panda3d (1.6.2-64) unstable; urgency=low
+
+  * Fixed Release build issues
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 27 Jun 2011 19:07:14 +0200
+
+panda3d (1.6.2-63) unstable; urgency=low
+
+  * Fixed audio traits
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 27 Jun 2011 16:14:46 +0200
+
+panda3d (1.6.2-62) unstable; urgency=low
+
+  * Added missing model files
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 27 Jun 2011 15:00:56 +0200
+
+panda3d (1.6.2-61) unstable; urgency=low
+
+  * Most samples run
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 27 Jun 2011 14:59:58 +0200
+
+panda3d (1.6.2-60) unstable; urgency=low
+
+  * Moved sample models
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 27 Jun 2011 09:06:44 +0200
+
+panda3d (1.6.2-59) unstable; urgency=low
+
+  * Renamed some model files
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Sun, 26 Jun 2011 21:31:40 +0200
+
+panda3d (1.6.2-58) unstable; urgency=low
+
+  * Added remaining samples
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Sun, 26 Jun 2011 21:30:01 +0200
+
+panda3d (1.6.2-57) unstable; urgency=low
+
+  * Further testing of Python bindings
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Sun, 26 Jun 2011 11:13:22 +0200
+
+panda3d (1.6.2-56) unstable; urgency=low
+
+  * Python modules generate, yet untested
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 24 Jun 2011 13:39:07 +0200
+
+panda3d (1.6.2-55) unstable; urgency=low
+
+  * Restructured Python distribution
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 21 Jun 2011 15:57:46 +0200
+
+panda3d (1.6.2-54) unstable; urgency=low
+
+  * Moved interrogate testing binaries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 21 Jun 2011 11:02:31 +0200
+
+panda3d (1.6.2-53) unstable; urgency=low
+
+  * Renamed interrogate binaries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 21 Jun 2011 10:58:27 +0200
+
+panda3d (1.6.2-52) unstable; urgency=low
+
+  * Renamed interrogate libraries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 21 Jun 2011 10:57:18 +0200
+
+panda3d (1.6.2-51) unstable; urgency=low
+
+  * Added missing direct Python module
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 16 Jul 2010 17:45:59 +0200
+
+panda3d (1.6.2-50) unstable; urgency=low
+
+  * Ported direct Python modules
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 16 Jul 2010 17:43:59 +0200
+
+panda3d (1.6.2-49) unstable; urgency=low
+
+  * Fixed model component install
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 08 Jul 2010 11:19:43 +0200
+
+panda3d (1.6.2-48) unstable; urgency=low
+
+  * Moved models directory
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 08 Jul 2010 08:16:43 +0200
+
+panda3d (1.6.2-47) unstable; urgency=low
+
+  * Fixed package dependencies between panda3d-tools and panda3d
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 18:01:07 +0200
+
+panda3d (1.6.2-46) unstable; urgency=low
+
+  * Ported remaining tool libraries and binaries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 17:59:10 +0200
+
+panda3d (1.6.2-45) unstable; urgency=low
+
+  * Ported eggqtess tools
+  * Created loader meta library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 17:09:42 +0200
+
+panda3d (1.6.2-44) unstable; urgency=low
+
+  * Moved palettizer to palettize
+  * Added eggmkfont and eggoptchar
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 16:38:46 +0200
+
+panda3d (1.6.2-43) unstable; urgency=low
+
+  * Ported some tools
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 16:24:43 +0200
+
+panda3d (1.6.2-42) unstable; urgency=low
+
+  * Ported some tool libraries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 15:35:17 +0200
+
+panda3d (1.6.2-41) unstable; urgency=low
+
+  * Added tools configuration
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 13:30:38 +0200
+
+panda3d (1.6.2-40) unstable; urgency=low
+
+  * Added package definitions
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 13:25:49 +0200
+
+panda3d (1.6.2-39) unstable; urgency=low
+
+  * Moved utils to tools
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 13:18:09 +0200
+
+panda3d (1.6.2-38) unstable; urgency=low
+
+  * Solved blocking fake HTTP server bug
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 12:14:49 +0200
+
+panda3d (1.6.2-37) unstable; urgency=low
+
+  * Enabled memory usage
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 07 Jul 2010 10:38:45 +0200
+
+panda3d (1.6.2-36) unstable; urgency=low
+
+  * Added configuration files
+  * Fixed dyanmic pipe loading
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 06 Jul 2010 17:19:39 +0200
+
+panda3d (1.6.2-35) unstable; urgency=low
+
+  * Ported http and motiontrail library
+  * Ported direct binaries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 06 Jul 2010 12:04:19 +0200
+
+panda3d (1.6.2-34) unstable; urgency=low
+
+  * Direct libraries compile
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 06 Jul 2010 11:22:05 +0200
+
+panda3d (1.6.2-33) unstable; urgency=low
+
+  * Moved cppparser to cppparse
+  * Added direct libraries and meta libraries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 06 Jul 2010 11:06:46 +0200
+
+panda3d (1.6.2-32) unstable; urgency=low
+
+  * Added models, no install rules yet
+  * Added interrogate testing
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 06 Jul 2010 10:11:26 +0200
+
+panda3d (1.6.2-31) unstable; urgency=low
+
+  * Interrogated libraries compile
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 05 Jul 2010 19:25:27 +0200
+
+panda3d (1.6.2-30) unstable; urgency=low
+
+  * Ported cppparse includes
+  * Added Panda3DInterrogate module for Interrogate support
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 05 Jul 2010 09:41:05 +0200
+
+panda3d (1.6.2-29) unstable; urgency=low
+
+  * Ported dxf and dxfegg library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 18:23:43 +0200
+
+panda3d (1.6.2-28) unstable; urgency=low
+
+  * Ported cvscopy library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 17:31:43 +0200
+
+panda3d (1.6.2-27) unstable; urgency=low
+
+  * Started new utils component
+  * Ported converter, tbase, eggbase, and progbase library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 17:21:51 +0200
+
+panda3d (1.6.2-26) unstable; urgency=low
+
+  * Added checkPandaVersion
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 15:02:43 +0200
+
+panda3d (1.6.2-25) unstable; urgency=low
+
+  * Moved ode library to pode
+  * Ported panda metalibs
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 14:40:08 +0200
+
+panda3d (1.6.2-24) unstable; urgency=low
+
+  * Moved gui library to pgui
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 14:28:51 +0200
+
+panda3d (1.6.2-23) unstable; urgency=low
+
+  * Moved base library to pbase
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 14:10:30 +0200
+
+panda3d (1.6.2-22) unstable; urgency=low
+
+  * Moved util library to putil
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 14:03:44 +0200
+
+panda3d (1.6.2-21) unstable; urgency=low
+
+  * Moved statclient library to pstatclient
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 14:01:45 +0200
+
+panda3d (1.6.2-20) unstable; urgency=low
+
+  * Ported glgsg and glstuff library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 13:50:14 +0200
+
+panda3d (1.6.2-19) unstable; urgency=low
+
+  * Renamed dtool libraries to comply with new metalib naming conventions
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 12:02:40 +0200
+
+panda3d (1.6.2-18) unstable; urgency=low
+
+  * Moved dtooldconfig testing binaries due to library name change
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 11:52:39 +0200
+
+panda3d (1.6.2-17) unstable; urgency=low
+
+  * Ported glxdisplay and pnmimagetypes library
+  * Started metalib port
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 30 Jun 2010 11:49:46 +0200
+
+panda3d (1.6.2-16) unstable; urgency=low
+
+  * Ported particlesystem library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 15:36:41 +0200
+
+panda3d (1.6.2-15) unstable; urgency=low
+
+  * Ported ode library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 15:32:47 +0200
+
+panda3d (1.6.2-14) unstable; urgency=low
+
+  * Ported pnmtext library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 13:45:54 +0200
+
+panda3d (1.6.2-13) unstable; urgency=low
+
+  * Ported framework and pgui library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 13:25:53 +0200
+
+panda3d (1.6.2-12) unstable; urgency=low
+
+  * Finished port of recorder library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 12:07:00 +0200
+
+panda3d (1.6.2-11) unstable; urgency=low
+
+  * Moved utils to panda binaries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 12:00:06 +0200
+
+panda3d (1.6.2-10) unstable; urgency=low
+
+  * Ported recorder library
+  * Removed downloader component
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 11:58:55 +0200
+
+panda3d (1.6.2-9) unstable; urgency=low
+
+  * Ported physics library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 11:43:46 +0200
+
+panda3d (1.6.2-8) unstable; urgency=low
+
+  * Added egg, egg2pg, and parametrics library
+  * Still missing Flex/Bison support for egg to compile
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 11:34:35 +0200
+
+panda3d (1.6.2-7) unstable; urgency=low
+
+  * Ported downloader library and tools
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 10:56:48 +0200
+
+panda3d (1.6.2-6) unstable; urgency=low
+
+  * Ported distort library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 10:18:30 +0200
+
+panda3d (1.6.2-5) unstable; urgency=low
+
+  * Ported collide, tform, dgraph, display, pgraphnodes, cull, device, grutil,
+    and text library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 10:16:03 +0200
+
+panda3d (1.6.2-4) unstable; urgency=low
+
+  * Ported char library
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 24 Jun 2010 09:17:37 +0200
+
+panda3d (1.6.2-3) unstable; urgency=low
+
+  * Added even more libraries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 23 Jun 2010 17:01:50 +0200
+
+panda3d (1.6.2-2) unstable; urgency=low
+
+  * Ported more libraries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 23 Jun 2010 16:31:39 +0200
+
+panda3d (1.6.2-1) unstable; urgency=low
+
+  * Ported first libraries and testing binaries
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 22 Jun 2010 14:27:39 +0200

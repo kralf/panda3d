@@ -25,10 +25,11 @@ remake_add_directories(
 remake_pack_deb(
   COMPONENT dtool
   DESCRIPTION "distribution tool"
-  libpython2.6
+  libpython libssl
 )
 remake_pack_deb(
-  panda3d-dtool
+  panda3d-dtool libz libode libopenal libfreetype
+  libjpeg libpng libtiff nvidia-cg-toolkit
 )
 remake_pack_deb(
   COMPONENT direct
@@ -39,6 +40,7 @@ remake_pack_deb(
   COMPONENT tools
   panda3d
   DESCRIPTION "tools"
+  libgtk2.0
 )
 remake_pack_deb(
   COMPONENT python
@@ -88,4 +90,14 @@ remake_pack_deb(
   COMPONENT blender
   DESCRIPTION "blender scripts"
   panda3d-tools blender
+)
+
+remake_distribute_deb(
+  DISTRIBUTION lucid
+  SECTION python
+  UPLOAD ppa:kralf/asl
+  DEPENDS remake libpython libssl-dev libgtk2.0-dev libz-dev
+    libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
+    libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-toolkit
+  PASS CMAKE_BUILD_TYPE PANDA3D_SUBVERSION_REVISION
 )
