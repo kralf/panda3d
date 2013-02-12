@@ -1,3 +1,9 @@
+panda3d (1.6.2-97) lucid; urgency=low
+
+  * Fixed build dependency libpython2.6 to include hard-coded version
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 12 Feb 2013 15:16:00 +0100
+
 panda3d (1.6.2-96) lucid; urgency=low
 
   * Updated build dependencies
