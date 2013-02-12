@@ -46,6 +46,7 @@ remake_pack_deb(
   COMPONENT python
   panda3d-direct
   DESCRIPTION "Python modules"
+  python
 )
 remake_pack_deb(
   COMPONENT test
@@ -99,5 +100,6 @@ remake_distribute_deb(
   DEPENDS remake libpython libssl-dev libgtk2.0-dev libz-dev
     libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
     libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-toolkit
+    bison flex python
   PASS CMAKE_BUILD_TYPE PANDA3D_SUBVERSION_REVISION
 )
