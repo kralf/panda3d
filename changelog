@@ -1,3 +1,10 @@
+panda3d (1.6.2-98) lucid; urgency=low
+
+  * Added nvidia-cg-dev build dependencies
+  * Added binary dependencies of development headers
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 13 Feb 2013 09:31:00 +0100
+
 panda3d (1.6.2-97) lucid; urgency=low
 
   * Fixed build dependency libpython2.6 to include hard-coded version

@@ -29,7 +29,7 @@ remake_pack_deb(
 )
 remake_pack_deb(
   panda3d-dtool libz libode libopenal libfreetype
-  libjpeg libpng libtiff nvidia-cg-toolkit
+  libjpeg libpng libtiff libcggl
 )
 remake_pack_deb(
   COMPONENT direct
@@ -57,12 +57,14 @@ remake_pack_deb(
 remake_pack_deb(
   COMPONENT dtool-dev
   DESCRIPTION "distribution tool development headers"
-  panda3d-dtool
+  panda3d-dtool python2.6-dev libssl-dev
 )
 remake_pack_deb(
   COMPONENT dev
   DESCRIPTION "development headers"
-  panda3d panda3d-dtool-dev
+  panda3d panda3d-dtool-dev libz-dev libode-dev libopenal-dev
+    libfreetype6-dev libjpeg62-dev libpng12-dev libtiff4-dev
+    libgl1-mesa-dev nvidia-cg-dev
 )
 remake_pack_deb(
   COMPONENT direct-dev
@@ -72,7 +74,7 @@ remake_pack_deb(
 remake_pack_deb(
   COMPONENT tools-dev
   DESCRIPTION "tools development headers"
-  panda3d-tools panda3d-dev
+  panda3d-tools panda3d-dev libgtk2.0-dev
 )
 
 remake_pack_deb(
@@ -97,9 +99,9 @@ remake_distribute_deb(
   DISTRIBUTION lucid
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS remake libpython2.6 libssl-dev libgtk2.0-dev libz-dev
+  DEPENDS remake python2.6-dev libssl-dev libgtk2.0-dev libz-dev
     libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
-    libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-toolkit
-    bison flex python
+    libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-dev bison
+    flex python
   PASS CMAKE_BUILD_TYPE PANDA3D_SUBVERSION_REVISION
 )
