@@ -21,6 +21,11 @@ remake_add_directories(
   modules
   COMPONENT dev
 )
+remake_doc(
+  man INSTALL share
+  ps
+  html
+)
 
 remake_pack_deb(
   COMPONENT dtool
@@ -95,6 +100,12 @@ remake_pack_deb(
   panda3d-tools blender
 )
 
+remake_pack_deb(
+  ARCH all
+  COMPONENT doc
+  DESCRIPTION "documentation"
+)
+
 remake_distribute_deb(
   DISTRIBUTION lucid
   SECTION python
@@ -102,6 +113,6 @@ remake_distribute_deb(
   DEPENDS remake python2.6-dev libssl-dev libgtk2.0-dev libz-dev
     libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
     libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-dev bison
-    flex python
+    flex python groff
   PASS CMAKE_BUILD_TYPE PANDA3D_SUBVERSION_REVISION
 )

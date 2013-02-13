@@ -1,3 +1,10 @@
+panda3d (1.6.2-99) lucid; urgency=low
+
+  * Added binary documentation package, including the Panda3D CMake module
+    documentation
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 13 Feb 2013 13:01:00 +0100
+
 panda3d (1.6.2-98) lucid; urgency=low
 
   * Added nvidia-cg-dev build dependencies
