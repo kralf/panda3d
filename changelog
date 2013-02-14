@@ -1,3 +1,10 @@
+panda3d (1.6.2-100) lucid; urgency=low
+
+  * No changes
+  * Binary rebuild against nvidia-cg-toolkit
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 14 Feb 2013 08:22:00 +0100
+
 panda3d (1.6.2-99) lucid; urgency=low
 
   * Added binary documentation package, including the Panda3D CMake module
