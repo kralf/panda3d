@@ -1,3 +1,9 @@
+panda3d (1.6.2-102) lucid; urgency=low
+
+  * Fixed libgtk2.0-0 build dependencies
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 14 Feb 2013 11:10:00 +0100
+
 panda3d (1.6.2-101) lucid; urgency=low
 
   * Fixed zlib build dependencies

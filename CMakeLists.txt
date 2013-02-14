@@ -45,7 +45,7 @@ remake_pack_deb(
   COMPONENT tools
   panda3d
   DESCRIPTION "tools"
-  libgtk2.0
+  libgtk2.0-0
 )
 remake_pack_deb(
   COMPONENT python
