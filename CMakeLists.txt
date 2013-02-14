@@ -33,7 +33,7 @@ remake_pack_deb(
   libpython libssl
 )
 remake_pack_deb(
-  panda3d-dtool libz libode libopenal libfreetype
+  panda3d-dtool zlib1g libode libopenal libfreetype
   libjpeg libpng libtiff libcggl
 )
 remake_pack_deb(
@@ -67,7 +67,7 @@ remake_pack_deb(
 remake_pack_deb(
   COMPONENT dev
   DESCRIPTION "development headers"
-  panda3d panda3d-dtool-dev libz-dev libode-dev libopenal-dev
+  panda3d panda3d-dtool-dev zlib1g-dev libode-dev libopenal-dev
     libfreetype6-dev libjpeg62-dev libpng12-dev libtiff4-dev
     libgl1-mesa-dev nvidia-cg-dev
 )
@@ -110,7 +110,7 @@ remake_distribute_deb(
   DISTRIBUTION lucid
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS remake python2.6-dev libssl-dev libgtk2.0-dev libz-dev
+  DEPENDS remake python2.6-dev libssl-dev libgtk2.0-dev zlib1g-dev
     libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
     libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-dev bison
     flex python groff
