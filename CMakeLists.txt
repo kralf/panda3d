@@ -34,7 +34,7 @@ remake_pack_deb(
 )
 remake_pack_deb(
   DEPENDS panda3d-dtool zlib1g libode libopenal libfreetype
-    libjpeg libpng libtiff libcggl
+    libjpeg[0-9]* libpng12-0 libtiff4 libcggl
 )
 remake_pack_deb(
   COMPONENT direct
@@ -66,8 +66,8 @@ remake_pack_deb(
   COMPONENT dev
   DESCRIPTION "development headers"
   DEPENDS panda3d panda3d-dtool-dev zlib1g-dev libode-dev
-    libopenal-dev libfreetype6-dev libjpeg62-dev libpng12-dev
-    libtiff4-dev libgl1-mesa-dev nvidia-cg-dev
+    libopenal-dev libfreetype6-dev libjpeg[0-9][0-9]*-dev
+    libpng12-dev libtiff4-dev libgl1-mesa-dev nvidia-cg-dev
 )
 remake_pack_deb(
   COMPONENT direct-dev
@@ -111,6 +111,17 @@ remake_distribute_deb(
   DEPENDS remake python2.6-dev libssl-dev libgtk2.0-dev zlib1g-dev
     libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
     libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-dev bison
-    flex python groff
+    flex python groff pkg-config
+  PASS CMAKE_BUILD_TYPE PANDA3D_GIT_REVISION
+)
+
+remake_distribute_deb(
+  DISTRIBUTION precise
+  SECTION python
+  UPLOAD ppa:kralf/asl
+  DEPENDS remake python2.6-dev libssl-dev libgtk2.0-dev zlib1g-dev
+    libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
+    libjpeg8-dev libpng12-dev libtiff4-dev nvidia-cg-dev bison
+    flex python groff pkg-config
   PASS CMAKE_BUILD_TYPE PANDA3D_GIT_REVISION
 )
