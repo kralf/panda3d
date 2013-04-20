@@ -30,74 +30,72 @@ remake_doc(
 remake_pack_deb(
   COMPONENT dtool
   DESCRIPTION "distribution tool"
-  libpython libssl
+  DEPENDS libpython libssl
 )
 remake_pack_deb(
-  panda3d-dtool zlib1g libode libopenal libfreetype
-  libjpeg libpng libtiff libcggl
+  DEPENDS panda3d-dtool zlib1g libode libopenal libfreetype
+    libjpeg libpng libtiff libcggl
 )
 remake_pack_deb(
   COMPONENT direct
-  panda3d
   DESCRIPTION "Python interface"
+  DEPENDS panda3d
 )
 remake_pack_deb(
   COMPONENT tools
-  panda3d
   DESCRIPTION "tools"
-  libgtk2.0-0
+  DEPENDS panda3d libgtk2.0-0
 )
 remake_pack_deb(
   COMPONENT python
-  panda3d-direct
   DESCRIPTION "Python modules"
-  python
+  DEPENDS panda3d-direct python
 )
 remake_pack_deb(
   COMPONENT test
   DESCRIPTION "testing binaries"
-  panda3d-dtool panda3d panda3d-tools
+  DEPENDS panda3d-dtool panda3d panda3d-tools
 )
 
 remake_pack_deb(
   COMPONENT dtool-dev
   DESCRIPTION "distribution tool development headers"
-  panda3d-dtool python2.6-dev libssl-dev
+  DEPENDS panda3d-dtool python2.6-dev libssl-dev
 )
 remake_pack_deb(
   COMPONENT dev
   DESCRIPTION "development headers"
-  panda3d panda3d-dtool-dev zlib1g-dev libode-dev libopenal-dev
-    libfreetype6-dev libjpeg62-dev libpng12-dev libtiff4-dev
-    libgl1-mesa-dev nvidia-cg-dev
+  DEPENDS panda3d panda3d-dtool-dev zlib1g-dev libode-dev
+    libopenal-dev libfreetype6-dev libjpeg62-dev libpng12-dev
+    libtiff4-dev libgl1-mesa-dev nvidia-cg-dev
 )
 remake_pack_deb(
   COMPONENT direct-dev
   DESCRIPTION "Python interface development headers"
-  panda3d-direct panda3d-dev
+  DEPENDS panda3d-direct panda3d-dev
 )
 remake_pack_deb(
   COMPONENT tools-dev
   DESCRIPTION "tools development headers"
-  panda3d-tools panda3d-dev libgtk2.0-dev
+  DEPENDS panda3d-tools panda3d-dev libgtk2.0-dev
 )
 
 remake_pack_deb(
   ARCH all
   COMPONENT models
   DESCRIPTION "models"
-  panda3d
+  DEPENDS panda3d
 )
 remake_pack_deb(
   COMPONENT samples
   DESCRIPTION "sample applications"
-  panda3d-python panda3d-models
+  DEPENDS panda3d-python panda3d-models
 )
 
 remake_pack_deb(
   COMPONENT blender
   DESCRIPTION "blender scripts"
-  panda3d-tools blender
+  DEPENDS panda3d-tools blender
 )
 
 remake_pack_deb(
@@ -114,5 +112,5 @@ remake_distribute_deb(
     libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
     libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-dev bison
     flex python groff
-  PASS CMAKE_BUILD_TYPE PANDA3D_SUBVERSION_REVISION
+  PASS CMAKE_BUILD_TYPE PANDA3D_GIT_REVISION
 )

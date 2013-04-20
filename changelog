@@ -1,3 +1,9 @@
+panda3d (1.6.2-103) lucid; urgency=low
+
+  * Rebased project to github
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Sat, 20 Apr 2013 12:23:00 +0100
+
 panda3d (1.6.2-102) lucid; urgency=low
 
   * Fixed libgtk2.0-0 build dependencies
