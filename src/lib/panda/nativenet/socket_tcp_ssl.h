@@ -32,7 +32,7 @@ struct SSlStartup
         SSL_METHOD *meth;
         SSLeay_add_ssl_algorithms();
         //meth = SSLv23_server_method();
-        meth = SSLv23_method();
+        meth = const_cast<SSL_METHOD*>(SSLv23_method());
         SSL_load_error_strings();
         global_ssl_ctx = SSL_CTX_new (meth);                        
    }

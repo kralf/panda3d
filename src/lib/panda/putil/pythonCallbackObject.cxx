@@ -23,8 +23,12 @@
 TypeHandle PythonCallbackObject::_type_handle;
 
 #ifndef CPPPARSER
+#ifdef __GNUC__
+IMPORT_THIS struct Dtool_PyTypedObject Dtool_TypedObject __attribute__((weak));
+#else
 IMPORT_THIS struct Dtool_PyTypedObject Dtool_TypedObject;
-#endif
+#endif  // __GNUC__
+#endif  // CPPPARSER
 
 ////////////////////////////////////////////////////////////////////
 //     Function: PythonCallbackObject::Constructor

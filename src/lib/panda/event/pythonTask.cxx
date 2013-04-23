@@ -22,8 +22,12 @@
 TypeHandle PythonTask::_type_handle;
 
 #ifndef CPPPARSER
+#ifdef __GNUC__
+IMPORT_THIS struct Dtool_PyTypedObject Dtool_TypedReferenceCount __attribute__((weak));
+#else
 IMPORT_THIS struct Dtool_PyTypedObject Dtool_TypedReferenceCount;
-#endif
+#endif  // __GNUC__
+#endif  // CPPPARSER
 
 ////////////////////////////////////////////////////////////////////
 //     Function: PythonTask::Constructor

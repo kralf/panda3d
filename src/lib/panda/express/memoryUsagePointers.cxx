@@ -27,9 +27,15 @@
 #include "py_panda.h"  
 
 #ifndef CPPPARSER
+#ifdef __GNUC__
+extern EXPCL_PANDAEXPRESS Dtool_PyTypedObject Dtool_TypedObject __attribute__((weak));
+extern EXPCL_PANDAEXPRESS Dtool_PyTypedObject Dtool_TypedReferenceCount __attribute__((weak));
+extern EXPCL_PANDAEXPRESS Dtool_PyTypedObject Dtool_ReferenceCount __attribute__((weak));
+#else
 extern EXPCL_PANDAEXPRESS Dtool_PyTypedObject Dtool_TypedObject;
 extern EXPCL_PANDAEXPRESS Dtool_PyTypedObject Dtool_TypedReferenceCount;
 extern EXPCL_PANDAEXPRESS Dtool_PyTypedObject Dtool_ReferenceCount;
+#endif  // __GNUC__
 #endif  // CPPPARSER
 
 #endif  // HAVE_PYTHON

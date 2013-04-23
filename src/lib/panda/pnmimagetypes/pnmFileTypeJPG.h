@@ -15,7 +15,7 @@
 #ifndef PNMFILETYPEJPG_H
 #define PNMFILETYPEJPG_H
 
-#include "pandabase.h"
+#include "dtool_config.h"
 
 #ifdef HAVE_JPEG
 
@@ -25,10 +25,6 @@
 // Ugly hack due to png weirdness with setjmp.
 #include <png.h>
 #endif
-
-#include "pnmFileType.h"
-#include "pnmReader.h"
-#include "pnmWriter.h"
 
 #if defined(_WIN32)
 #define WIN32_LEAN_AND_MEAN
@@ -40,6 +36,12 @@ extern "C" {
 #include <jpeglib.h>
 #include <setjmp.h>
 }
+
+#include "pandabase.h"
+
+#include "pnmFileType.h"
+#include "pnmReader.h"
+#include "pnmWriter.h"
 
 ////////////////////////////////////////////////////////////////////
 //       Class : PNMFileTypeJPG

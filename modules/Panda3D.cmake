@@ -92,17 +92,18 @@ macro(panda3d_interrogate panda3d_target)
     endforeach(panda3d_flag)
   endif(CMAKE_BUILD_TYPE)
 
-  remake_set(panda3d_include_flags)
-  remake_set(panda3d_interrogate_include_flags)
+  remake_unset(panda3d_include_flags)
+  remake_unset(panda3d_interrogate_include_flags)
 
   get_property(panda3d_interrogate_include_dirs DIRECTORY PROPERTY
     PANDA3D_INTERROGATE_INCLUDE_DIRECTORIES)
   foreach(panda3d_interrogate_include_dir ${panda3d_interrogate_include_dirs})
-    remake_list_push(panda3d_include_flags
-      "-I${panda3d_interrogate_include_dir}")
     remake_list_push(panda3d_interrogate_include_flags
       "-S${panda3d_interrogate_include_dir}")
   endforeach(panda3d_interrogate_include_dir)
+  remake_list_push(panda3d_interrogate_include_flags
+    "-S${CMAKE_INSTALL_PREFIX}/include"
+    "-S${CMAKE_INSTALL_PREFIX}/include/${CMAKE_LIBRARY_ARCHITECTURE}")
 
   get_property(panda3d_include_dirs DIRECTORY PROPERTY INCLUDE_DIRECTORIES)
   foreach(panda3d_include_dir ${panda3d_include_dirs})
@@ -123,7 +124,7 @@ macro(panda3d_interrogate panda3d_target)
   remake_file(panda3d_file ${panda3d_dir}/arguments)
   remake_file_create(${panda3d_file})
   remake_file_write(${panda3d_file} ${panda3d_args} ${panda3d_defs}
-    ${panda3d_include_flags} ${panda3d_interrogate_include_flags})
+    ${panda3d_interrogate_include_flags} ${panda3d_include_flags})
   remake_file(panda3d_file ${panda3d_dir}/input)
   remake_file_create(${panda3d_file})
   remake_file_write(${panda3d_file} ${panda3d_input})

@@ -30,11 +30,11 @@ remake_doc(
 remake_pack_deb(
   COMPONENT dtool
   DESCRIPTION "distribution tool"
-  DEPENDS libpython libssl
+  DEPENDS libpython2.[0-9]* libssl[0-9].[0-9].[0-9]
 )
 remake_pack_deb(
-  DEPENDS panda3d-dtool zlib1g libode libopenal libfreetype
-    libjpeg[0-9]* libpng12-0 libtiff4 libcggl
+  DEPENDS panda3d-dtool zlib1g libode1 libopenal1 libfreetype6
+    libjpeg[0-9]* libpng12-0 libtiff4 libcg
 )
 remake_pack_deb(
   COMPONENT direct
@@ -60,14 +60,14 @@ remake_pack_deb(
 remake_pack_deb(
   COMPONENT dtool-dev
   DESCRIPTION "distribution tool development headers"
-  DEPENDS panda3d-dtool python2.6-dev libssl-dev
+  DEPENDS panda3d-dtool python-dev libssl-dev
 )
 remake_pack_deb(
   COMPONENT dev
   DESCRIPTION "development headers"
   DEPENDS panda3d panda3d-dtool-dev zlib1g-dev libode-dev
     libopenal-dev libfreetype6-dev libjpeg[0-9][0-9]*-dev
-    libpng12-dev libtiff4-dev libgl1-mesa-dev nvidia-cg-dev
+    libpng12-dev libtiff4-dev libgl1-mesa-dev nvidia-cg-toolkit
 )
 remake_pack_deb(
   COMPONENT direct-dev
@@ -108,10 +108,10 @@ remake_distribute_deb(
   DISTRIBUTION lucid
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS remake python2.6-dev libssl-dev libgtk2.0-dev zlib1g-dev
+  DEPENDS remake python-dev libssl-dev libgtk2.0-dev zlib1g-dev
     libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
-    libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-dev bison
-    flex python groff pkg-config
+    libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-toolkit bison
+    flex python blender groff pkg-config
   PASS CMAKE_BUILD_TYPE PANDA3D_GIT_REVISION
 )
 
@@ -119,9 +119,9 @@ remake_distribute_deb(
   DISTRIBUTION precise
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS remake python2.6-dev libssl-dev libgtk2.0-dev zlib1g-dev
+  DEPENDS remake python-dev libssl-dev libgtk2.0-dev zlib1g-dev
     libode-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
-    libjpeg8-dev libpng12-dev libtiff4-dev nvidia-cg-dev bison
-    flex python groff pkg-config
+    libjpeg8-dev libpng12-dev libtiff4-dev nvidia-cg-toolkit bison
+    flex python blender groff pkg-config
   PASS CMAKE_BUILD_TYPE PANDA3D_GIT_REVISION
 )

@@ -21,8 +21,12 @@
   #include "py_panda.h"
   #include "typedReferenceCount.h"
   #ifndef CPPPARSER
+  #ifdef __GNUC__
+    extern EXPCL_PANDAODE Dtool_PyTypedObject Dtool_OdeGeom __attribute__((weak));
+  #else
     extern EXPCL_PANDAODE Dtool_PyTypedObject Dtool_OdeGeom;
-  #endif
+  #endif  // __GNUC__
+  #endif  // CPPPARSER
 #endif
 
 dReal OdeUtil::OC_infinity = dInfinity;

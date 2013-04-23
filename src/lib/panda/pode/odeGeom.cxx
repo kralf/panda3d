@@ -30,8 +30,12 @@
   #include "py_panda.h"
   #include "typedReferenceCount.h"
   #ifndef CPPPARSER
+  #ifdef __GNUC__
+    extern EXPCL_PANDAODE Dtool_PyTypedObject Dtool_OdeContact __attribute__((weak));
+  #else
     extern EXPCL_PANDAODE Dtool_PyTypedObject Dtool_OdeContact;
-  #endif
+  #endif  // __GNUC__
+  #endif  // CPPPARSER
 #endif
 
 //OdeGeom::GeomSurfaceMap OdeGeom::_geom_surface_map;

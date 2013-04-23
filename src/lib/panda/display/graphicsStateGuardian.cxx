@@ -60,8 +60,12 @@
 #ifdef HAVE_PYTHON
 #include "py_panda.h"
 #ifndef CPPPARSER
+#ifdef __GNUC__
+IMPORT_THIS struct Dtool_PyTypedObject Dtool_Texture __attribute__((weak));
+#else
 IMPORT_THIS struct Dtool_PyTypedObject Dtool_Texture;
-#endif
+#endif  // __GNUC__
+#endif  // CPPPARSER
 #endif  // HAVE_PYTHON
 
 PStatCollector GraphicsStateGuardian::_vertex_buffer_switch_pcollector("Vertex buffer switch:Vertex");

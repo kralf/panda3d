@@ -773,7 +773,11 @@ unref() const {
 ////////////////////////////////////////////////////////////////////
 PyObject *RenderState::
 get_composition_cache() const {
+#ifdef __GNUC__
+  IMPORT_THIS struct Dtool_PyTypedObject Dtool_RenderState __attribute__((weak));
+#else
   IMPORT_THIS struct Dtool_PyTypedObject Dtool_RenderState;
+#endif
   LightReMutexHolder holder(*_states_lock);
   size_t cache_size = _composition_cache.get_size();
   PyObject *list = PyList_New(cache_size);
@@ -833,7 +837,11 @@ get_composition_cache() const {
 ////////////////////////////////////////////////////////////////////
 PyObject *RenderState::
 get_invert_composition_cache() const {
+#ifdef __GNUC__
+  IMPORT_THIS struct Dtool_PyTypedObject Dtool_RenderState __attribute__((weak));
+#else
   IMPORT_THIS struct Dtool_PyTypedObject Dtool_RenderState;
+#endif
   LightReMutexHolder holder(*_states_lock);
   size_t cache_size = _invert_composition_cache.get_size();
   PyObject *list = PyList_New(cache_size);
@@ -2054,7 +2062,11 @@ update_pstats(int old_referenced_bits, int new_referenced_bits) {
 ////////////////////////////////////////////////////////////////////
 PyObject *RenderState::
 get_states() {
+#ifdef __GNUC__
+  IMPORT_THIS struct Dtool_PyTypedObject Dtool_RenderState __attribute__((weak));
+#else
   IMPORT_THIS struct Dtool_PyTypedObject Dtool_RenderState;
+#endif
   if (_states == (States *)NULL) {
     return PyList_New(0);
   }
