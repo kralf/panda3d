@@ -31,8 +31,7 @@ if(PANDA3D_TOOLS_COMPONENT_BUILD)
 endif(PANDA3D_TOOLS_COMPONENT_BUILD)
 
 remake_project_get(CONFIGURATION_DESTINATION DESTINATION)
-# remake_project_header(config.h.remake INSTALL)
-remake_include(${CMAKE_CURRENT_BINARY_DIR})
+remake_project_header(config.h.remake INSTALL)
 remake_include()
 
 remake_add_directories(lib)

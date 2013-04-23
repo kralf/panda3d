@@ -1,3 +1,9 @@
+panda3d (1.6.2-106) lucid; urgency=low
+
+  * Re-enabled configuration header in CMakeLists file
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 23 Apr 2013 13:10:00 +0100
+
 panda3d (1.6.2-105) lucid; urgency=low
 
   * Adapted build and binary dependencies for precise
