@@ -76,7 +76,8 @@ macro(panda3d_interrogate panda3d_target)
   endif(panda3d_promiscuous)
 
   remake_set(panda3d_defs -Dvolatile -Dmutable -DCPPPARSER -D__STDC__=1
-    -D__cplusplus -D__inline -D__const=const -DBUILDING_${panda3d_building})
+    -D__cplusplus -D__inline -D__signed__=signed -D__const=const
+    -DBUILDING_${panda3d_building})
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     remake_list_push(panda3d_defs -D_LP64)
   else(CMAKE_SIZEOF_VOID_P EQUAL 8)

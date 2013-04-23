@@ -1,3 +1,10 @@
+panda3d (1.6.2-107) lucid; urgency=low
+
+  * Added __signed__ definition to interrogate flags in panda3d_interrogate()
+    (build failed under 32-bit precise)
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 23 Apr 2013 22:23:00 +0100
+
 panda3d (1.6.2-106) lucid; urgency=low
 
   * Re-enabled configuration header in CMakeLists file
