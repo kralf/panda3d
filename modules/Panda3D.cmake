@@ -19,6 +19,7 @@
 ############################################################################
 
 include(ReMakeGenerate)
+include(ReMakePython)
 
 remake_minimum_required(VERSION 0.3)
 
@@ -246,8 +247,8 @@ macro(panda3d_python_package)
 
   string(REPLACE ";" ":" panda3d_python_path "${panda3d_paths}")
   remake_generate_custom("Python module"
-    PYTHONPATH=${panda3d_python_path} python ${panda3d_command} -q -r
-      ${panda3d_libraries}
+    PYTHONPATH=${panda3d_python_path} ${PYTHON_EXECUTABLE}
+      ${panda3d_command} -q -r ${panda3d_libraries}
     INPUT ${panda3d_targets} GENERATED
     SOURCES ${panda3d_sources}
     OTHERS ${panda3d_others})

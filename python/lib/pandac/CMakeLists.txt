@@ -3,7 +3,7 @@ remake_set(PANDA3D_EXPRESS_PATH
   ${REMAKE_PROJECT_BINARY_DIR}/metalib/panda/express)
 
 panda3d_python_package(
-  COMMAND ${REMAKE_PYTHON_SOURCE_DIR}/bin/direct/gen_pycode
+  COMMAND ${CMAKE_SOURCE_DIR}/python/bin/direct/gen_pycode
   NAME panda3d.pandac
   PATH ${PANDA3D_PYTHON_PATH} ${PANDA3D_EXPRESS_PATH}
 )

@@ -1,3 +1,10 @@
+panda3d (1.6.2-109) lucid; urgency=low
+
+  * Fixed panda3d_python_package() to not make use of deprecated
+    ${REMAKE_PYTHON_SOURCE_DIR} variable
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 07 May 2013 16:46:00 +0100
+
 panda3d (1.6.2-108) lucid; urgency=low
 
   * Adapted top-level CMakeLists.txt to reflect recent changes in
