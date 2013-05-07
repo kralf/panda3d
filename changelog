@@ -1,3 +1,10 @@
+panda3d (1.6.2-108) lucid; urgency=low
+
+  * Adapted top-level CMakeLists.txt to reflect recent changes in
+    ReMakePython
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 07 May 2013 14:09:00 +0100
+
 panda3d (1.6.2-107) lucid; urgency=low
 
   * Added __signed__ definition to interrogate flags in panda3d_interrogate()
