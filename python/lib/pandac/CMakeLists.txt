@@ -1,4 +1,4 @@
-remake_set(PANDA3D_PYTHON_PATH ${REMAKE_PYTHON_BINARY_DIR}/lib)
+remake_set(PANDA3D_PYTHON_PATH ${CMAKE_BINARY_DIR}/python/lib)
 remake_set(PANDA3D_EXPRESS_PATH
   ${REMAKE_PROJECT_BINARY_DIR}/metalib/panda/express)
 
