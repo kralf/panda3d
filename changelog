@@ -1,3 +1,10 @@
+panda3d (1.6.2-114) lucid; urgency=low
+
+  * Fixed plugin loader problems in Ubuntu precise (plugins would not
+    be found due to missing linkage to dtool library)
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 20 Jun 2013 14:47:00 +0100
+
 panda3d (1.6.2-113) lucid; urgency=low
 
   * Fixed linkage problems in Ubuntu precise
