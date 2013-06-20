@@ -1,3 +1,10 @@
+panda3d (1.6.2-112) lucid; urgency=low
+
+  * Now linking meta libraries with FORCE_LINK, addressing linkage failures
+    in Ubuntu precise
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 20 Jun 2013 07:45:00 +0100
+
 panda3d (1.6.2-111) lucid; urgency=low
 
   * Fixed Config.prc generation bug
