@@ -1,3 +1,10 @@
+panda3d (1.6.2-116) lucid; urgency=low
+
+  * Small fixes in variable substitution for control extra and configuration
+    files
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 11 Jul 2013 08:56:00 +0100
+
 panda3d (1.6.2-115) lucid; urgency=low
 
   * Changed plugin search path to the location of libpanda3d-dutil.so
