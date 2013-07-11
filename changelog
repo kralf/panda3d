@@ -1,3 +1,13 @@
+panda3d (1.6.2-115) lucid; urgency=low
+
+  * Changed plugin search path to the location of libpanda3d-dutil.so
+    (the meta-library libpanda3d-dtool.so would not properly link into
+    executables under precise)
+  * Added control extra files for proper creation and removal of the
+    modelcache directory
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 11 Jul 2013 07:54:00 +0100
+
 panda3d (1.6.2-114) lucid; urgency=low
 
   * Fixed plugin loader problems in Ubuntu precise (plugins would not

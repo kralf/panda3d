@@ -443,7 +443,7 @@ read_args() {
     char *tail = strrchr(buffer,'/');
     char *head = strchr(buffer,'/');
     if (tail && head &&
-      (strcmp(tail, "/lib" PANDA_LIBRARY_PREFIX "dtool.so")==0))
+      (strcmp(tail, "/lib" PANDA_LIBRARY_PREFIX "dutil.so")==0))
     {
       _dtool_name = head;
     }

@@ -37,6 +37,7 @@ remake_pack_deb(
 remake_pack_deb(
   DEPENDS panda3d-dtool zlib1g libode1 libopenal1 libfreetype6
     libjpeg[0-9]* libpng12-0 libtiff4 libcg
+  EXTRA debian/*
 )
 remake_pack_deb(
   COMPONENT direct

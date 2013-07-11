@@ -1,0 +1,14 @@
+#!/bin/sh -e
+# postinst for panda3d
+
+action="$1"
+oldversion="$2"
+
+if [ "$action" != configure ]; then
+  exit 0
+fi
+
+mkdir -p ${MODEL_DESTINATION}/modelcache
+chmod 0777 ${MODEL_DESTINATION}/modelcache
+
+exit 0

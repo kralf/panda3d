@@ -1,0 +1,10 @@
+#!/bin/sh -e
+# postrm for panda3d
+
+if [ "$1" = "purge" ]; then
+  if [ -d "${MODEL_DESTINATION}/modelcache" ]; then
+    rm -rf ${MODEL_DESTINATION}/modelcache
+  fi
+fi
+
+exit 0
