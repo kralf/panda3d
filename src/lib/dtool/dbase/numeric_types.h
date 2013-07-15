@@ -37,6 +37,8 @@ typedef unsigned long PN_uint64;
 typedef double PN_float64;
 typedef float PN_float32;
 
+typedef double PN_stdfloat;
+
 #else  // _LP64
 // A 32-bit environment.
 
@@ -58,6 +60,8 @@ typedef unsigned long long PN_uint64;
 
 typedef double PN_float64;
 typedef float PN_float32;
+
+typedef float PN_stdfloat;
 
 #endif  // _LP64
 #endif

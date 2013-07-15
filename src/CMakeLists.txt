@@ -5,6 +5,7 @@ remake_find_package(JPEG)
 remake_find_package(PNG)
 remake_find_package(TIFF)
 remake_find_library(ode ode/ode.h)
+remake_find_package(bullet CONFIG)
 remake_find_package(gl CONFIG)
 remake_find_library(Cg Cg/cg.h PACKAGE Cg OPTIONAL)
 remake_find_library(CgGL Cg/cgGL.h PACKAGE CgGL OPTIONAL)
@@ -20,6 +21,7 @@ endif(CGGL_FOUND)
 
 remake_include(
   ${FREETYPE2_INCLUDE_DIRS}
+  ${BULLET_INCLUDE_DIRS}
   ${GL_INCLUDE_DIRS}
   ${PYTHON_INCLUDE_PATH}
 )

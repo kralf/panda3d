@@ -1,3 +1,9 @@
+panda3d (1.6.2-119) lucid; urgency=low
+
+  * Added bullet support, interrogation fails
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 15 Jul 2013 18:28:00 +0100
+
 panda3d (1.6.2-118) lucid; urgency=low
 
   * Tested tinydisplay support
