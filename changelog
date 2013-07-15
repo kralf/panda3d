@@ -1,3 +1,11 @@
+panda3d (1.6.2-118) lucid; urgency=low
+
+  * Tested tinydisplay support
+  * Added meta-library libpanda3d-panda_tiny.so, following the idea of
+    libpanda3d-panda_gl.so
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 15 Jul 2013 13:51:00 +0100
+
 panda3d (1.6.2-117) lucid; urgency=low
 
   * Added tinydisplay support, needs testing
