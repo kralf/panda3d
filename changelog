@@ -1,3 +1,9 @@
+panda3d (1.6.2-120) lucid; urgency=low
+
+  * Interrogation of bullet succeeds
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 18 Jul 2013 10:09:00 +0100
+
 panda3d (1.6.2-119) lucid; urgency=low
 
   * Added bullet support, interrogation fails
