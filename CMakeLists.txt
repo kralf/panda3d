@@ -113,10 +113,10 @@ remake_distribute_deb(
   DISTRIBUTION lucid
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS remake python-dev libssl-dev libgtk2.0-dev zlib1g-dev
-    libode-dev libbullet-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
+  DEPENDS python-dev libssl-dev libgtk2.0-dev zlib1g-dev libode-dev
+    libbullet-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
     libjpeg62-dev libpng12-dev libtiff4-dev nvidia-cg-toolkit bison
-    flex python blender groff pkg-config
+    flex python blender remake groff pkg-config
   PASS CMAKE_BUILD_TYPE PANDA3D_GIT_REVISION
 )
 
@@ -124,9 +124,9 @@ remake_distribute_deb(
   DISTRIBUTION precise
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS remake python-dev libssl-dev libgtk2.0-dev zlib1g-dev
-    libode-dev libbullet-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
+  DEPENDS python-dev libssl-dev libgtk2.0-dev zlib1g-dev libode-dev
+    libbullet-dev libgl1-mesa-dev libopenal-dev libfreetype6-dev
     libjpeg8-dev libpng12-dev libtiff4-dev nvidia-cg-toolkit bison
-    flex python blender groff pkg-config
+    flex python blender remake groff pkg-config
   PASS CMAKE_BUILD_TYPE PANDA3D_GIT_REVISION
 )
