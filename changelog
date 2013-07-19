@@ -1,3 +1,10 @@
+panda3d (1.6.2-122) lucid; urgency=low
+
+  * No changes, rebuilding for exclusion of CMakeLists.txt in dev packages
+    (which has been fixed in ReMake)
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Fri, 19 Jul 2013 07:44:00 +0100
+
 panda3d (1.6.2-121) lucid; urgency=low
 
   * Fixed libpbullet linkage
