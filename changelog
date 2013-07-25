@@ -1,3 +1,10 @@
+panda3d (1.6.2-124) lucid; urgency=low
+
+  * Removed zlib pkg-config file dependency as it cannot be satisfied under
+    lucid
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 25 Jul 2013 21:55:00 +0100
+
 panda3d (1.6.2-123) lucid; urgency=low
 
   * Added pkg-config files
