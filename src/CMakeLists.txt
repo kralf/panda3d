@@ -1,4 +1,4 @@
-remake_find_package(ZLIB)
+remake_find_package(zlib CONFIG)
 remake_find_package(openssl CONFIG)
 remake_find_package(freetype2 CONFIG)
 remake_find_package(JPEG)
@@ -38,3 +38,11 @@ remake_project_header(config.h.remake INSTALL)
 remake_add_directories(lib)
 remake_add_directories(metalib)
 remake_add_directories(bin)
+
+remake_pkg_config_generate(COMPONENT dtool REQUIRES python openssl)
+remake_pkg_config_generate(REQUIRES panda3d-dtool zlib ode bullet openal
+  freetype2 libpng12 gl)
+remake_pkg_config_generate(COMPONENT direct REQUIRES panda3d)
+if(PANDA3D_TOOLS_COMPONENT_BUILD)
+  remake_pkg_config_generate(COMPONENT tools REQUIRES panda3d gtk+-2.0)
+endif(PANDA3D_TOOLS_COMPONENT_BUILD)

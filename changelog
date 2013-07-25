@@ -1,3 +1,9 @@
+panda3d (1.6.2-123) lucid; urgency=low
+
+  * Added pkg-config files
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 25 Jul 2013 16:29:00 +0100
+
 panda3d (1.6.2-122) lucid; urgency=low
 
   * No changes, rebuilding for exclusion of CMakeLists.txt in dev packages
