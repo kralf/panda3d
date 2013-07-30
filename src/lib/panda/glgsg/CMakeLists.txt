@@ -1,2 +1,1 @@
-remake_add_library(glgsg *.cxx LINK ${GL_LIBRARIES})
-remake_add_headers(*.h *.I *.T)
+remake_add_plugin(glgsg *.cxx LINK ${GL_LIBRARIES})

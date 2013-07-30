@@ -12,6 +12,7 @@ remake_project(
   HOME "http://panda3d.org"
   LICENSE "Modified BSD License"
   INSTALL /usr
+  PLUGIN_DESTINATION lib
   NOTES ReleaseNotes
 )
 

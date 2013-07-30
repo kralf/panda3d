@@ -15,5 +15,4 @@ remake_generate_custom(
 )
 remake_include(${CMAKE_CURRENT_BINARY_DIR})
 
-remake_add_library(tinydisplay *.cxx)
-remake_add_headers(*.h *.I *.T)
+remake_add_plugin(tinydisplay *.cxx)

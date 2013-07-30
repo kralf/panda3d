@@ -1,3 +1,10 @@
+panda3d (1.6.2-125) lucid; urgency=low
+
+  * Defining plugin libraries by remake_add_plugin() to hide them from
+    the pkg-config files (forced linkage otherwise loads all display plugins)
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 30 Jul 2013 12:33:00 +0100
+
 panda3d (1.6.2-124) lucid; urgency=low
 
   * Removed zlib pkg-config file dependency as it cannot be satisfied under
