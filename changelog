@@ -1,3 +1,10 @@
+panda3d (1.6.2-126) lucid; urgency=low
+
+  * Removed python pkg-config file dependency as it cannot be satisfied
+    under lucid
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 05 Aug 2013 07:19:00 +0100
+
 panda3d (1.6.2-125) lucid; urgency=low
 
   * Defining plugin libraries by remake_add_plugin() to hide them from
