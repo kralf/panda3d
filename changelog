@@ -1,3 +1,9 @@
+panda3d (1.6.2-127) lucid; urgency=low
+
+  * No changes, rebuild to fix install location of Python modules
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 08 Aug 2013 10:35:00 +0100
+
 panda3d (1.6.2-126) lucid; urgency=low
 
   * Removed python pkg-config file dependency as it cannot be satisfied
