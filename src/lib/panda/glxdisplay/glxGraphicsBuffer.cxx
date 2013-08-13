@@ -186,7 +186,7 @@ open_buffer() {
     }
   }
   
-  if (glxgsg->_fbconfig == None || glxgsg->_context_has_pbuffer) {
+  if (glxgsg->_fbconfig == None || !glxgsg->_context_has_pbuffer) {
     // If we didn't use an fbconfig to create the GSG, or it doesn't
     // support buffers, we can't create a PBuffer.
     return false;
