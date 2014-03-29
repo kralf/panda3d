@@ -1,3 +1,10 @@
+panda3d (1.6.2-130) lucid; urgency=low
+
+  * Forcing linkage of bam tools with panda meta-library to fix the lack
+    of texture image type support
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Sat, 29 Mar 2014 07:35:00 +0100
+
 panda3d (1.6.2-129) lucid; urgency=low
 
   * Changed parameter naming of man_extension to man_section in gendocs

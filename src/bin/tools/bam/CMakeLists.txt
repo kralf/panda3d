@@ -1,1 +1,1 @@
-remake_add_executables(*.cxx LINK converter eggbase)
+remake_add_executables(*.cxx FORCE_LINK converter eggbase panda)
