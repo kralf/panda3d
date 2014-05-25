@@ -52,17 +52,41 @@ get_joint_type() const {
   return dJointGetType(_id);
 }
 
-/*
 INLINE void OdeJoint::
-set_feedback(dJointFeedback *feedback) {
-  dJointSetFeedback(_id, feedback);
+set_feedback(OdeJointFeedback *feedback) {
+  if (_feedback != NULL) {
+    delete _feedback;
+  }
+  
+  _feedback = feedback;
+  
+  if (_feedback != NULL) {
+    dJointSetFeedback(_id, _feedback->get_feedback_ptr());
+  }
+  else {
+    dJointSetFeedback(_id, NULL);
+  }
 }
 
-INLINE dJointFeedback *OdeJoint::
-get_feedback() {
-  return dJointGetFeedback(_id);
+INLINE void OdeJoint::
+set_feedback(bool flag) {
+  if (flag) {
+    if (_feedback != NULL) {
+      return;
+    }
+    _feedback = new OdeJointFeedback;
+    dJointSetFeedback(_id, _feedback->get_feedback_ptr());
+  } else if (_feedback != NULL) {
+    dJointSetFeedback(_id, NULL);
+    delete _feedback;
+    _feedback = NULL;
+  }
 }
-*/
+
+INLINE OdeJointFeedback *OdeJoint::
+get_feedback() {
+  return _feedback;
+}
 
 INLINE int OdeJoint::
 compare_to(const OdeJoint &other) const {

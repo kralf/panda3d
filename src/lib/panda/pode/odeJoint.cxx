@@ -31,14 +31,16 @@ TypeHandle OdeJoint::_type_handle;
 
 OdeJoint::
 OdeJoint() : 
-  _id(0) {
+  _id(0),
+  _feedback(NULL) {
   ostream &out = odejoint_cat.debug();
   out << get_type() << "(" << _id  << ")\n";
 }
 
 OdeJoint::
 OdeJoint(dJointID id) : 
-  _id(id) {
+  _id(id),
+  _feedback(NULL) {
   ostream &out = odejoint_cat.debug();
   out << get_type() << "(" << _id  << ")\n";
 }
@@ -49,8 +51,11 @@ OdeJoint::
 
 void OdeJoint::
 destroy() {
+  if (_feedback != NULL) {
+    delete _feedback;
+  }
   nassertv(_id);
-  dJointDestroy(_id);
+  dJointDestroy(_id);  
 }
 
 ////////////////////////////////////////////////////////////////////

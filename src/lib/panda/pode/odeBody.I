@@ -209,6 +209,18 @@ get_mass() const {
   return mass;
 }
 
+INLINE dReal OdeBody::
+get_force() const {
+  const dReal *res = dBodyGetForce(_id);
+  return *res;
+}
+
+INLINE dReal OdeBody::
+get_torque() const {
+  const dReal *res = dBodyGetTorque(_id);
+  return *res;
+}
+
 INLINE void OdeBody::
 add_force(dReal fx, dReal fy, dReal fz) {
   dBodyAddForce(_id, fx, fy, fz);

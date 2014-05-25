@@ -17,6 +17,7 @@
 #include "odeMass.h"
 #include "odeBody.h"
 #include "odeJointGroup.h"
+#include "odeJointFeedback.h"
 #include "odeJoint.h"
 #include "odeSpace.h"
 #include "odeGeom.h"
@@ -85,6 +86,7 @@ init_libode() {
   OdeMass::init_type();
   OdeBody::init_type();
   OdeJointGroup::init_type();
+  OdeJointFeedback::init_type();
   OdeJoint::init_type();
   OdeSpace::init_type();
   OdeGeom::init_type();

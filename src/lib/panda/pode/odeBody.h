@@ -82,12 +82,14 @@ PUBLISHED:
   INLINE void* get_data() const;
 #endif
 
-  INLINE LVecBase3f  get_position() const;
+  INLINE LVecBase3f get_position() const;
   INLINE LMatrix3f  get_rotation() const;
-  INLINE LVecBase4f  get_quaternion() const;
-  INLINE LVecBase3f  get_linear_vel() const;
-  INLINE LVecBase3f  get_angular_vel() const;
-  INLINE OdeMass     get_mass() const;
+  INLINE LVecBase4f get_quaternion() const;
+  INLINE LVecBase3f get_linear_vel() const;
+  INLINE LVecBase3f get_angular_vel() const;
+  INLINE OdeMass    get_mass() const;
+  INLINE dReal      get_force() const;
+  INLINE dReal      get_torque() const;
 
   INLINE void add_force(dReal fx, dReal fy, dReal fz);
   INLINE void add_force(const LVecBase3f &f);

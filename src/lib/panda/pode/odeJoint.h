@@ -22,6 +22,7 @@
 #include "ode_includes.h"
 #include "odeWorld.h"      // Needed for derived classes
 #include "odeJointGroup.h"
+#include "odeJointFeedback.h"
 
 // Strange, we should be forced to include this by get_body()
 class OdeBody; 
@@ -75,9 +76,10 @@ PUBLISHED:
   /* INLINE void *get_data(); */
   INLINE int get_joint_type() const;
   OdeBody get_body(int index) const;
-  /* INLINE void set_feedback(dJointFeedback *); */
-  /* INLINE dJointFeedback *get_feedback(); */
-   
+  INLINE void set_feedback(OdeJointFeedback *feedback);
+  INLINE void set_feedback(bool flag = true);
+  INLINE OdeJointFeedback *get_feedback();
+
   void attach_bodies(const OdeBody &body1, const OdeBody &body2);
   void attach_body(const OdeBody &body, int index);
   void detach();
@@ -101,6 +103,7 @@ PUBLISHED:
 
 protected:
   dJointID _id;
+  OdeJointFeedback *_feedback;
 
 public:
   static TypeHandle get_class_type() {

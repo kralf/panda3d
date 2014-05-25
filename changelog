@@ -1,3 +1,10 @@
+panda3d (1.6.2-131) lucid; urgency=low
+
+  * Added OdeJointFeedback implementation
+  * Added feedback interface methods to OdeJoint
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Sun, 25 May 2014 15:38:00 +0100
+
 panda3d (1.6.2-130) lucid; urgency=low
 
   * Forcing linkage of bam tools with panda meta-library to fix the lack
