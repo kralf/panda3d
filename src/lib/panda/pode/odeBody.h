@@ -88,8 +88,8 @@ PUBLISHED:
   INLINE LVecBase3f get_linear_vel() const;
   INLINE LVecBase3f get_angular_vel() const;
   INLINE OdeMass    get_mass() const;
-  INLINE dReal      get_force() const;
-  INLINE dReal      get_torque() const;
+  INLINE LVecBase3f get_force() const;
+  INLINE LVecBase3f get_torque() const;
 
   INLINE void add_force(dReal fx, dReal fy, dReal fz);
   INLINE void add_force(const LVecBase3f &f);

@@ -209,16 +209,16 @@ get_mass() const {
   return mass;
 }
 
-INLINE dReal OdeBody::
+INLINE LVecBase3f OdeBody::
 get_force() const {
   const dReal *res = dBodyGetForce(_id);
-  return *res;
+  return LVecBase3f(res[0], res[1], res[2]);
 }
 
-INLINE dReal OdeBody::
+INLINE LVecBase3f OdeBody::
 get_torque() const {
   const dReal *res = dBodyGetTorque(_id);
-  return *res;
+  return LVecBase3f(res[0], res[1], res[2]);
 }
 
 INLINE void OdeBody::
