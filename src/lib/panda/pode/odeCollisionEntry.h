@@ -19,6 +19,7 @@
 #include "typedReferenceCount.h"
 
 #include "odeContactGeom.h"
+#include "odeContactJoint.h"
 
 class OdeUtil;
 
@@ -40,8 +41,10 @@ PUBLISHED:
   INLINE const LPoint3f get_contact_point(size_t n) const;
   INLINE const OdeContactGeom get_contact_geom(size_t n) const;
   INLINE const OdeContactGeom operator [] (size_t n) const;
+  INLINE const OdeContactJoint get_contact_joint(size_t n) const;
   MAKE_SEQ(get_contact_points, get_num_contacts, get_contact_point);
   MAKE_SEQ(get_contact_geoms, get_num_contacts, get_contact_geom);
+  MAKE_SEQ(get_contact_joints, get_num_contacts, get_contact_joint);
   
   INLINE operator bool () const;
   INLINE bool is_empty() const;
@@ -52,6 +55,7 @@ private:
   dBodyID _body1, _body2;
   size_t _num_contacts;
   OdeContactGeom *_contact_geoms;
+  OdeContactJoint *_contact_joints;
 
 public:
   static TypeHandle get_class_type() {

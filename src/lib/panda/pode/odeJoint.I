@@ -84,7 +84,7 @@ set_feedback(bool flag) {
 }
 
 INLINE OdeJointFeedback *OdeJoint::
-get_feedback() {
+get_feedback() const {
   return _feedback;
 }
 

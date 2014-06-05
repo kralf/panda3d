@@ -24,5 +24,6 @@ TypeHandle OdeCollisionEntry::_type_handle;
 OdeCollisionEntry::
 ~OdeCollisionEntry() {
   delete[] _contact_geoms;
+  delete[] _contact_joints;
 }
 

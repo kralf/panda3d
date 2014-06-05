@@ -8,7 +8,8 @@
 #include "ode_includes.h"
 
 #include "odeJoint.h"
-#include "odeContact.h"
+
+class OdeContact;
 
 ////////////////////////////////////////////////////////////////////
 //       Class : OdeContactJoint
@@ -16,8 +17,11 @@
 ////////////////////////////////////////////////////////////////////
 class EXPCL_PANDAODE OdeContactJoint : public OdeJoint {
   friend class OdeJoint;
+  friend class OdeSpace;
+  friend class OdeCollisionEntry;
 
 private:
+  OdeContactJoint();
   OdeContactJoint(dJointID id);
 
 PUBLISHED:

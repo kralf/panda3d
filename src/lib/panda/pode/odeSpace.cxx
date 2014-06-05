@@ -19,6 +19,7 @@
 #include "odeSimpleSpace.h"
 #include "odeHashSpace.h"
 #include "odeQuadTreeSpace.h"
+#include "odeContactJoint.h"
 
 #include "throw_event.h"
 
@@ -49,7 +50,8 @@ PyObject* OdeSpace::_python_callback = NULL;
 
 OdeSpace::
 OdeSpace(dSpaceID id) : 
-  _id(id) {
+  _id(id),
+  _contact_feedback(false) {
   my_world = NULL;
 }
 
@@ -134,6 +136,11 @@ set_auto_collide_joint_group(OdeJointGroup &joint_group) {
   _collide_joint_group = joint_group.get_id();
 }
 
+void OdeSpace::
+set_contact_feedback(bool feedback) {
+  _contact_feedback = feedback;
+}
+
 int OdeSpace::
 auto_collide() {
   if (my_world == NULL) {
@@ -159,15 +166,15 @@ get_contact_data(int data_index) {
 }
 
 int OdeSpace:: 
-get_contact_id(int data_index, int first) {
+get_contact_id(int contact_index, int first) {
 // get the contact data it looks like so [x1,y1,z1,x2,y2,z2... x64,y64,z64]
 // use the return in from autoCollide to determine how much of the data is
 // valid. The data would be more straight forward but the callbacks have to be
 // static.
   if (first == 0) {
-    return OdeSpace::contact_ids[(data_index * 2) + 0];
+    return OdeSpace::contact_ids[(contact_index * 2) + 0];
   } else {
-    return OdeSpace::contact_ids[(data_index * 2) + 1];
+    return OdeSpace::contact_ids[(contact_index * 2) + 1];
   }
 }
 
@@ -217,6 +224,7 @@ auto_callback(void *data, dGeomID o1, dGeomID o2) {
       entry->_body2 = b2;
       entry->_num_contacts = numc;
       entry->_contact_geoms = new OdeContactGeom[numc];
+      entry->_contact_joints = new OdeContactJoint[numc];
     }
 
     for(i=0; i < numc; i++) {
@@ -229,6 +237,8 @@ auto_callback(void *data, dGeomID o1, dGeomID o2) {
       }
       if (!_collide_space->_collision_event.empty()) {
         entry->_contact_geoms[i] = contact[i].geom;
+        entry->_contact_joints[i] = c;
+        entry->_contact_joints[i].set_feedback(_collide_space->_contact_feedback);
       }
       // this creates contact position data for python. It is useful for debugging only 64 points are stored
       if(contactCount < 64) {

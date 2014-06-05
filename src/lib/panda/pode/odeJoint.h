@@ -78,7 +78,7 @@ PUBLISHED:
   OdeBody get_body(int index) const;
   INLINE void set_feedback(OdeJointFeedback *feedback);
   INLINE void set_feedback(bool flag = true);
-  INLINE OdeJointFeedback *get_feedback();
+  INLINE OdeJointFeedback *get_feedback() const;
 
   void attach_bodies(const OdeBody &body1, const OdeBody &body2);
   void attach_body(const OdeBody &body, int index);

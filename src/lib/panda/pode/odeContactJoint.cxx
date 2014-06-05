@@ -14,8 +14,14 @@
 
 #include "config_ode.h"
 #include "odeContactJoint.h"
+#include "odeContact.h"
 
 TypeHandle OdeContactJoint::_type_handle;
+
+OdeContactJoint::
+OdeContactJoint() : 
+  OdeJoint(0) {
+}
 
 OdeContactJoint::
 OdeContactJoint(dJointID id) : 

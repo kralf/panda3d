@@ -107,6 +107,17 @@ get_contact_point(size_t n) const {
 }
 
 ////////////////////////////////////////////////////////////////////
+//     Function: OdeCollisionEntry::get_contact_joint
+//       Access: Published
+//  Description: Returns the nth contact joint in the collision.
+////////////////////////////////////////////////////////////////////
+INLINE const OdeContactJoint OdeCollisionEntry::
+get_contact_joint(size_t n) const {
+  nassertr(n >= 0 && n < _num_contacts, OdeContactJoint(0));
+  return _contact_joints[n];
+}
+
+////////////////////////////////////////////////////////////////////
 //     Function: OdeCollisionEntry::operator bool
 //       Access: Published
 //  Description: An OdeCollisionEntry evaluates to False if it

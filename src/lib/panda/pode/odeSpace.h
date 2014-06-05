@@ -70,6 +70,7 @@ PUBLISHED:
   INLINE int is_enabled();
   void set_auto_collide_world(OdeWorld&);
   void set_auto_collide_joint_group(OdeJointGroup&);
+  void set_contact_feedback(bool feedback);
 
   void add(OdeGeom& geom);
   void add(OdeSpace& space);
@@ -92,8 +93,8 @@ PUBLISHED:
 #ifdef HAVE_PYTHON
   int collide(PyObject* arg, PyObject* near_callback);
 #endif
-  static double get_contact_data(int data_index);
-  int get_contact_id(int data_index, int first = 0);
+  double get_contact_data(int data_index);
+  int get_contact_id(int contact_index, int first = 0);
   int set_collide_id(int collide_id, dGeomID id);
   int set_collide_id(OdeGeom& geom, int collide_id);
   void set_surface_type( int surface_type, dGeomID id);
@@ -129,6 +130,7 @@ protected:
   dSpaceID _id;
   int _g; // REMOVE ME
   OdeWorld* my_world;
+  bool _contact_feedback;
 
 public:
   static TypeHandle get_class_type() {

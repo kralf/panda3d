@@ -1,3 +1,10 @@
+panda3d (1.6.2-133) lucid; urgency=low
+
+  * Added contact joint member to OdeCollisionEntry
+  * Added contact joint feedback accesor to OdeSpace
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 05 Jun 2014 13:51:00 +0100
+
 panda3d (1.6.2-132) lucid; urgency=low
 
   * Added torque and force read accessors to OdeBody
