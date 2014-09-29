@@ -1290,8 +1290,8 @@ void x11GraphicsWindow::
 poll_raw_mice()
 {
 #ifdef HAVE_LINUX_INPUT_H
-  for (int dev=0; dev<_mouse_device_info.size(); dev++) {
-    MouseDeviceInfo &inf = _mouse_device_info[dev];
+  for (int d=0; d<_mouse_device_info.size(); d++) {
+    MouseDeviceInfo &inf = _mouse_device_info[d];
 
     // Read all bytes into buffer.
     if (inf._fd >= 0) {
