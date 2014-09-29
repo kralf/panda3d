@@ -38,8 +38,8 @@ remake_pack_deb(
   DEPENDS libpython2.[0-9]* libssl[0-9].[0-9].[0-9]
 )
 remake_pack_deb(
-  DEPENDS panda3d-dtool zlib1g libode1 libbullet libopenal1 libfreetype6
-    libjpeg[0-9]* libpng12-0 libtiff4 libcg
+  DEPENDS panda3d-dtool zlib1g libode1 libbullet[dynamics0-9.]*
+    libopenal1 libfreetype6 libjpeg[0-9]* libpng12-0 libtiff[4-5] libcg
   EXTRA debian/*
 )
 remake_pack_deb(

@@ -1,3 +1,9 @@
+panda3d (1.6.2-135) lucid; urgency=low
+
+  * Fixed some package dependencies for trusty
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Mon, 29 Sep 2014 16:24:00 +0100
+
 panda3d (1.6.2-134) lucid; urgency=low
 
   * Release distribution for Ubuntu Trusty Tahr (required several code
